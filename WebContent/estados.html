@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" ng-app="estadosModulo">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="img/favicon.ico">
+
+  <title>Maverick!</title>
+  <!-- link API angular 1.13-->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <!--estadosController-->
+  <script src="controller/estadosController.js"></script>
+
+
+  <!-- Custom styles for this template -->
+  <link href="css/oficinaEstilos.css" rel="stylesheet">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- bicliotecas do java script/ jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- link estados.js -->
+  <script src="js/estados.js"></script>
+</head>
+<body ng-controller="estadosController">
+  <header>
+    <!-- Static navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">MAVERICK</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Início <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Clientes</a>
+          </li>
+            
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarCadastro" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+                <div class="dropdown-menu" aria-labelledby="navbarCadastro">
+                  <a class="dropdown-item" href="#"> Cliente</a>
+                  <a class="dropdown-item" href="#"> Estoque</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item active" href="#"> Estado</a>
+                  <a class="dropdown-item" href="cidades.html"> Cidade</a>
+                  <a class="dropdown-item" href="bairros.html"> Bairro</a>
+                </div>
+            </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="#">Estoque</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Ordem de Serviço(OS)
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
+              <a class="dropdown-item" href="#">Lançar OS</a>
+              <a class="dropdown-item" href="#">OS abertas</a>
+              <a class="dropdown-item" href="#">OS fechadas</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+  <form>
+    <br>
+    <div class="container" > <!-- container principal - inicio -->
+      <h1 align="center">Estados(UF)</h1>
+      <br>
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist" > <!--div de abas(titulos) - inicio -->
+          <a class="nav-item nav-link active" id="nav-lista-tab" data-toggle="tab" href="#nav-lista" role="tab" aria-controls="nav-home" aria-selected="true">Lista</a>
+          <a class="nav-item nav-link" id="nav-cadastro-tab" data-toggle="tab" href="#nav-cadastro" role="tab" aria-controls="nav-profile" aria-selected="false">Cadastro</a>
+          
+        </div><!--div de abas  - fim -->
+      </nav>
+      <div class="tab-content" id="nav-tabContent"><!-- aba de abas(conteudos) - inicio-->
+        <div class="tab-pane fade show active" id="nav-lista" role="tabpanel" aria-labelledby="nav-lista-tab">
+          <table class="table table-striped table-hover">
+          	<tr>
+          	<td colspan="2" align="right">Pesquisar cursos: <input type="text" ng-model="pesquisaEstado" id="pesquisa" placeholder="Pesquisa de estados..."></td>
+          	</tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <tr class="chamaAba" onclick="chamaAba()" ng-repeat="estadosTabela in estados | filter:pesquisaEstado" ng-dblclick="selecionaEstado(estadosTabela)">
+              <td>{{estadosTabela.codigo}} </td>
+              <td>{{estadosTabela.nome}}</td>
+            </tr>
+          </table>
+        </div>
+
+
+        <!-- Aba Cadastro - Inicio -->
+        <div class="tab-pane fade" id="nav-cadastro" role="tabpanel" aria-labelledby="nav-cadastro-tab"><br>
+          <div class="form-group row">
+            <label align="right" for="codigo" class="col-sm-1 col-form-label" >Código:</label>
+            <div class="col-sm-1">
+              <input type="number" disabled ng-model="estado.codigo" class="form-control" id="codigo" placeholder="Cód">
+            </div>
+            <label align="right" for="nome" class="col-sm-1 col-form-label">Nome:</label>
+            <div class="col-9">
+              <input type="text" ng-model="estado.nome" class="form-control" id="nome" placeholder="Digite o nome.">
+            </div>
+          </div>
+
+          <div align="center">
+            <button type="submit" ng-click="limparCampos()" class="btn btn-success">Novo</button>
+            <button type="submit" ng-disabled="!estado.nome" ng-click="salvar()" class="btn btn-primary">Salvar</button>
+            <button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>
+          </div>
+        </div><!-- Aba Cadastro - Fim -->
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"></div>
+      </div><!-- aba de abas(conteudos) - fim-->
+    </div><!-- container principal - fim -->
+
+
+  </form>
+
+  <!-- FOOTER -->
+  <br><br>
+  <footer class="container">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+  </footer>
+
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    </body>
+    </html>

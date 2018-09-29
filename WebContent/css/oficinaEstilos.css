@@ -1,0 +1,12 @@
+#codigo{
+   -moz-appearance: textfield;
+   appearance: textfield;
+}
+
+div{
+	border: 0px solid;
+}
+
+.obg{
+	color:red;
+}
