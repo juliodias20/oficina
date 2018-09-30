@@ -1,0 +1,13 @@
+div{
+	border:0px solid;
+}
+
+#pesquisaCEP{
+	width:50px;
+	height:40px;
+
+	padding: 0;
+	
+	background-size: cover;
+}
+
