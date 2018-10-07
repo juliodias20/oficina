@@ -32,6 +32,7 @@ clientesModulo.controller("clientesController", function ($http, $scope){
 	$scope.salvar = function() {
 		if($scope.cliente.codCliente == undefined){
 			$http.post(urlCliente,$scope.cliente).success(function(cliente){
+				console.log($scope.cliente);
 				$scope.limparCampos();
 				$scope.listarClientes();
 			}).error(function(erro){
