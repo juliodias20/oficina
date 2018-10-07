@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.maverick.model.model.ClienteModel;
 
-
 public interface ClienteDaoInterface {
 
 	ClienteModel salvarCliente(ClienteModel clienteModel);

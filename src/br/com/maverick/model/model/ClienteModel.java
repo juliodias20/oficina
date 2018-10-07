@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
-@Table(name="cliente")
+@Table(name="tbcliente")
 
 public class ClienteModel {
 
@@ -19,7 +19,7 @@ public class ClienteModel {
 	@Column(name="codcliente")
 	Integer codCliente;
 	
-	@Column(name="tipoPessoa",nullable=false)
+	@Column(name="tipopessoa",nullable=false)
 	String tipoPessoa;
 	
 	@Column(name="nomecliente", length=255, nullable=false)
@@ -118,7 +118,7 @@ public class ClienteModel {
 	}
 
 	public void setNomeCliente(String nomeCliente) {
-		this.nomeCliente = nomeCliente;
+		this.nomeCliente = nomeCliente.toUpperCase();
 	}
 
 	public String getRazaoSocial() {

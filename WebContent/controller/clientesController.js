@@ -56,7 +56,7 @@ clientesModulo.controller("clientesController", function ($http, $scope){
 				$scope.listarClientes();
 				$scope.limparCampos();
 			}).error(function (erro){
-				alerto(erro);
+				alert(erro);
 			});
 		}
 	}
