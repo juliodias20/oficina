@@ -1,5 +1,7 @@
 package br.com.maverick.model.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity
@@ -21,7 +25,7 @@ public class ModeloModel {
 	@Column(name="codmodelo")
 	Integer codModelo;
 	
-	@Column(name="nomemodelo", nullable=false,unique=true)
+	@Column(name="nomemodelo", nullable=false)
 	String nomeModelo;
 	
 	@Column(name="qtdportas", nullable=false)
@@ -34,6 +38,14 @@ public class ModeloModel {
 	@JoinColumn(name="codmarca", referencedColumnName="codmarca", nullable=false)
 	MarcaModel marcaModel;
 
+	@OneToMany(mappedBy="modeloModel")
+	private List<ProdutoModel> produtoModel;
+		
+	@XmlTransient
+	public List<ProdutoModel> getProdutos(){
+		return produtoModel;
+	}
+	
 	public ModeloModel() {
 	}
 
