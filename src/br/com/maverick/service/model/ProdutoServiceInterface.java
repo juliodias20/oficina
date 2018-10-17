@@ -13,5 +13,7 @@ public interface ProdutoServiceInterface {
 	void excluir(ProdutoModel produtoModel);
 	
 	List<ProdutoModel> getProdutos();
+
+	List<ProdutoModel> getProdutos(Integer codProduto);
 	
 }

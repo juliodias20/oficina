@@ -20,12 +20,6 @@ modelosModulo.controller("modelosController",function($http, $scope){
 			alert(erro);
 		})
 	}
-
-	$scope.qtdPortas = function(portas){[
-							{qtd:2},
-							{qtd:3},
-							{qtd:4},
-							{qtd:5}]};
 	
 	$scope.selecionaModelo = function(modeloSelecionado){
 		$scope.modelo = modeloSelecionado;
@@ -74,6 +68,5 @@ modelosModulo.controller("modelosController",function($http, $scope){
 	//executa
 	$scope.listarMarcas();
 	$scope.listarModelos();
-	$scope.qtdPortas();
 
 });

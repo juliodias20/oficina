@@ -14,4 +14,6 @@ public interface ModeloServiceInterface {
 	
 	List<ModeloModel> getModelos();
 	
+	List<ModeloModel> getModelos(Integer codModelo);
+	
 }

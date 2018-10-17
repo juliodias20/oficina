@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.com.maverick.model.model.ModeloModel;
-
 public class ModeloDaoImplem implements ModeloDaoInterface{
 
 	@PersistenceContext(unitName="OficinaPersistenceUnit")
@@ -37,5 +36,16 @@ public class ModeloDaoImplem implements ModeloDaoInterface{
 		Query query = entityManager.createQuery("from ModeloModel");
 		return query.getResultList();
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ModeloModel> getModelos(Integer codModelo){
+		Query query = entityManager.createQuery("from ModeloModel m where m.codModelo = :id");
+			  query.setParameter("id", codModelo);
+		return query.getResultList();
+	}
+	
+	
+	
 
 }

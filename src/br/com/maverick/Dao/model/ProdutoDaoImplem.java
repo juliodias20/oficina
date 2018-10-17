@@ -32,11 +32,25 @@ public class ProdutoDaoImplem implements ProdutoDaoInterface {
 		
 	}
 
+	//get todos os produtos
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ProdutoModel> getProdutos() {
 		Query query = entityManager.createQuery("from ProdutoModel");
 		return query.getResultList();
 	}
+	
+	
+	//get um produto por ID
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ProdutoModel> getProdutos(Integer codProduto){
+		Query query = entityManager.createQuery("from ProdutoModel p where p.codProduto = :id");
+			  query.setParameter("id", codProduto);
+		return query.getResultList();
+	}
 
+	
+	
+	
 }

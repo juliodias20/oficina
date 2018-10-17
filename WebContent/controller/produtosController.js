@@ -1,10 +1,11 @@
 var produtosModulo = angular.module('produtosModulo',[]);
 
 produtosModulo.controller("produtosController",function($http, $scope){
-
+	
+	
 	urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
 	urlProduto = 'http://localhost:8080/Oficina/rest/produtos'
-
+		
 	$scope.listarModelos = function(){
 		$http.get(urlModelo).success(function (modelos){
 			$scope.modelos = modelos;
@@ -20,17 +21,46 @@ produtosModulo.controller("produtosController",function($http, $scope){
 			alert(erro);
 		})
 	}
-
+	
+	$scope.getModelo = function(){
+		$http.get(urlModelo+'/'+$scope.pesquisaCarro.codModelo).success(function (modelo){
+			console.log(modelo);
+		}).error(function (erro){
+			alert(erro);
+		})	
+	}
+	
+	$scope.pesquisaCarro = function(modeloSelecionado){
+		$scope.produto.modeloModel = modeloSelecionado;
+		document.getElementById('nomeModeloCar').value =  modeloSelecionado.nomeModelo+' / '+modeloSelecionado.qtdPortas+'P / '+modeloSelecionado.ano;
+	}
+    
 	$scope.selecionaProduto = function(produtoSelecionado){
 		$scope.produto = produtoSelecionado;
+		document.getElementById('nomeModeloCar').value =  produtoSelecionado.modeloModel.nomeModelo+' / '+produtoSelecionado.modeloModel.qtdPortas+'P / '+produtoSelecionado.modeloModel.ano;
 	}
-
+	
+	
 	$scope.limparCampos = function(){
-		$scope.produto = "";
+			console.log($scope.produto);
+			$scope.produto.tipoProduto="N";
+			$scope.produto.codProduto="";
+			$scope.produto.modeloModel="";
+			$scope.produto.nomeProduto="";
+			$scope.produto.observacao="";
+			$scope.produto.porta="";
+			$scope.produto.qtdEstoque="";
+			$scope.produto.vlrPago="";
+			document.getElementById('nomeModeloCar').value = "";
 	}
 
+	$scope.testar = function(){
+		
+		console.log($scope.produto);
+	}
+	
 	$scope.salvar = function() {
-		if($scope.produto.codProduto == undefined){console.log($scope.produto);
+		if($scope.produto.codProduto == undefined){
 			$http.post(urlProduto,$scope.produto).success(function(produto){
 				$scope.limparCampos();
 				$scope.listarProdutos();

@@ -38,4 +38,9 @@ public class ModeloServiceImplem implements ModeloServiceInterface{
 		return modeloDaoInterface.getModelos();
 	}
 
+	@Override
+	public List<ModeloModel> getModelos(Integer codModelo) {
+		return modeloDaoInterface.getModelos(codModelo);
+	}
+
 }

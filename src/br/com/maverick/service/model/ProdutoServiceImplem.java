@@ -36,5 +36,10 @@ public class ProdutoServiceImplem implements ProdutoServiceInterface {
 	public List<ProdutoModel> getProdutos() {
 		return produtoDaoInterface.getProdutos();
 	}
+	
+	@Override
+	public List<ProdutoModel> getProdutos(Integer codProduto) {
+		return produtoDaoInterface.getProdutos(codProduto);
+	}
 
 }

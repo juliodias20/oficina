@@ -14,4 +14,6 @@ public interface ModeloDaoInterface {
 	
 	List<ModeloModel> getModelos();
 	
+	List<ModeloModel> getModelos(Integer codModelo);
+	
 }

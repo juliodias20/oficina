@@ -26,7 +26,21 @@ clientesModulo.controller("clientesController", function ($http, $scope){
 	}
 
 	$scope.limparCampos = function(){
-		$scope.cliente = "";
+		$scope.cliente.tipoPessoa="F";
+		$scope.cliente.codCliente="";
+		$scope.cliente.bairro="";
+		$scope.cliente.cep="";
+		$scope.cliente.cidade="";
+		$scope.cliente.cnpj="";
+		$scope.cliente.codCliente="";
+		$scope.cliente.cpf="";
+		$scope.cliente.email="";
+		$scope.cliente.estado="";
+		$scope.cliente.logradouro="";
+		$scope.cliente.nomeCliente="";
+		$scope.cliente.numero="";
+		$scope.cliente.razaoSocial="";
+		$scope.cliente.telefone="";
 	}
 
 	$scope.salvar = function() {

@@ -25,9 +25,17 @@ public class ModeloRestFacade {
 	@Inject
 	private ModeloServiceInterface modeloServiceInterface;
 	
+	
 	@GET
 	public List<ModeloModel> getModelos(){
 		return modeloServiceInterface.getModelos();
+	}
+	
+	
+	@GET
+	@Path("/{codModelo}")
+	public List<ModeloModel> getModelos(@PathParam("codModelo") Integer codModelo){
+		return modeloServiceInterface.getModelos(codModelo);
 	}
 	
 	@POST

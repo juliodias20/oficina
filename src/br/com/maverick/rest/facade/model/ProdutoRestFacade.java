@@ -30,6 +30,12 @@ public class ProdutoRestFacade {
 		return produtoServiceInterface.getProdutos();
 	}
 	
+	@GET
+	@Path("/{codProduto}")
+	public  List<ProdutoModel> getProdutos(@PathParam("codProduto") Integer codProduto){
+		return produtoServiceInterface.getProdutos(codProduto);
+	}
+	
 	@POST
 	public ProdutoModel salvar(ProdutoModel produtoModel) {
 		return produtoServiceInterface.salvarProduto(produtoModel);

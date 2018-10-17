@@ -32,6 +32,12 @@ public class ProdutoModel {
 	@Column(name="observacao")
 	String observacao;
 	
+	@Column(name="qtdestoque")
+	Integer qtdEstoque;
+	
+	@Column(name="vlrpago")
+	double vlrPago;
+	
 	@ManyToOne
 	@JoinColumn(name="codmodelo",referencedColumnName="codmodelo", nullable=false)
 	ModeloModel modeloModel;
@@ -39,14 +45,19 @@ public class ProdutoModel {
 	public ProdutoModel() {
 	}
 
-	public ProdutoModel(Integer codProduto, String nomeProduto, String porta, String tipoProduto, String observacao,ModeloModel modeloModel) {
+	public ProdutoModel(Integer codProduto, String nomeProduto, String porta, String tipoProduto, String observacao,
+			Integer qtdEstoque, double vlrPago, ModeloModel modeloModel) {
 		this.codProduto = codProduto;
 		this.nomeProduto = nomeProduto;
 		this.porta = porta;
 		this.tipoProduto = tipoProduto;
 		this.observacao = observacao;
+		this.qtdEstoque = qtdEstoque;
+		this.vlrPago = vlrPago;
 		this.modeloModel = modeloModel;
 	}
+
+
 
 	public Integer getCodProduto() {
 		return codProduto;
@@ -86,6 +97,22 @@ public class ProdutoModel {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao.toUpperCase();
+	}
+
+	public Integer getQtdEstoque() {
+		return qtdEstoque;
+	}
+
+	public void setQtdEstoque(Integer qtdEstoque) {
+		this.qtdEstoque = qtdEstoque;
+	}
+
+	public double getVlrPago() {
+		return vlrPago;
+	}
+
+	public void setVlrPago(double vlrPago) {
+		this.vlrPago = vlrPago;
 	}
 
 	public ModeloModel getModeloModel() {
