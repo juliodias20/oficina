@@ -92,7 +92,7 @@
                     <table class="table table-striped table-hover">
                         <tr>
                             <td colspan="5" align="right">Pesquisar produtos:
-                                <input type="text" ng-model="pesquisaModelo" id="pesquisa" placeholder="Pesquisa de produtos...">
+                                <input type="text" ng-model="pesquisaProduto" id="pesquisa" placeholder="Pesquisa de produtos...">
                             </td>
                         </tr>
                         <th>Código</th>
@@ -100,7 +100,7 @@
                         <th>Carro</th>
                         <th>Porta</th>
                         <th>Tipo</th>
-                        <tr class="chamaAba" onclick="chamaAba()" ng-repeat="produtosTabela in produtos | filter:pesquisaModelo" ng-dblclick="selecionaProduto(produtosTabela)">
+                        <tr class="chamaAba" onclick="chamaAba()" ng-repeat="produtosTabela in produtos | filter:pesquisaProduto" ng-dblclick="selecionaProduto(produtosTabela)">
                             <td>{{produtosTabela.codProduto}} </td>
                             <td>{{produtosTabela.nomeProduto}}</td>
                             <td>{{produtosTabela.modeloModel.nomeModelo}} / {{produtosTabela.modeloModel.qtdPortas}}P / {{produtosTabela.modeloModel.ano}}</td>
@@ -114,7 +114,7 @@
                 <div class="tab-pane fade" id="nav-cadastro" role="tabpanel" aria-labelledby="nav-cadastro-tab">
                     <br>
                     <div class="form-group row">
-                        <label align="left" for="codProduto" class="col-sm-1 col-form-label">Código:</label>
+                        <label align="right" for="codProduto" class="col-sm-1 col-form-label">Código:</label>
                         <div class="col-sm-1">
                             <input type="number" disabled ng-model="produto.codProduto" class="form-control" id="codProduto">
                         </div>
@@ -137,24 +137,25 @@
                         </div>
                         <div class="col-sm-3">
 	                        <div class="dropdown" align="right">
-							  <button class="btn btn-secondary dropdown-toggle col-sm-8" type="button" id="dropdownProdutoAcao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <button class="btn btn-secondary dropdown-toggle col-sm-8" type="button" ng-disabled="!produto.codProduto" id="dropdownProdutoAcao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							    Ações
 							  </button>
 							  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							    <a class="dropdown-item" data-toggle="modal" data-target="#lancarProtudosEstoque" onclick="carregaDados();"href="#">Lançar estoque</a>
+							    <a class="dropdown-item" ng-click="abrirModalLancarProdutoEstoque()" data-target="#lancarProtudosEstoque"href="#" >Lançar estoque</a>
+							    <a class="dropdown-item" data-toggle="modal" data-target="#removerProtudosEstoque"href="#" >Remover estoque</a>
 							  </div>
 							</div>
 						</div>
                     </div>
                     <div class="form-group row">
-                        <label align="left" for="nomeProduto" class="col-sm-1 col-form-label"><span class="obg">*</span>Produto:</label>
+                        <label align="right" for="nomeProduto" class="col-sm-1 col-form-label"><span class="obg">*</span>Produto:</label>
                         <div class="col-8">
                             <input type="text" ng-model="produto.nomeProduto" class="form-control" id="nomeProduto">
                         </div>
                     </div>
                     <hr>
                     <div class="form-group row">
-                    	<label align="left" for="carro" class="col-sm-1 col-form-label"><span class="obg">*</span>Carro:</label>
+                    	<label align="right" for="carro" class="col-sm-1 col-form-label"><span class="obg">*</span>Carro:</label>
                     	<div class="col-sm-1">
                             <input type="number" disabled ng-model="produto.modeloModel.codModelo"  class="form-control" id="codModeloCar">
                         </div>
@@ -171,15 +172,21 @@
                         -->
                         <div class="col-sm-2" align="left">
 			    			<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCarro" >Pesquisar</button>
-			    			  
 			    		</div>
-                    	<label align="right" for="qtdEstoque" class="col-sm-1 col-form-label">Quantidade:</label>
+			    	</div>
+			    	<hr>
+			    	<div class="form-group row">
+                    	<label align="right" for="Estoque" class="col-sm-1 col-form-label">Quantidade:</label>
                         <div class="col-2">
-                            <input type="text" ng-model="produto.qtdEstoque" class="form-control" id="qtdEstoque">
+                            <input type="text" disabled ng-model="produto.qtdEstoque" class="form-control" id="qtdEstoque">
                         </div>
-                        <label align="right" for="vlrProduto" class="col-sm-1 col-form-label">Valor:</label>
-                        <div class="col-2">
-                            <input type="text" ng-model="produto.vlrPago" class="form-control" id="vlrProduto">
+                        <label align="right" for="vlrPagoProduto" class="col-sm-1.5 col-form-label">Comprado por:</label>
+                        <div class="col-2" >
+                            <input type="text" disabled ng-model="produto.vlrPago" class="form-control" id="vlrPagoProduto">
+                        </div>
+                        <label align="right" for="vlrVenderProduto" class="col-sm-1.5 col-form-label">Vender por:</label>
+                        <div class="col-2" >
+                            <input type="text" disabled ng-model="produto.vlrVenda" class="form-control" id="vlrVenderProduto">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -194,6 +201,7 @@
                         <button type="submit" ng-click="limparCampos()" class="btn btn-success">Novo</button>
                         <button type="submit" ng-click="salvar()" class="btn btn-primary">Salvar</button>
                         <button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>
+                        <button ng-click="teste()">teste</button>
                     </div>
                 </div>
                 <!-- Aba Cadastro - Fim -->
@@ -205,7 +213,7 @@
     </form>
 
 	<!-- Modal - Lançar estoque - inicio-->
-	<div class="modal fade" id="lancarProtudosEstoque" tabindex="-1" role="dialog" aria-labelledby="modalLancarProdutosEstoque" aria-hidden="true">
+	<div class="modal fade" id="lancarProdutosEstoque" tabindex="-1" role="dialog" aria-labelledby="modalLancarProdutosEstoque" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered " role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -216,35 +224,27 @@
 	      </div>
 	      <div class="modal-body">
 	        <form>
-	        	<div class="form-group">
-	        		<label align="left" for="modalCodProduto" class="col-md-1 col-form-label"><span class="obg">*</span>Código:</label>
-	                <div class="col-md-3">
-	                    <input type="text" class="form-control" id="modalCodProduto">
-	                </div>
-	            </div>
-	            <div class="form-group">
-		        	<label align="left" for="modalNomeProduto" class="col-md-1 col-form-label"><span class="obg">*</span>Produto:</label>
-	                <div class="col-md-12">
-	                    <input type="text" class="form-control" id="modalNomeProduto">
-	                </div>
-	            </div>
-	            <div class="form-group">
-		        	<label align="left" for="modalQtdProduto" class="col-md-3 col-form-label"><span class="obg">*</span>Quantidade:</label>
-	                <div class="col-md-3">
+	            <div class="form-group" align="right">
+		        	<label align="right" for="modalQtdProduto" class="col-md-3 col-form-label"><span class="obg">*</span>Quantidade:</label>
+	                <div class="col-md-4">
 	                    <input type="text" class="form-control" id="modalQtdProduto">
 	                </div>
-	            </div>
-	            <div class="form-group">
-	                <label align="left" for="modalQtdProduto" class="col-md-4 col-form-label"><span class="obg">*</span>Valor Unitário:</label>
-	                <div class="col-md-3">
-	                    <input type="text" class="form-control" id="modalVlrUnitario" >
+	            
+	                <label align="right" for="modalVlrPago" class="col-md-5 col-form-label"><span class="obg">*</span>Valor de compra:</label>
+	                <div class="col-md-4">
+	                    <input type="text" class="form-control" id="modalVlrPago" >
+	                </div>
+	                
+	                <label align="right" for="modalQtdVenda" class="col-md-4 col-form-label"><span class="obg">*</span>Valor de venda:</label>
+	                <div class="col-md-4">
+	                    <input type="text" class="form-control" id="modalVlrVenda" >
 	                </div>
 	            </div>
 	        </form>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" onclick="teste()">Save changes</button>
+	        <button type="button" class="btn btn-secondary" id="fecharModalLancarProdutoEstoque" data-dismiss="modal">Fechar</button>
+	        <button type="button" class="btn btn-primary" ng-click="lancaEstoque()" >Lançar</button>
 	      </div>
 	    </div>
 	  </div>

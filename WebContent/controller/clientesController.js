@@ -1,9 +1,23 @@
-var clientesModulo = angular.module('clientesModulo',[]);
+var clientesModulo = angular.module('clientesModulo',['ngCookies']);
 
-clientesModulo.controller("clientesController", function ($http, $scope){
+clientesModulo.controller("clientesController", function ($http, $location, $scope, $rootScope, $cookies){
+	
+	//autenticação de login
+	$rootScope.globals = $cookies.getObject('globals') || {};
+    if ($rootScope.globals.currentUser) {
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+    }
+
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        // redirect to login page if not logged in and trying to access a restricted page
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
+        var loggedIn = $rootScope.globals.currentUser;
+        if (restrictedPage && !loggedIn) {
+        	window.location.href="http://localhost:8080/Oficina/login.html";
+        }
+    });
 	
 	urlCep = 'https://viacep.com.br/ws/';
-	
 	urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
 	
 	$scope.listarClientes = function (){

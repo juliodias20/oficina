@@ -2,7 +2,6 @@ var produtosModulo = angular.module('produtosModulo',[]);
 
 produtosModulo.controller("produtosController",function($http, $scope){
 	
-	
 	urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
 	urlProduto = 'http://localhost:8080/Oficina/rest/produtos'
 		
@@ -30,6 +29,10 @@ produtosModulo.controller("produtosController",function($http, $scope){
 		})	
 	}
 	
+	$scope.abrirModalLancarProdutoEstoque = function(){
+		$('#lancarProdutosEstoque').modal('show');
+	}
+	
 	$scope.pesquisaCarro = function(modeloSelecionado){
 		$scope.produto.modeloModel = modeloSelecionado;
 		document.getElementById('nomeModeloCar').value =  modeloSelecionado.nomeModelo+' / '+modeloSelecionado.qtdPortas+'P / '+modeloSelecionado.ano;
@@ -40,9 +43,38 @@ produtosModulo.controller("produtosController",function($http, $scope){
 		document.getElementById('nomeModeloCar').value =  produtoSelecionado.modeloModel.nomeModelo+' / '+produtoSelecionado.modeloModel.qtdPortas+'P / '+produtoSelecionado.modeloModel.ano;
 	}
 	
+	$scope.lancaEstoque = function(){
+		if(Number(document.getElementById('modalQtdProduto').value) <= 0 || Number(document.getElementById('modalVlrPago').value) <= 0){
+			alert("\'Quantidade\' e \'Valor de Compra\' precisam ser maiores que zero.");
+			//limpa campos do modal
+			document.getElementById('modalQtdProduto').value = null;
+			document.getElementById('modalVlrPago').value = null;
+			document.getElementById('modalVlrVenda').value = null;
+			return false;
+		}else {
+			
+			//atualiza formulário
+			$scope.produto.qtdEstoque = $scope.produto.qtdEstoque + Number(document.getElementById('modalQtdProduto').value);
+			$scope.produto.vlrPago = Number(document.getElementById('modalVlrPago').value);
+			$scope.produto.vlrVenda = Number(document.getElementById('modalVlrVenda').value);
+			
+			//limpa campos do modal
+			document.getElementById('modalQtdProduto').value = null;
+			document.getElementById('modalVlrPago').value = null;
+			document.getElementById('modalVlrVenda').value = null
+			
+		
+			$('#lancarProdutosEstoque').modal('hide');
+			
+		}
+		
+	}
+	
+	$scope.teste = function(){
+		console.log($scope.produto);
+	}
 	
 	$scope.limparCampos = function(){
-			console.log($scope.produto);
 			$scope.produto.tipoProduto="N";
 			$scope.produto.codProduto="";
 			$scope.produto.modeloModel="";
@@ -51,16 +83,16 @@ produtosModulo.controller("produtosController",function($http, $scope){
 			$scope.produto.porta="";
 			$scope.produto.qtdEstoque="";
 			$scope.produto.vlrPago="";
+			$scope.produto.vlrVenda="";
 			document.getElementById('nomeModeloCar').value = "";
-	}
-
-	$scope.testar = function(){
 		
-		console.log($scope.produto);
 	}
 	
 	$scope.salvar = function() {
 		if($scope.produto.codProduto == undefined){
+			if($scope.produto.qtdEstoque == ""){
+				$scope.produto.qtdEstoque=0;
+			}
 			$http.post(urlProduto,$scope.produto).success(function(produto){
 				$scope.limparCampos();
 				$scope.listarProdutos();
@@ -68,12 +100,13 @@ produtosModulo.controller("produtosController",function($http, $scope){
 				alert(erro);
 			});			
 		}else{
-				$http.put(urlProduto,$scope.produto).success(function(produto){
-					$scope.listarProdutos();
-					$scope.limparCampos();
-				}).error(function (erro){
-					alert(erro);
-				});
+			console.log($scope.produto);
+			$http.put(urlProduto,$scope.produto).success(function(produto){
+				$scope.listarProdutos();
+				$scope.limparCampos();
+			}).error(function (erro){
+				alert(erro);
+			});
 		}
 	}
 	

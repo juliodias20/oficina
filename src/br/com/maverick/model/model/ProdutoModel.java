@@ -38,6 +38,9 @@ public class ProdutoModel {
 	@Column(name="vlrpago")
 	double vlrPago;
 	
+	@Column(name="vlrvenda")
+	double vlrVenda;
+	
 	@ManyToOne
 	@JoinColumn(name="codmodelo",referencedColumnName="codmodelo", nullable=false)
 	ModeloModel modeloModel;
@@ -46,7 +49,7 @@ public class ProdutoModel {
 	}
 
 	public ProdutoModel(Integer codProduto, String nomeProduto, String porta, String tipoProduto, String observacao,
-			Integer qtdEstoque, double vlrPago, ModeloModel modeloModel) {
+			Integer qtdEstoque, double vlrPago, ModeloModel modeloModel, double vlrVenda) {
 		this.codProduto = codProduto;
 		this.nomeProduto = nomeProduto;
 		this.porta = porta;
@@ -55,6 +58,7 @@ public class ProdutoModel {
 		this.qtdEstoque = qtdEstoque;
 		this.vlrPago = vlrPago;
 		this.modeloModel = modeloModel;
+		this.vlrVenda = vlrVenda;
 	}
 
 
@@ -121,6 +125,14 @@ public class ProdutoModel {
 
 	public void setModeloModel(ModeloModel modeloModel) {
 		this.modeloModel = modeloModel;
+	}
+	
+	public double getVlrVenda() {
+		return vlrVenda;
+	}
+
+	public void setVlrVenda(double vlrVenda) {
+		this.vlrVenda = vlrVenda;
 	}
 
 	@Override

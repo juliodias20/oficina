@@ -12,3 +12,4 @@ function carregaDados(){
 	document.getElementById('modalCodProduto').value = document.getElementById('codProduto').value;
 	document.getElementById('modalNomeProduto').value = document.getElementById('nomeProduto').value;
 }
+
