@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,7 +24,7 @@ public class UsuarioModel {
 	@Column(name="codusuario")
 	Integer codUsuario;
 	
-	@Column(name="login")
+	@Column(name="login", unique=true)
 	String login;
 	
 	@Column(name="senha")

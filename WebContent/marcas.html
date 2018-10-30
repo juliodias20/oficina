@@ -8,6 +8,7 @@
     <title>Maverick!</title>
     <!-- link API angular 1.13-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.min.js"></script>
 
     <!--marcasController-->
     <script src="controller/marcasController.js"></script>
@@ -39,25 +40,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">Início <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Clientes</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarCadastro" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarCadastro">
-                            <a class="dropdown-item" href="#"> Cliente</a>
-                            <a class="dropdown-item" href="#"> Estoque</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"> Estado</a>
-                            <a class="dropdown-item" href="cidades.html"> Cidade</a>
-                            <a class="dropdown-item" href="#"> Bairro</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clientes.html">Clientes</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Estoque</a>
+                        <a class="nav-link" href="produtos.html">Estoque</a>
                     </li>
+                    
+                    <li class="nav-item dropdown active">
+			            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			              Carros
+			            </a>
+			            <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
+			              <a class="dropdown-item active" href="marcas.html">Marcas</a>
+			              <a class="dropdown-item" href="modelos.html">Modelos</a>
+			            </div>
+			          </li>
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Ordem de Serviço(OS)
@@ -70,6 +70,7 @@
                     </li>
                 </ul>
             </div>
+            <a href="#" class="btn btn-outline-warning" ng-click="sair()">Sair</a>
         </nav>
     </header>
 

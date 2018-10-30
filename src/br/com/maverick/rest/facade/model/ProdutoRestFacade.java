@@ -32,7 +32,7 @@ public class ProdutoRestFacade {
 	
 	@GET
 	@Path("/{codProduto}")
-	public  List<ProdutoModel> getProdutos(@PathParam("codProduto") Integer codProduto){
+	public List<ProdutoModel> getProdutos(@PathParam("codProduto") Integer codProduto){
 		return produtoServiceInterface.getProdutos(codProduto);
 	}
 	

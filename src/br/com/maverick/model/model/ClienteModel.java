@@ -126,7 +126,7 @@ public class ClienteModel {
 	}
 
 	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
+		this.razaoSocial = razaoSocial.toUpperCase();
 	}
 
 	public String getTelefone() {
@@ -166,7 +166,7 @@ public class ClienteModel {
 	}
 
 	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+		this.logradouro = logradouro.toUpperCase();
 	}
 
 	public Integer getNumero() {
@@ -182,7 +182,7 @@ public class ClienteModel {
 	}
 
 	public void setCidade(String cidade) {
-		this.cidade = cidade;
+		this.cidade = cidade.toUpperCase();
 	}
 
 	public String getBairro() {
@@ -190,7 +190,7 @@ public class ClienteModel {
 	}
 
 	public void setBairro(String bairro) {
-		this.bairro = bairro;
+		this.bairro = bairro.toUpperCase();
 	}
 
 	public String getEstado() {
@@ -198,7 +198,7 @@ public class ClienteModel {
 	}
 
 	public void setEstado(String estado) {
-		this.estado = estado;
+		this.estado = estado.toUpperCase();
 	}
 
 	public String getEmail() {

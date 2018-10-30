@@ -42,7 +42,8 @@ public class UsuarioDaoImplem implements UsuarioDaoInterface {
 		Query query = entityManager.createQuery("from UsuarioModel");
 		return query.getResultList();
 	}
-
+	
+	//getById
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<UsuarioModel> getUsuarios(Integer codUsuario) {

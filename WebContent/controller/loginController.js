@@ -19,7 +19,7 @@ loginModulo.controller("loginController", function ($http, $location, $scope, $r
 	
     urlLogin = 'http://localhost:8080/Oficina/rest/login';
     
-    $scope.teste = function(){
+    $scope.logar = function(){
     	
     	$http.post(urlLogin,$scope.usuario).success(function(usuario){
     		
@@ -37,7 +37,7 @@ loginModulo.controller("loginController", function ($http, $location, $scope, $r
     		window.location.href="http://localhost:8080/Oficina/index.html";
     		
 	    	}).error(function(erro){
-	    		alert('Usuário e/ou senha invalido(s)');
+	    		$('#loginModal').modal('show');
 	    	})
     	}
     	

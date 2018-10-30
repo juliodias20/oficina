@@ -14,8 +14,19 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
         	window.location.href="http://localhost:8080/Oficina/login.html";
+
         }
+        
+        
+    $scope.perfil = $rootScope.globals.currentUser.usuario.perfilModel.nomePerfil;
     });
+	
+    $scope.sair = function(){
+    	 $rootScope.globals = {};
+         $cookies.remove('globals');
+         $http.defaults.headers.common.Authorization = 'Basic';
+         window.location.href="http://localhost:8080/Oficina/login.html";	
+    };
 	
 	urlCep = 'https://viacep.com.br/ws/';
 	urlCliente = 'http://localhost:8080/Oficina/rest/clientes';

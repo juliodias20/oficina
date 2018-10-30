@@ -1,6 +1,32 @@
-var produtosModulo = angular.module('produtosModulo',[]);
+var produtosModulo = angular.module('produtosModulo',['ngCookies']);
 
-produtosModulo.controller("produtosController",function($http, $scope){
+produtosModulo.controller("produtosController",function($http, $location, $scope, $rootScope, $cookies){
+	
+	//autenticação de login
+	$rootScope.globals = $cookies.getObject('globals') || {};
+    if ($rootScope.globals.currentUser) {
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+    }
+
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        // redirect to login page if not logged in and trying to access a restricted page
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
+        var loggedIn = $rootScope.globals.currentUser;
+        if (restrictedPage && !loggedIn) {
+        	window.location.href="http://localhost:8080/Oficina/login.html";
+
+        }
+        
+        
+        $scope.perfil = $rootScope.globals.currentUser.usuario.perfilModel.nomePerfil;
+    });
+	
+    $scope.sair = function(){
+    	 $rootScope.globals = {};
+         $cookies.remove('globals');
+         $http.defaults.headers.common.Authorization = 'Basic';
+         window.location.href="http://localhost:8080/Oficina/login.html";	
+    };
 	
 	urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
 	urlProduto = 'http://localhost:8080/Oficina/rest/produtos'
@@ -44,8 +70,8 @@ produtosModulo.controller("produtosController",function($http, $scope){
 	}
 	
 	$scope.lancaEstoque = function(){
-		if(Number(document.getElementById('modalQtdProduto').value) <= 0 || Number(document.getElementById('modalVlrPago').value) <= 0){
-			alert("\'Quantidade\' e \'Valor de Compra\' precisam ser maiores que zero.");
+		if(Number(document.getElementById('modalQtdProduto').value) <= 0){
+			alert("\'Quantidade\' precisa ser maior que zero.");
 			//limpa campos do modal
 			document.getElementById('modalQtdProduto').value = null;
 			document.getElementById('modalVlrPago').value = null;
@@ -55,15 +81,27 @@ produtosModulo.controller("produtosController",function($http, $scope){
 			
 			//atualiza formulário
 			$scope.produto.qtdEstoque = $scope.produto.qtdEstoque + Number(document.getElementById('modalQtdProduto').value);
-			$scope.produto.vlrPago = Number(document.getElementById('modalVlrPago').value);
-			$scope.produto.vlrVenda = Number(document.getElementById('modalVlrVenda').value);
+			if(Number(document.getElementById('modalVlrPago').value) != 0){
+				$scope.produto.vlrPago = Number(document.getElementById('modalVlrPago').value);
+			}
+			if(Number(document.getElementById('modalVlrVenda').value) != 0){
+				$scope.produto.vlrVenda = Number(document.getElementById('modalVlrVenda').value);
+			}
+			
 			
 			//limpa campos do modal
 			document.getElementById('modalQtdProduto').value = null;
 			document.getElementById('modalVlrPago').value = null;
 			document.getElementById('modalVlrVenda').value = null
 			
-		
+			//lança produtos no estoque
+			$http.put(urlProduto,$scope.produto).success(function(produto){
+				$scope.listarProdutos();
+				alert('Produtos inseritos no estoque.')
+			}).error(function (erro){
+				alert(erro);
+			});
+			
 			$('#lancarProdutosEstoque').modal('hide');
 			
 		}
@@ -100,7 +138,6 @@ produtosModulo.controller("produtosController",function($http, $scope){
 				alert(erro);
 			});			
 		}else{
-			console.log($scope.produto);
 			$http.put(urlProduto,$scope.produto).success(function(produto){
 				$scope.listarProdutos();
 				$scope.limparCampos();
