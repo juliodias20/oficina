@@ -49,9 +49,10 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 	
 	$scope.listarUsuarios = function (){
 		$http.get(urlUsuario).success(function (usuarios){
+			/* isso faz com que seja possivel filtrar pela data  no campinho de busca
 			for(var i = 0 ; i < usuarios.length ; i++ ){
 				usuarios[i].dtCriacao = unixToDate(usuarios[i].dtCriacao);
-			}
+			}*/
 			$scope.usuarios = usuarios;
 		}).error(function (erro){
 			alert(erro);
@@ -82,7 +83,11 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 
 	$scope.salvar = function() {
 		if($scope.usuario.codUsuario == undefined){
+			dt = new Date().getTime();
+			$scope.usuario.dtCriacao = dt;
+			
 			$scope.usuario.ativo = 'SIM';
+			console.log($scope.usuario);
 			$http.post(urlUsuario,$scope.usuario).success(function(usuario){
 				$scope.limparCampos();
 				$scope.listarUsuarios();

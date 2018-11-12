@@ -7,28 +7,24 @@
 
 <title>Maverick!</title>
 <!-- link API angular 1.13-->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.min.js"></script>
 
-<!--marcasController-->
-<script src="controller/OsController.js"></script>
+<!--lancarOsController-->
+<script src="controller/lancarOsController.js"></script>
+
 <!-- Custom styles for this template -->
 <link href="css/oficinaEstilos.css" rel="stylesheet">
 
 <!-- Bootstrap core CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 <!-- bicliotecas do java script/ jquery -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- link marcas.js -->
-<script src="js/lancarOs.js"></script>
+<!-- link lancarOs.js 
+<script src="js/lancarOs.js"></script>-->
 </head>
 
 <body ng-controller="lancarOsController">
@@ -46,8 +42,12 @@
 					<li class="nav-item"><a class="nav-link" href="index.html">Início
 							<span class="sr-only">(current)</span>
 					</a></li>
-					<li class="nav-item "><a class="nav-link" href="clientes.html"
-						ng-if="perfil == 'admin'">Clientes</a></li>
+					<li class="nav-item ">
+						<a class="nav-link" href="clientes.html">Clientes</a>
+					</li>
+					<li class="nav-item">
+			          	<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
+			        </li>
 					<li class="nav-item"><a class="nav-link" href="produtos.html">Estoque</a>
 					</li>
 					<li class="nav-item dropdown"><a
@@ -75,9 +75,9 @@
 
 	<form>
 		<br>
-		<div class="container border">
+		<div class="container ">
 			<!-- container principal - inicio -->
-			<h1 align="center">Ordem de Serviço</h1>
+			<h1 align="center">Nova Ordem de Serviço(OS)</h1>
 			<br><!-- 
 			<div class="form-group row">
 				<label align="right" for="numOS" class="col-sm-1 col-form-label">Número:</label>
@@ -89,33 +89,148 @@
 			<div class="form-group row">
 				<label align="left" for="cliente" class="col-sm-1 col-form-label"><span class="obg">*</span>Cliente:</label>
 				<div class="col-sm-3">
-					<input type="text" disabled ng-model="lancaros.cliente" class="form-control" id="cliente">
+					<input type="text" disabled class="form-control" id="cliente">
 				</div>
+				<div class="col-sm-1" align="left">
+			    	<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCliente" ng-click="listarClientes()">Pesquisar</button>
+			    </div>
+			    <label align="right" class="col-sm-2 col-form-label" for="ano" ><span class="obg">*</span>Tipo de OS:</label>
+			    <div class="col-sm-2">
+                	<select class="form-control" ng-model="lancaros.tipoOs">
+                    	<option value="PADRAO">PADRÃO</option>
+                        <option value="GARANTIA">GARANTIA</option>
+                    </select>
+                </div>
 			</div>
 			<hr>
 			<div class="form-group row">
             	<label align="left" for="carro" class="col-sm-1 col-form-label"><span class="obg">*</span>Carro:</label>
-                <div class="col-sm-1">
-                	<input type="number" disabled ng-model="produto.modeloModel.codModelo"  class="form-control" id="codModeloCar">
+                <div class="col-sm-3">
+                	<input type="text" disabled class="form-control" id="nomeModeloCar" />
                 </div>
-                <div class="col-sm-2">
-                	<input type="text" disabled class="form-control" id="nomeModeloCar" >
-                </div>
-                <div class="col-sm-2" align="left">
-			    	<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCarro" >Pesquisar</button>
+                <div class="col-sm-1" align="left">
+			    	<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCarro" ng-click="listarModelos()">Pesquisar</button>
 			    </div>
+			    <label align="right" for="placa" class="col-sm-2 col-form-label"><span class="obg">*</span>Placa do carro:</label>
+			    <div class="col-sm-2">
+			    	<input type="text" class="form-control" id="placaCarro" ng-model="lancaros.placaCarro" />
+			    </div>
+			</div>
+			<hr>
+			<div class="form-group row">
+				<label align="left" for="descricao" class="col-sm-1 col-form-label">Descrição:</label>
+				<div class="col-sm-11">
+					<textarea class="form-control" ng-model="lancaros.descricao" id="descricao"></textarea> 
+				</div>
 			</div>
 
 			<div align="center">
 				<button ng-click="limparCampos()" class="btn btn-success">Limpar</button>
 				<button ng-click="salvar()" class="btn btn-primary">Lançar OS</button>
+				<button ng-click="testar()">testar</button>
 			</div>
 			<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"></div>
 
 		</div>
 		<!-- container principal - fim -->
-
 	</form>
+
+<!-- Modal - Pesquisa carro - inicio-->
+	<div class="modal fade" id="modalPesquisaCarro" tabindex="-1" role="dialog" aria-labelledby="modalPesquisaCarro" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Pesquisar carros</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <table class="table table-striped table-hover">
+                  <tr>
+                      <td colspan="5" align="right">
+                      		Pesquisar modelos: <input type="text" ng-model="pesquisaModelo" id="pesquisa" placeholder="Pesquisa de modelos...">
+                      </td>
+                  </tr>
+                  <th>Código</th>
+                  <th>Modelo</th>
+                  <th>Marca</th>
+                  <th>Nº de portas</th>
+                  <th>Ano</th>
+                  <tr data-dismiss="modal" aria-label="Close" ng-repeat="modelosTabela in modelos | filter:pesquisaModelo" ng-click="pesquisaCarro(modelosTabela)" >
+                      <td>{{modelosTabela.codModelo}} </td>
+                      <td>{{modelosTabela.nomeModelo}}</td>
+                      <td>{{modelosTabela.marcaModel.nomeMarca}}</td>
+                      <td>{{modelosTabela.qtdPortas}}</td>
+                      <td>{{modelosTabela.ano}}</td>
+                  </tr>
+              </table>
+	      </div>
+	      <div class="modal-footer">
+	        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - Pesquisa carro - fim-->
+	
+	<!-- Modal - Pesquisa cliente - inicio-->
+	<div class="modal fade" id="modalPesquisaCliente" tabindex="-2" role="dialog" aria-labelledby="modalPesquisaCliente" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalLancarProdutosEstoque">Pesquisar cliente</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <table class="table table-striped table-hover">
+				<tr>
+					<td colspan="5" align="right">Pesquisar clientes: <input type="text" ng-model="pesquisaCliente" id="pesquisa" placeholder="Pesquisa de clientes..."></td>
+				</tr>
+				<th>Código</th>
+				<th>Nome</th>
+				<th>Telefone</th>
+				<th>Email</th>
+				<tr data-dismiss="modal" aria-label="Close" ng-repeat="clientesTabela in clientes | filter:pesquisaCliente" ng-click="buscaCliente(clientesTabela)">
+					<td>{{clientesTabela.codCliente}}</td>
+					<td>{{clientesTabela.nomeCliente}}</td>
+					<td>{{clientesTabela.telefone}}</td>
+					<td>{{clientesTabela.email}}</td>
+				</tr>
+			</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - Pesquisa cliente - fim-->
+	
+	<!-- Modal - Alertas - inicio-->
+	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="pTitulo"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="pMsg"></p>
+	      </div>
+	      <div class="modal-footer">
+	        	<button type="button" class="btn btn-secondary" ng-click="fecharModal()">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - Alertas - fim-->
+
+
 
 	<!-- FOOTER -->
 	<br>

@@ -42,7 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="clientes.html">Clientes</a>
                     </li>
-
+					<li class="nav-item">
+			          	<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
+			        </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="produtos.html">Estoque</a>
                     </li>
@@ -61,7 +63,7 @@
                             Ordem de Serviço(OS)
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
-                            <a class="dropdown-item" href="#">Lançar OS</a>
+                            <a class="dropdown-item" href="lancaros.html">Lançar OS</a>
                             <a class="dropdown-item" href="#">OS abertas</a>
                             <a class="dropdown-item" href="#">OS fechadas</a>
                         </div>
@@ -273,7 +275,7 @@
                   <th>Marca</th>
                   <th>Nº de portas</th>
                   <th>Ano</th>
-                  <tr class="chamaAba" onclick="chamaAba()" data-dismiss="modal" aria-label="Close" ng-repeat="modelosTabela in modelos | filter:pesquisaModelo" ng-click="pesquisaCarro(modelosTabela)" >
+                  <tr class="chamaAba" data-dismiss="modal" aria-label="Close" ng-repeat="modelosTabela in modelos | filter:pesquisaModelo" ng-click="pesquisaCarro(modelosTabela)" >
                       <td>{{modelosTabela.codModelo}} </td>
                       <td>{{modelosTabela.nomeModelo}}</td>
                       <td>{{modelosTabela.marcaModel.nomeMarca}}</td>

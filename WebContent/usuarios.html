@@ -43,17 +43,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="clientes.html">Clientes</a>
                     </li>
-
+					<li class="nav-item">
+			          	<a class="nav-link active" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
+			        </li>
                     <li class="nav-item">
                         <a class="nav-link" href="produtos.html">Estoque</a>
                     </li>
                     
-                    <li class="nav-item dropdown active">
+                    <li class="nav-item dropdown">
 			            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			              Carros
 			            </a>
 			            <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
-			              <a class="dropdown-item active" href="marcas.html">Marcas</a>
+			              <a class="dropdown-item" href="marcas.html">Marcas</a>
 			              <a class="dropdown-item" href="modelos.html">Modelos</a>
 			            </div>
 			          </li>
@@ -63,7 +65,7 @@
                             Ordem de Serviço(OS)
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
-                            <a class="dropdown-item" href="#">Lançar OS</a>
+                            <a class="dropdown-item" href="lancaros.html">Lançar OS</a>
                             <a class="dropdown-item" href="#">OS abertas</a>
                             <a class="dropdown-item" href="#">OS fechadas</a>
                         </div>

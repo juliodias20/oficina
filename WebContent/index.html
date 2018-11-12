@@ -5,12 +5,12 @@
   <link rel="icon" href="img/favicon.ico">
 
   <title>Maverick!</title>
-  <!-- link API angular 1.13-->
+  <!-- link API angular 1.5-->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.min.js"></script>
+  
   <!--indexController-->
   <script src="controller/indexController.js"></script>
-
 
   <!-- Custom styles for this template -->
   <link href="css/oficinaEstilos.css" rel="stylesheet">
@@ -40,21 +40,11 @@
           </li>
           
           <li class="nav-item ">
-            <a class="nav-link" href="clientes.html" ng-if="perfil == 'admin'" >Clientes</a>
+            <a class="nav-link" href="clientes.html">Clientes</a>
           </li>
-            <!--  
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarCadastro" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
-                <div class="dropdown-menu" aria-labelledby="navbarCadastro">
-                  <a class="dropdown-item" href="clientes.html"> Cliente</a>
-                  <a class="dropdown-item" href="#"> Estoque</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="estados.html"> Estado</a>
-                  <a class="dropdown-item" href="cidades.html"> Cidade</a>
-                  <a class="dropdown-item" href="bairros.html"> Bairro</a>
-                </div>
-            </li>
-            -->
+          <li class="nav-item">
+          	<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="produtos.html">Estoque</a>
           </li>
@@ -72,7 +62,7 @@
               Ordem de Serviço(OS)
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
-              <a class="dropdown-item" href="#">Lançar OS</a>
+              <a class="dropdown-item" href="lancaros.html">Lançar OS</a>
               <a class="dropdown-item" href="#">OS abertas</a>
               <a class="dropdown-item" href="#">OS fechadas</a>
             </div>

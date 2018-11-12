@@ -2,7 +2,7 @@ var indexModulo = angular.module('indexModulo',['ngCookies']);
 
 indexModulo.controller("indexController", function ($http, $location, $scope, $rootScope, $cookies){
 	
-	//autenticação de login
+	//--------------------------------------------------------autenticação de login
 	$rootScope.globals = $cookies.getObject('globals') || {};
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
@@ -27,5 +27,6 @@ indexModulo.controller("indexController", function ($http, $location, $scope, $r
          $http.defaults.headers.common.Authorization = 'Basic';
          window.location.href="http://localhost:8080/Oficina/login.html";	
     };
+    //--------------------------------------------------------autenticação de login
 
 });

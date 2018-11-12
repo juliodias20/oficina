@@ -2,7 +2,7 @@ var clientesModulo = angular.module('clientesModulo',['ngCookies']);
 
 clientesModulo.controller("clientesController", function ($http, $location, $scope, $rootScope, $cookies){
 	
-	//autenticação de login
+	//--------------------------------------------------------autenticação de login
 	$rootScope.globals = $cookies.getObject('globals') || {};
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
@@ -18,7 +18,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
         }
         
         
-    $scope.perfil = $rootScope.globals.currentUser.usuario.perfilModel.nomePerfil;
+        $scope.perfil = $rootScope.globals.currentUser.usuario.perfilModel.nomePerfil;
     });
 	
     $scope.sair = function(){
@@ -27,8 +27,8 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
          $http.defaults.headers.common.Authorization = 'Basic';
          window.location.href="http://localhost:8080/Oficina/login.html";	
     };
-	
-	urlCep = 'https://viacep.com.br/ws/';
+    //--------------------------------------------------------autenticação de login
+	urlCep = 'http://viacep.com.br/ws/';
 	urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
 	
 	$scope.listarClientes = function (){
@@ -102,12 +102,13 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 	}
 
 	$scope.buscaCEP = function(){
-		$http.get(urlCep+'/'+$scope.cliente.cep+'/json').success(function(cep){
+		$http.get(urlCep+$scope.cliente.cep+'/json').success(function(cep){
 			$scope.cliente.logradouro = cep.logradouro;
 			$scope.cliente.cidade = cep.localidade;
 			$scope.cliente.estado = cep.uf;
 			$scope.cliente.bairro = cep.bairro;
 		}).error(function (){
+			console.log(urlCep+$scope.cliente.cep+'/json');
 			console.log('deu ruim');
 		})
 	}
