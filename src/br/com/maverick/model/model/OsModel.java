@@ -20,7 +20,7 @@ public class OsModel {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="numos")
-	Integer numOS;
+	Integer numOs;
 	
 	@Column(name="dhabertura")
 	Date dhAbertura;
@@ -54,9 +54,9 @@ public class OsModel {
 	public OsModel() {
 	}
 
-	public OsModel(Integer numOS, Date dhAbertura, Date dhEncerramento, String status, String descricao,
+	public OsModel(Integer numOs, Date dhAbertura, Date dhEncerramento, String status, String descricao,
 			String placaCarro, float valorTotal, String tipoOs, ModeloModel modeloModel, ClienteModel clienteModel) {
-		this.numOS = numOS;
+		this.numOs = numOs;
 		this.dhAbertura = dhAbertura;
 		this.dhEncerramento = dhEncerramento;
 		this.status = status;
@@ -68,12 +68,12 @@ public class OsModel {
 		this.clienteModel = clienteModel;
 	}
 
-	public Integer getNumOS() {
-		return numOS;
+	public Integer getNumOs() {
+		return numOs;
 	}
 
-	public void setNumOS(Integer numOS) {
-		this.numOS = numOS;
+	public void setNumOS(Integer numOs) {
+		this.numOs = numOs;
 	}
 
 	public Date getDhAbertura() {
@@ -97,7 +97,7 @@ public class OsModel {
 	}
 
 	public void setStatus(String status) {
-		this.status = status;
+		this.status = status.toUpperCase();
 	}
 
 	public String getDescricao() {
@@ -105,7 +105,7 @@ public class OsModel {
 	}
 
 	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+		this.descricao = descricao.toUpperCase();
 	}
 
 	public String getPlacaCarro() {
@@ -113,7 +113,7 @@ public class OsModel {
 	}
 
 	public void setPlacaCarro(String placaCarro) {
-		this.placaCarro = placaCarro;
+		this.placaCarro = placaCarro.toUpperCase();
 	}
 
 	public float getValorTotal() {
@@ -129,7 +129,7 @@ public class OsModel {
 	}
 
 	public void setTipoOs(String tipoOs) {
-		this.tipoOs = tipoOs;
+		this.tipoOs = tipoOs.toUpperCase();
 	}
 
 	public ModeloModel getModeloModel() {
@@ -152,7 +152,7 @@ public class OsModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((numOS == null) ? 0 : numOS.hashCode());
+		result = prime * result + ((numOs == null) ? 0 : numOs.hashCode());
 		return result;
 	}
 
@@ -165,10 +165,10 @@ public class OsModel {
 		if (getClass() != obj.getClass())
 			return false;
 		OsModel other = (OsModel) obj;
-		if (numOS == null) {
-			if (other.numOS != null)
+		if (numOs == null) {
+			if (other.numOs != null)
 				return false;
-		} else if (!numOS.equals(other.numOS))
+		} else if (!numOs.equals(other.numOs))
 			return false;
 		return true;
 	}

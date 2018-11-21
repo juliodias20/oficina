@@ -32,7 +32,7 @@ public class OsRestFacade {
 	
 	@GET
 	@Path("/{numOs}")
-	public List<OsModel> getOS(@PathParam("numOS") Integer numOs){
+	public List<OsModel> getOs(@PathParam("numOs") Integer numOs){
 		return osServiceInterface.getOs(numOs);
 	}
 	
@@ -47,7 +47,7 @@ public class OsRestFacade {
 	}
 	
 	@DELETE
-	@Path("/{numOS}")
+	@Path("/{numOs}")
 	public void excluir(@PathParam("numOs") Integer numOs) {
 		OsModel osModel = new OsModel();
 		osModel.setNumOS(numOs);

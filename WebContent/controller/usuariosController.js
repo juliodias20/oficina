@@ -54,6 +54,7 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 				usuarios[i].dtCriacao = unixToDate(usuarios[i].dtCriacao);
 			}*/
 			$scope.usuarios = usuarios;
+			console.log(usuarios);
 		}).error(function (erro){
 			alert(erro);
 		});

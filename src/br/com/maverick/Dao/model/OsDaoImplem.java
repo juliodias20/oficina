@@ -39,13 +39,24 @@ public class OsDaoImplem implements OsDaoInterface {
 		return query.getResultList();
 	}
 	
-	//get uma OS pelo NUMERO
+	//get uma OS pelo NUMERO ou STATUS
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<OsModel> getOs(Integer numOs) {
-		Query query = entityManager.createQuery("from OsModel os where os.numos = :numOs");
-			  query.setParameter("numOs", numOs);
-		return query.getResultList();
+		if(numOs >= 1) {
+			Query query = entityManager.createQuery("from OsModel os where os.numOs = :numOs");
+			query.setParameter("numOs", numOs);
+			return query.getResultList();
+		}else if(numOs == 0) {
+			Query query = entityManager.createQuery("from OsModel os where os.status = 'PENDENTE'");
+			return query.getResultList();
+		}else if(numOs == -1) {
+			Query query = entityManager.createQuery("from OsModel os where os.status = 'ENCERRADA'");
+			return query.getResultList();
+		}else {
+			return null;
+		}
+	
 	}
 
 }

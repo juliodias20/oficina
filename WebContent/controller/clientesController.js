@@ -101,6 +101,27 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 		}
 	}
 
+	
+	/* jeito novo get CEP*/
+	$scope.buscaCEP = function(){
+		$http.get(urlCep+$scope.cliente.cep+'/json', {
+			headers: {
+				'Access-Control-Allow-Origin':'*',
+				'Access-Control-Allow-Headers':'origin, content-type, accept, authorization'
+			}
+		}).success(function(cep){
+			$scope.cliente.logradouro = cep.logradouro;
+			$scope.cliente.cidade = cep.localidade;
+			$scope.cliente.estado = cep.uf;
+			$scope.cliente.bairro = cep.bairro;
+		}).error(function (){
+			console.log(urlCep+$scope.cliente.cep+'/json');
+			console.log('deu ruim com CORS');
+		})
+		
+	}
+	
+	/* jeito antigo get CEP
 	$scope.buscaCEP = function(){
 		$http.get(urlCep+$scope.cliente.cep+'/json').success(function(cep){
 			$scope.cliente.logradouro = cep.logradouro;
@@ -112,7 +133,11 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 			console.log('deu ruim');
 		})
 	}
+	*/
 	
+	$scope.teste = function (){
+		console.log($scope.cliente);
+	}
 	
 	//executa
 	$scope.listarClientes();

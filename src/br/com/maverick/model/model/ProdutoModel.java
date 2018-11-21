@@ -44,7 +44,13 @@ public class ProdutoModel {
 	@ManyToOne
 	@JoinColumn(name="codmodelo",referencedColumnName="codmodelo", nullable=false)
 	ModeloModel modeloModel;
-
+	
+	/*
+	@ManyToOne
+	@JoinColumn(name="numos", referencedColumnName="numos", nullable=false)
+	SubOsModel subOsModel;
+	*/
+	
 	public ProdutoModel() {
 	}
 
