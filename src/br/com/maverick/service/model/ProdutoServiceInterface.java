@@ -15,5 +15,7 @@ public interface ProdutoServiceInterface {
 	List<ProdutoModel> getProdutos();
 
 	List<ProdutoModel> getProdutos(Integer codProduto);
+
+	void alterar(Integer codProduto, Integer qtdEstoque);
 	
 }

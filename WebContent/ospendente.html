@@ -43,7 +43,7 @@
 							<span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Clientes</a>
+						<a class="nav-link" href="clientes.html">Clientes</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'">Usuarios</a>
@@ -66,8 +66,8 @@
 							Ordem de Serviço(OS) </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
 							<a class="dropdown-item" href="lancaros.html">Lançar OS</a> <a
-								class="dropdown-item" href="ospendente.html">OS's Pendentes</a> <a
-								class="dropdown-item active" href="#">OS's encerradas</a>
+								class="dropdown-item active" href="ospendente.html">OS's Pendentes</a> <a
+								class="dropdown-item" href="osencerradas.html">OS's encerradas</a>
 						</div></li>
 				</ul>
 			</div>
@@ -106,7 +106,7 @@
 						<th>Carro</th>
 						<th>Placa</th>
 						<th>Valor</th>
-						<tr class="chamaAba" onclick="chamaAba()" ng-repeat="osTabela in osPendentes | filter:pesquisaOS" ng-dblclick="selecionaOs(osTabela);listarItens();">
+						<tr class="chamaAba" onclick="chamaAba()" ng-repeat="osTabela in osPendentes | filter:pesquisaOS" ng-dblclick="selecionaOs(osTabela);listarItensOs();">
 							<td>{{osTabela.numOs}}</td>
 							<td>{{osTabela.clienteModel.nomeCliente}}</td>
 							<td>{{osTabela.dhAbertura}}</td>
@@ -123,25 +123,33 @@
 					
 					<div class="form-group row">
 						<label align="right" for="numos" class="col-sm-1 col-form-label">Nº OS:</label>
-						<div class="col-sm-1">
+						<div class="col-sm-2">
 							<input type="number" disabled ng-model="osPendente.numOs" class="form-control" id="numOs">
 						</div>
 						
-						<label align="right" for="status" class="col-sm-1.5 col-form-label">Status:</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" disabled ng-model="osPendente.status"> </input>
-						</div>
-					
-						<label align="right" for="osPendente.valorTotal" class="col-sm-1.5 col-form-label">Valor total:</label>
-						<div class="cnpj col-sm-2">
-							<input class="form-control" disabled ng-model="osPendente.valorTotal" type="text" id="valorTotal" style="width: 150px;" />
-						</div>
-						
-						<label align="right" for="dhabertura" class="col-sm-1.5 col-form-label">Data abertura:</label>
+						<label align="right" for="dhabertura" class="col-sm-2 col-form-label">Data abertura:</label>
 						<div class="cpf col-sm-2">
-							<input class="form-control" disabled ng-model="osPendente.dhAbertura" type="text" style="width: 150px;" />
+							<input class="form-control" disabled ng-model="osPendente.dhAbertura" type="text"  />
 						</div>
 						
+						<label align="right" for="dhencerramento" class="col-sm-2 col-form-label" style="display:none;">Data encerramento:</label>
+						<div class="cpf col-sm-2">
+							<input class="form-control" disabled ng-model="osPendente.dhEncerramento" type="text" style="display:none;" />
+						</div>
+						
+					</div>
+					<div class="form-group row">
+						
+						<label align="right" for="tipoOs" class="col-sm-1 col-form-label">Tipo OS:</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" disabled ng-model="osPendente.tipoOs" id="tipoOs"> </input>
+						</div>
+						
+						<label align="right" for="osPendente.valorTotal" class="col-sm-2 col-form-label">Valor total da OS:</label>
+						<div class="cnpj col-sm-2">
+							<input class="form-control" disabled ng-model="osPendente.valorTotal" type="text" id="valorTotal"  />
+						</div>
+															
 					</div>
 					<hr>
 					
@@ -156,7 +164,7 @@
 					    
 					    <label class="col-sm-2 col-form-label" align="right" for="telefone">Telefone:</label>
 						<div class="col-sm-2">
-							<input class="form-control" ng-model="osPendente.clienteModel.telefone" type="text" id="telefone" />
+							<input class="form-control" disabled ng-model="osPendente.clienteModel.telefone" type="text" id="telefone" />
 						</div>
 					    
 					</div>
@@ -172,9 +180,9 @@
 			    			<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCarro" ng-click="listarModelos()" >Pesquisar</button>
 			    		</div>
 					
-						<label align="right" for="placa" class="col-sm-2 col-form-label"><span class="obg">*</span>Placa do carro:</label>
+						<label align="right" for="placa" class="col-sm-2 col-form-label">Placa do carro:</label>
 					    <div class="col-sm-2">
-					    	<input type="text" class="form-control" id="placaCarro" ng-model="osPendente.placaCarro" />
+					    	<input type="text" disabled class="form-control" id="placaCarro" ng-model="osPendente.placaCarro" />
 					    </div>
 					</div>
 					<hr>
@@ -192,29 +200,29 @@
 					<h2 align="left">Itens</h2>
 					</div>
 					<div class="container row">
-					<button type="submit" ng-click="salvar()" class="btn btn-success">Incluir item</button>
-						<button type="submit" ng-click="salvar()" class="btn btn-danger">Remover item</button>
+						<button type="submit" ng-click="mostraModalIncluiItem()" class="btn btn-success">Incluir item</button>
 					</div>
 					<br>
 					<table class="table table-striped table-hover">
 						<tr>
-							<td colspan="6" align="right">Pesquisar Itens: <input type="text" ng-model="pesquisaItens" id="pesquisaItens" placeholder="Pesquisa de Itens..."></td>
+							<td colspan="7 align="right">Pesquisar Itens: <input type="text" ng-model="pesquisaItens" id="pesquisaItens" placeholder="Pesquisa de Itens..."></td>
 						</tr>
 						<th>Produto</th>
 						<th>Quantidade</th>
 						<th>Valor unitário</th>
 						<th>Valor total</th>
-
-						<tr ng-repeat="itensTabela in itens | filter:pesquisaItens" ng-dblclick="selecionaItem(itemTabela);">
-							<td>{{itensTabela.produto}}</td>
+						<th></th>
+						<tr ng-repeat="itensTabela in itens | filter:pesquisaItens" ng-dblclick="alteraItem(itensTabela);">
+							<td>{{itensTabela.produtoModel.nomeProduto}}</td>
 							<td>{{itensTabela.qtd}}</td>
 							<td>{{itensTabela.valorUnit}}</td>
 							<td>{{itensTabela.vlrTotal}}</td>
+							<td align="right"><button type="submit" ng-click="excluirItem(itensTabela)" class="btn btn-danger">Remover item</button></td>
 
 						</tr>
 					</table>
 					<div align="center">
-						<button type="submit" ng-click="salvar()" class="btn btn-primary">Encerrar OS</button>
+						<button type="submit" ng-click="encerrarOs()" class="btn btn-primary">Encerrar OS</button>
 
 					</div>
 				
@@ -315,6 +323,106 @@
 	</div>
 	<!-- Modal - Pesquisa carro - fim-->
 
+	<!-- Modal - Inclui itens - inicio-->
+	<div class="modal fade" id="modalIncluiItem" tabindex="-2" role="dialog" aria-labelledby="modalIncluiItem" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalIncluiItem">Selecione o Item</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+		      	<div class="form-group row">
+			      	<label align="right" for="nomeItem" class="col-sm-2 col-form-label">Item:</label>
+		            <div class="col-8">
+		                <input type="text" disabled class="form-control" id="nomeItem">
+		            </div>
+		            <div class="col-sm-2" align="left">
+		    			<button class="btn" id="dropdownPesquisaItem"  ng-click="mostraModalSelecionaItem();listarItensEstoque()">Pesquisar</button>
+		    		</div>
+		      	</div>
+		      	<div class="form-group row">
+		      		<label align="right" for="qtdItem" class="col-sm-2 col-form-label">Quantidade:</label>
+		            <div class="col-2">
+		                <input type="text" class="form-control" ng-model="itemOs.qtd" id="qtdItem">
+		            </div>
+		            <label align="right" for="valorUnit" class="col-sm-2 col-form-label">Valor unitário:</label>
+		            <div class="col-2">
+		                <input type="text" class="form-control" ng-model="itemOs.valorUnit" id="valorUnit">
+		            </div>
+		      	</div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary" ng-click="salvarItem()">Incluir Item</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - inclui itens - fim-->
+	
+	<!-- Modal - Seleciona item - inicio-->
+	<div class="modal fade" id="modalSelecionaItem" tabindex="-2" role="dialog" aria-labelledby="modalSelecionaItem" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="tituloModalIncluiItem">Estoque de Itens</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+		      <table class="table table-striped table-hover">
+                 <tr>
+                     <td colspan="5" align="right">Pesquisar produtos:
+                         <input type="text" ng-model="pesquisaProduto" id="pesquisa" placeholder="Pesquisa de produtos...">
+                     </td>
+                 </tr>
+                 <th>Código</th>
+                 <th>Produto</th>
+                 <th>Carro</th>
+                 <th>Porta</th>
+                 <th>Tipo</th>
+                 <tr ng-repeat="estoqueTabela in itensEstoque | filter:pesquisaProduto" ng-dblclick="selecionaItem(estoqueTabela)">
+                     <td>{{estoqueTabela.codProduto}} </td>
+                     <td>{{estoqueTabela.nomeProduto}}</td>
+                     <td>{{estoqueTabela.modeloModel.nomeModelo}} / {{estoqueTabela.modeloModel.qtdPortas}}P / {{estoqueTabela.modeloModel.ano}}</td>
+                     <td>{{estoqueTabela.porta}}</td>
+                     <td>{{estoqueTabela.tipoProduto}}</td>
+                 </tr>
+             </table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - seleciona Item - fim-->
+	
+	<!-- Modal - mensagens - inicio-->
+	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="pTitulo"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="pMsg"></p>
+	      </div>
+	      <div class="modal-footer">
+	        	<button type="button" class="btn btn-secondary" ng-click="fecharModal()">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - mensagens - fim-->
+	
 
 	<!-- Bootstrap core JavaScript================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->

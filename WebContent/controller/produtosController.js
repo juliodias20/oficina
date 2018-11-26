@@ -164,5 +164,6 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 	//executa
 	$scope.listarModelos();
 	$scope.listarProdutos();
+	$scope.teste();
 
 });

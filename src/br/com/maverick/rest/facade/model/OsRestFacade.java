@@ -44,6 +44,13 @@ public class OsRestFacade {
 	@PUT
 	public void alterar(OsModel osModel) {
 		osServiceInterface.alterar(osModel);
+	}	
+	
+	@PUT
+	@Path("/{numOs}/{valorTotal}")
+	public void alterar(@PathParam("numOs") Integer numOs,
+						@PathParam("valorTotal") float valorTotal) {
+		osServiceInterface.alterar(numOs, valorTotal);
 	}
 	
 	@DELETE

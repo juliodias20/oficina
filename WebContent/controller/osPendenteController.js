@@ -54,25 +54,29 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     urlItens = 'http://localhost:8080/Oficina/rest/subos';
     urlProduto = 'http://localhost:8080/Oficina/rest/produtos';
     
-    $scope.buscaCliente = function(clienteSelecionado){
-		$scope.osPendente.clienteModel = clienteSelecionado;
-		document.getElementById('cliente').value =  clienteSelecionado.nomeCliente;
-	}
     
-    $scope.getProduto = function () {
-    	var x = $scope.itens;
-    	console.log(x);
-    	
-    	/*$http.get(urlProduto+'/'+codProduto).success(function (produto){
-    		alert(produto);
+    //Função que atualiza o preço total da Ordem de Serviço(soma o valor de cada produto da OS e seta na tabela "tbos")
+    $scope.atualizaPrecoOs = function(){
+    	$http.get(urlItens+'/'+$scope.osPendente.numOs).success(function (itens){
+    		var vlrTotal = 0.0;
+    		
+    		for (i=0 ; i<itens.length ; i++){
+    			vlrTotal = vlrTotal + itens[i].vlrTotal;
+    		}
+    		
+    		$http.put(urlOs+'/'+$scope.osPendente.numOs+'/'+vlrTotal).success(function (){
+    			$scope.osPendente.valorTotal = vlrTotal;
+    		}).error(function (erro){
+    			alert(erro);
+    		})
     	}).error(function (erro){
     		alert(erro);
-    	})*/
-    }
+    	})
+    	
+	}  
     
-    
-    
-    $scope.listarItens = function(){
+    //função que lista os Itens(produtos) vinculados a OS
+    $scope.listarItensOs = function(){
     	$http.get(urlItens+'/'+$scope.osPendente.numOs).success(function (itens){
     		$scope.itens = itens;
     	}).error(function (erro){
@@ -80,7 +84,34 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	})
     }
     
+    //função que lista os Itens do estoque
+    $scope.listarItensEstoque = function(){
+    	$http.get(urlProduto).success(function (itensEstoque){
+    		$scope.itensEstoque = itensEstoque;
+    	}).error(function (erro){
+    		alert(erro);
+    	})
+    }
     
+	//função que seleciona um Item dos Itens do estoque
+	$scope.selecionaItem = function(itemSelecionado){
+		$scope.itemOs.produtoModel = itemSelecionado;
+		document.getElementById('nomeItem').value =  itemSelecionado.nomeProduto+' - '+itemSelecionado.modeloModel.nomeModelo+'('+itemSelecionado.modeloModel.qtdPortas+' Portas)';
+		$('#modalSelecionaItem').modal('hide');
+	}
+    
+    //função que chama Modal para alterar item já lançado na OS
+	$scope.alteraItem = function (itemSelecionado){
+		$scope.operacao = 'U';
+		$scope.itemOs = {};
+		$scope.itemOs = itemSelecionado;
+		document.getElementById('nomeItem').value =  itemSelecionado.produtoModel.nomeProduto+' - '+itemSelecionado.produtoModel.modeloModel.nomeModelo+'('+itemSelecionado.produtoModel.modeloModel.qtdPortas+' Portas)';
+		$('#modalIncluiItem').modal('show');
+
+		
+	}
+	
+    //função que lista os modelos de carro
     $scope.listarModelos = function(){
 		$http.get(urlModelo).success(function (modelos){
 			$scope.modelos = modelos;
@@ -90,6 +121,13 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		})
 	}
     
+    //função que seleciona um modelo de carro da lista de modelos de carro
+    $scope.pesquisaCarro = function(modeloSelecionado){
+		$scope.osPendente.modeloModel = modeloSelecionado;
+		document.getElementById('nomeModeloCar').value =  modeloSelecionado.nomeModelo+' / '+modeloSelecionado.qtdPortas+'P / '+modeloSelecionado.ano;
+	}  
+    
+    //função que lista os clientes cadastrados
     $scope.listarClientes = function (){
 		$http.get(urlCliente).success(function (clientes){
 			$scope.clientes = clientes;
@@ -98,6 +136,13 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		});
 	};
 	
+	//função que seleciona um cliente da lista clientes
+    $scope.buscaCliente = function(clienteSelecionado){
+		$scope.osPendente.clienteModel = clienteSelecionado;
+		document.getElementById('cliente').value =  clienteSelecionado.nomeCliente;
+	} 
+	
+	//função que lista todas as OS Pendentes(que ainda não foram encerradas)
 	$scope.listarOs = function (){
 		$http.get(urlOs+'/0').success(function (oss){
 			for(var i = 0 ; i < oss.length ; i++ ){
@@ -110,35 +155,33 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		})
 	}
 	
+	//função que seleciona uma OS da lista de OS's Pendente
 	$scope.selecionaOs = function(osSelecionada){
 		$scope.osPendente = osSelecionada;
 		document.getElementById('nomeModeloCar').value =  osSelecionada.modeloModel.nomeModelo+' / '+osSelecionada.modeloModel.qtdPortas+'P / '+osSelecionada.modeloModel.ano;
 		document.getElementById('cliente').value =  osSelecionada.clienteModel.nomeCliente;
 	}
 	
-    /*
-    $scope.limparCampos = function(){
-    	$scope.osPendente = {};
-    	$scope.lancaros.modeloModel = {};
-    	$scope.lancaros.modeloModel.codModelo = "";
-    	$scope.lancaros.clienteModel = {};
-    	$scope.lancaros.clienteModel.codCliente = "";
-    	$scope.lancaros.placaCarro = "";
-    	$scope.lancaros.dhAbertura = "";
-    	$scope.lancaros.status = "";
-    	$scope.lancaros.tipoOs = "";
-    	document.getElementById('nomeModeloCar').value = "";
-    	document.getElementById('cliente').value = "";
-    }
-    */
-    $scope.pesquisaCarro = function(modeloSelecionado){
-		$scope.osPendente.modeloModel = modeloSelecionado;
-		document.getElementById('nomeModeloCar').value =  modeloSelecionado.nomeModelo+' / '+modeloSelecionado.qtdPortas+'P / '+modeloSelecionado.ano;
-	}    
+	
+	
+	//função que chama o Modal com formulario do item que será lançado
+	$scope.mostraModalIncluiItem = function (){
+		document.getElementById('nomeItem').value="";
+		$scope.itemOs = {};
+		$scope.itemOs.numOs = $scope.osPendente.numOs;
+		$('#modalIncluiItem').modal('show');
+	}
+
+	
+	//função que chama que busca itens do estoque
+	$scope.mostraModalSelecionaItem = function (){
+		$('#modalSelecionaItem').modal('show');
+	}
     
+    //função que insere uma nova OS
     $scope.salvar = function() {
     	if($scope.lancaros.clienteModel.codCliente == ""){
-    		$scope.chamarModalMensagens("Erro!","Para lançar uma OS é necessário preencher todos os campos!");
+    		$scope.chamarModalMensagens("Erro!","Para lançar uma Ordem de Serviço é necessário preencher todos os campos!");
     	}else{
     	
 	    	$scope.lancaros.dhAbertura = new Date().getTime();
@@ -152,31 +195,81 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 			});			
     	}
     }
-	   
-    
-    $scope.testar = function(){
-    	document.getElementById('pTitulo').innerHTML = 'Erro';
-    	document.getElementById('pMsg').innerHTML = "Erro do sistema, TODO MUNDO EM PÂNICO!";
-    	$('#modalMensagens').modal('show');
+	
+    //função que insere novo item na OS
+    $scope.salvarItem = function(){
+    	$scope.itemOs.vlrTotal = (Number($scope.itemOs.qtd) * Number($scope.itemOs.valorUnit));
+    	
+    	if($scope.operacao == 'U'){
+    		$http.put(urlItens,$scope.itemOs).success(function(){
+    			alert('Item alterado com sucesso!');
+    			$scope.atualizaPrecoOs();
+    			$('#modalIncluiItem').modal('hide');
+    		}).error(function (erro){
+    			alert(erro);
+    		})
+    	}else{
+	    	$http.post(urlItens,$scope.itemOs).success(function(ite){
+	    		$scope.atualizaPrecoOs();
+	    		$('#modalIncluiItem').modal('hide');
+	    		alert("Item lançado na OS com  sucesso!");
+	    		$scope.listarItensOs();
+	    		
+	    	}).error(function(erro){
+	    		alert(erro);
+	    	})
+    	}
+    }	
+	
+	//função que remove um item da OS
+	$scope.excluirItem = function(itemSelecionado){
+    	$http.delete(urlItens+'/'+itemSelecionado.numOs+'/'+itemSelecionado.produtoModel.codProduto).success(function(){
+    		alert("Item removido");
+    		$scope.atualizaPrecoOs();
+    		$scope.listarItensOs();
+    	}).error(function (erro){
+    		alert(erro);
+    	});
+   
     }
     
-    $scope.fecharModal = function(){
-    	document.getElementById('pTitulo').innerHTML = "";
-    	document.getElementById('pMsg').innerHTML = "";
-    	$('#modalMensagens').modal('hide');
-    }
-    
+    //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
     $scope.chamarModalMensagens = function(vTitulo, vMensagem){
     	document.getElementById('pTitulo').innerHTML = vTitulo;
     	document.getElementById('pMsg').innerHTML = vMensagem;
     	$('#modalMensagens').modal('show');
     }
     
-    //$scope.limparCampos();
+    //função que fecha o modal de mensagem
+    $scope.fecharModalMensagens = function(){
+    	document.getElementById('pTitulo').innerHTML = "";
+    	document.getElementById('pMsg').innerHTML = "";
+    	$('#modalMensagens').modal('hide');
+    }
+    
+    //função que encerra a OS
+    $scope.encerrarOs = function(){
+    	var dhEnc = new Date().getTime();
+    	
+    	$http.get(urlOs+'/'+$scope.osPendente.numOs).success(function (os){
+    		$scope.encerraOs = os[0];
+    		
+    		$scope.encerraOs.dhEncerramento = dhEnc;
+    		$scope.encerraOs.status = 'ENCERRADA';
+    		
+    		$http.put(urlOs,$scope.encerraOs).success(function (){
+    			$scope.chamarModalMensagens('Mensagem','Ordem de Serviço encerrada com sucesso!');
+        		window.location.href="http://localhost:8080/Oficina/osencerradas.html";
+        	}).error(function (erro){
+        		alert(erro);
+        	})
+    		
+    	}).error(function (erro){
+    		alert(erro);
+    	});
+    
+    }
+    
     $scope.listarOs();
-    
-    
-    
-    
     
 });

@@ -67,7 +67,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
                             <a class="dropdown-item" href="lancaros.html">Lançar OS</a>
                             <a class="dropdown-item" href="ospendente.html">OS abertas</a>
-                            <a class="dropdown-item" href="#">OS fechadas</a>
+                            <a class="dropdown-item" href="osencerradas.html">OS fechadas</a>
                         </div>
                     </li>
                 </ul>
@@ -134,7 +134,7 @@
 
 		              	<label align="right" for="dtCriacao" class="col-sm-1 col-form-label">Criação:</label>
                         <div class="col-sm-2">
-                            <input type="text" disabled ng-model="usuario.dtCriacao" class="form-control" id="dtCriacao">
+                            <input type="text" disabled ng-model="usuario.dtCriacao | date:'dd/MM/yyyy - HH:mm:ss'" class="form-control" id="dtCriacao">
                         </div>
 
                         <label align="right" for="ativo" class="col-sm-1 col-form-label">Ativo:</label>

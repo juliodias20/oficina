@@ -46,6 +46,13 @@ public class ProdutoRestFacade {
 		produtoServiceInterface.alterar(produtoModel);
 	}
 	
+	@PUT
+	@Path("/{codProduto}/{qtdEstoque}")
+	public void alterar(@PathParam("codProduto") Integer codProduto,
+						@PathParam("qtdEstoque") Integer qtdEstoque) {
+		produtoServiceInterface.alterar(codProduto, qtdEstoque);
+	}
+	
 	@DELETE
 	@Path("/{codProduto}")
 	public void excluir(@PathParam("codProduto") Integer codProduto) {

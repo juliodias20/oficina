@@ -10,10 +10,13 @@ public interface OsServiceInterface {
 	
 	void alterar(OsModel osModel);
 	
+	void alterar(Integer numOs, float valorTotal);
+	
 	void excluir(OsModel osModel);
 	
 	List<OsModel> getOs();
 
 	List<OsModel> getOs(Integer numOs);
+
 	
 }

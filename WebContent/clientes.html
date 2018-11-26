@@ -73,7 +73,7 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
 							<a class="dropdown-item" href="lancaros.html">Lançar OS</a> <a
 								class="dropdown-item" href="ospendente.html">OS abertas</a> <a
-								class="dropdown-item" href="#">OS fechadas</a>
+								class="dropdown-item" href="osencerradas.html">OS fechadas</a>
 						</div></li>
 				</ul>
 			</div>
@@ -132,10 +132,8 @@
 							<input type="number" disabled ng-model="cliente.codCliente"
 								class="form-control" id="codigo">
 						</div>
-						<label align="right" for="tipoPessoa"
-							class="col-sm-1 col-form-label">Pessoa:</label>
-						<div class="col-sm-2 form-control" id="tipoPessoa"
-							ng-init="cliente.tipoPessoa='F'">
+						<label align="right" for="tipoPessoa" class="col-sm-1 col-form-label">Pessoa:</label>
+						<div class="col-md-3 col-lg-3 col-xl-2 form-control" id="tipoPessoa" ng-init="cliente.tipoPessoa='F'">
 							<label class="radio-inline"><input
 								ng-model="cliente.tipoPessoa" class="pessoa" value="F"
 								type="radio" name="optradio"> Física &nbsp;&nbsp;&nbsp;</label>

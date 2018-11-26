@@ -10,7 +10,7 @@ public interface SubOsDaoInterface {
 	
 	void alterar(SubOsModel subOsModel);
 	
-	void excluir(SubOsModel subOsModel);
+	void excluir(Integer numOS, Integer codProduto);
 	
 	List<SubOsModel> getSubOs();
 	

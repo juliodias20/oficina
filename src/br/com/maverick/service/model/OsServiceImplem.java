@@ -26,6 +26,12 @@ public class OsServiceImplem implements OsServiceInterface {
 
 	@Override
 	@Transactional
+	public void alterar(Integer numOs, float valorTotal) {
+		osDaoInterface.alterar(numOs,valorTotal);
+	}
+	
+	@Override
+	@Transactional
 	public void excluir(OsModel osModel) {
 		osDaoInterface.excluir(osModel);
 		
@@ -40,5 +46,7 @@ public class OsServiceImplem implements OsServiceInterface {
 	public List<OsModel> getOs(Integer numOs) {
 		return osDaoInterface.getOs(numOs);
 	}
+
+	
 
 }

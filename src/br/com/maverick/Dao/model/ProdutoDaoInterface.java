@@ -10,11 +10,12 @@ public interface ProdutoDaoInterface {
 	
 	void alterar(ProdutoModel produtoModel);
 	
+	void alterar(Integer codProduto, Integer qtdEstoque);
+	
 	void excluir(ProdutoModel produtoModel);
 	
 	List<ProdutoModel> getProdutos();
 
 	List<ProdutoModel> getProdutos(Integer codProduto);
-		
 	
 }

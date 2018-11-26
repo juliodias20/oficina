@@ -26,15 +26,19 @@ public class SubOsDaoImplem implements SubOsDaoInterface {
 	}
 
 	@Override
-	public void excluir(SubOsModel subOsModel) {
-		SubOsModel subOsModelMerge = entityManager.merge(subOsModel);
-		entityManager.remove(subOsModelMerge);
+	public void excluir(Integer numOs, Integer codProduto) {
+		System.out.println("numOS: "+numOs);
+		System.out.println("codProduto: "+codProduto);
+		Query query = entityManager.createQuery("delete from SubOsModel sos where sos.numOs = :numOs and sos.produtoModel.codProduto = :codProduto");
+			  query.setParameter("numOs", numOs);
+			  query.setParameter("codProduto", codProduto);
+			  query.executeUpdate();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<SubOsModel> getSubOs() {
-		Query query = entityManager.createQuery("from SubOsModel");
+		Query query = entityManager.createQuery("from SubOsModel sos");
 		return query.getResultList();
 	}
 
@@ -49,7 +53,7 @@ public class SubOsDaoImplem implements SubOsDaoInterface {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<SubOsModel> getSubOs(Integer numOs, Integer codProduto) {
-		Query query = entityManager.createQuery("from SubOsModel sos where sos.numOs = :numOs and sos.codProduto = :codProduto");
+		Query query = entityManager.createQuery("from SubOsModel sos where sos.numOs = :numOs and sos.produtoModel.codProduto = :codProduto");
 			  query.setParameter("numOs", numOs);
 			  query.setParameter("codProduto", codProduto);
 		return query.getResultList();

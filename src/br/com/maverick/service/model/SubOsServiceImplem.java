@@ -28,8 +28,8 @@ public class SubOsServiceImplem implements SubOsServiceInterface {
 
 	@Override
 	@Transactional
-	public void excluir(SubOsModel subOsModel) {
-		subOsDaoInterface.excluir(subOsModel);
+	public void excluir(Integer numOs, Integer codProduto) {
+		subOsDaoInterface.excluir(numOs, codProduto);
 	}
 
 	@Override

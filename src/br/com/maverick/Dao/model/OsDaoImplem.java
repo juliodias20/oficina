@@ -24,7 +24,16 @@ public class OsDaoImplem implements OsDaoInterface {
 		OsModel osModelMerge = entityManager.merge(osModel);
 		entityManager.persist(osModelMerge);
 	}
-
+	
+	//metodo que atualiza o valor total da Ordem de Serviço, conforme os itens da OS são inseridos/alterados/removidos;
+	@Override
+	public void alterar(Integer numOs, float valorTotal) {
+		Query query = entityManager.createQuery("update OsModel os set os.valorTotal = :valorTotal where os.numOs = :numOs");
+			  query.setParameter("valorTotal", valorTotal);
+			  query.setParameter("numOs", numOs);
+			  query.executeUpdate();
+	}
+	
 	@Override
 	public void excluir(OsModel osModel) {
 		OsModel osModelMerge = entityManager.merge(osModel);
@@ -58,5 +67,9 @@ public class OsDaoImplem implements OsDaoInterface {
 		}
 	
 	}
+
+	
+
+	
 
 }

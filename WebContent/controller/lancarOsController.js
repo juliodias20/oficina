@@ -32,7 +32,21 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
     urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
     urlOs = 'http://localhost:8080/Oficina/rest/os';
-    	
+    
+    //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    $scope.chamarModalMensagens = function(vTitulo, vMensagem){
+    	document.getElementById('pTitulo').innerHTML = vTitulo;
+    	document.getElementById('pMsg').innerHTML = vMensagem;
+    	$('#modalMensagens').modal('show');
+    }
+    
+    //função que fecha o modal de mensagem
+    $scope.fecharModal = function(){
+    	document.getElementById('pTitulo').innerHTML = "";
+    	document.getElementById('pMsg').innerHTML = "";
+    	$('#modalMensagens').modal('hide');
+    }
+    
     $scope.listarModelos = function(){
 		$http.get(urlModelo).success(function (modelos){
 			$scope.modelos = modelos;
@@ -83,8 +97,9 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 	    	$scope.lancaros.status = "PENDENTE";
 	    	
 			$http.post(urlOs,$scope.lancaros).success(function(os){
-				alert("Ordem de Serviço lançada com sucesso!");
-				$scope.limparCampos()
+				$scope.chamarModalMensagens('Mensagem','Ordem de Serviço lançada com sucesso!');
+				$scope.limparCampos();
+				window.location.href="http://localhost:8080/Oficina/ospendente.html";
 			}).error(function(erro){
 				alert(erro);
 			});			
@@ -92,23 +107,7 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     }
 	   
     
-    $scope.testar = function(){
-    	document.getElementById('pTitulo').innerHTML = 'Erro';
-    	document.getElementById('pMsg').innerHTML = "Erro do sistema, TODO MUNDO EM PÂNICO!";
-    	$('#modalMensagens').modal('show');
-    }
     
-    $scope.fecharModal = function(){
-    	document.getElementById('pTitulo').innerHTML = "";
-    	document.getElementById('pMsg').innerHTML = "";
-    	$('#modalMensagens').modal('hide');
-    }
-    
-    $scope.chamarModalMensagens = function(vTitulo, vMensagem){
-    	document.getElementById('pTitulo').innerHTML = vTitulo;
-    	document.getElementById('pMsg').innerHTML = vMensagem;
-    	$('#modalMensagens').modal('show');
-    }
     
     $scope.limparCampos();
     

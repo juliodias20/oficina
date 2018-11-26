@@ -51,17 +51,14 @@ public class SubOsRestFacade {
 	@PUT
 	public void alterar(SubOsModel subOsModel) {
 		subOsServiceInterface.alterar(subOsModel);
-	}
+	}	
 	
 	@DELETE
 	@Path("/{numOs}/{codProduto}")
 	public void excluir(@PathParam("numOs") Integer numOs,
 						@PathParam("codProduto") Integer codProduto) {
 		
-		SubOsModel subOsModel = new SubOsModel();
-		subOsModel.setNumOs(numOs);
-		subOsModel.setCodProduto(codProduto);
-		subOsServiceInterface.excluir(subOsModel);
+		subOsServiceInterface.excluir(numOs, codProduto);
 	}	
 	
 }

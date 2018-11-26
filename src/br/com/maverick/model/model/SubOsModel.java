@@ -1,16 +1,15 @@
 package br.com.maverick.model.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
 
 @XmlRootElement
 @Entity
@@ -24,9 +23,6 @@ public class SubOsModel {
 	
 	@Column(name="numos", nullable=false)
 	Integer numOs;
-
-	@Column(name="codproduto",nullable=false)
-	Integer codProduto;
 	
 	@Column(name="qtd")
 	Integer qtd;
@@ -37,29 +33,28 @@ public class SubOsModel {
 	@Column(name="vlrtotal")
 	float vlrTotal;
 	
-	@Column(name="produto")
-	String produto;
+	@OneToOne
+	@JoinColumn(name="codproduto", referencedColumnName="codproduto", nullable=false)
+	ProdutoModel produtoModel;
 	
-	/*
-	@OneToMany(mappedBy="subOsModel")
-	private List<ProdutoModel> produtoModel;
-	
-	@XmlTransient
-	public List<ProdutoModel> getProdutos(){
-		return produtoModel;
-	}
-	*/
 
 	public SubOsModel() {
 	}
 
-	public SubOsModel(Integer numOs, Integer codProduto, Integer qtd, float valorUnit, float vlrTotal) {
+	
+
+	public SubOsModel(Integer item, Integer numOs, Integer qtd, float valorUnit, float vlrTotal,
+			ProdutoModel produtoModel) {
+		super();
+		Item = item;
 		this.numOs = numOs;
-		this.codProduto = codProduto;
 		this.qtd = qtd;
 		this.valorUnit = valorUnit;
 		this.vlrTotal = vlrTotal;
+		this.produtoModel = produtoModel;
 	}
+
+
 
 	public Integer getNumOs() {
 		return numOs;
@@ -69,14 +64,14 @@ public class SubOsModel {
 		this.numOs = numOs;
 	}
 
-	public Integer getCodProduto() {
-		return codProduto;
+	public ProdutoModel getProdutoModel() {
+		return produtoModel;
 	}
 
-	public void setCodProduto(Integer codProduto) {
-		this.codProduto = codProduto;
+	public void setProdutoModel(ProdutoModel produtoModel) {
+		this.produtoModel = produtoModel;
 	}
-
+	
 	public Integer getQtd() {
 		return qtd;
 	}
@@ -100,22 +95,19 @@ public class SubOsModel {
 	public void setVlrTotal(float vlrTotal) {
 		this.vlrTotal = vlrTotal;
 	}
-	
-	public String getProduto() {
-		return produto;
-	}
 
-	public void setProduto(String produto) {
-		this.produto = produto;
-	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codProduto == null) ? 0 : codProduto.hashCode());
+		result = prime * result + ((numOs == null) ? 0 : numOs.hashCode());
+		result = prime * result + ((produtoModel == null) ? 0 : produtoModel.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -126,12 +118,19 @@ public class SubOsModel {
 		if (getClass() != obj.getClass())
 			return false;
 		SubOsModel other = (SubOsModel) obj;
-		if (codProduto == null) {
-			if (other.codProduto != null)
+		if (numOs == null) {
+			if (other.numOs != null)
 				return false;
-		} else if (!codProduto.equals(other.codProduto))
+		} else if (!numOs.equals(other.numOs))
+			return false;
+		if (produtoModel == null) {
+			if (other.produtoModel != null)
+				return false;
+		} else if (!produtoModel.equals(other.produtoModel))
 			return false;
 		return true;
 	}
+
+
 	
 }

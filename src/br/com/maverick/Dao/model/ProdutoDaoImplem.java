@@ -26,6 +26,14 @@ public class ProdutoDaoImplem implements ProdutoDaoInterface {
 	}
 
 	@Override
+	public void alterar(Integer codProduto, Integer qtdEstoque) {
+		Query query = entityManager.createQuery("update ProdutoModel pro set pro.qtdEstoque = :qtdEstoque where pro.codProduto = :codProduto");
+			  query.setParameter("qtdEstoque", qtdEstoque);
+			  query.setParameter("codProduto", codProduto);
+			  query.executeUpdate();
+	}
+	
+	@Override
 	public void excluir(ProdutoModel produtoModel) {
 		ProdutoModel produtoModelMerge = entityManager.merge(produtoModel);
 		entityManager.remove(produtoModelMerge);
@@ -49,6 +57,8 @@ public class ProdutoDaoImplem implements ProdutoDaoInterface {
 			  query.setParameter("id", codProduto);
 		return query.getResultList();
 	}
+
+	
 
 	
 	

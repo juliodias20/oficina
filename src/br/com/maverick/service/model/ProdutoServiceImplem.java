@@ -25,6 +25,12 @@ public class ProdutoServiceImplem implements ProdutoServiceInterface {
 	public void alterar(ProdutoModel produtoModel) {
 		produtoDaoInterface.alterar(produtoModel);
 	}
+	
+	@Override
+	@Transactional
+	public void alterar(Integer codProduto, Integer qtdEstoque) {
+		produtoDaoInterface.alterar(codProduto, qtdEstoque);
+	}
 
 	@Override
 	@Transactional
