@@ -95,7 +95,7 @@
                 <div class="tab-pane fade show active" id="nav-lista" role="tabpanel" aria-labelledby="nav-lista-tab">
                     <table class="table table-striped table-hover">
                         <tr>
-                            <td colspan="5" align="right">Pesquisar usuário:
+                            <td colspan="4" align="right">Pesquisar usuário:
                                 <input type="text" ng-model="pesquisaUsuario" id="pesquisa" placeholder="Pesquisa de usuários...">
                             </td>
                         </tr>
@@ -103,13 +103,13 @@
                         <th>Nome</th>
                         <th>Perfil</th>
                         <th>Data de criação</th>
-                        <th>Ativo</th>
+                        <!--  <th>Ativo</th> -->
                         <tr class="chamaAba" onclick="chamaAba()" ng-repeat="usuariosTabela in usuarios | filter:pesquisaUsuario" ng-dblclick="selecionaUsuario(usuariosTabela)">
                             <td>{{usuariosTabela.codUsuario}} </td>
                             <td>{{usuariosTabela.login}}</td>
                             <td>{{usuariosTabela.perfilModel.nomePerfil}}
                             <td>{{usuariosTabela.dtCriacao | date:'dd/MM/yyyy - HH:mm:ss'}}</td>
-                            <td>{{usuariosTabela.ativo}}</td>
+                            <!-- <td>{{usuariosTabela.ativo}}</td> -->
                         </tr>
                     </table>
                 </div>
@@ -125,7 +125,7 @@
                             <input type="number" disabled ng-model="usuario.codUsuario" class="form-control" id="codUsuario">
                         </div>
                         
-                        <label for="perfil" class="col-sm-1 col-form-label">Perfil:</label>
+                        <label for="perfil" class="col-sm-1 col-form-label"><span class="obg">*</span>Perfil:</label>
 		              	<div class="col-sm-2">
 		                	<select class="form-control" ng-model="usuario.perfilModel" id="perfil" 
 		                		ng-options="perfil.nomePerfil for perfil in perfis track by perfil.codPerfil">
@@ -137,9 +137,9 @@
                             <input type="text" disabled ng-model="usuario.dtCriacao | date:'dd/MM/yyyy - HH:mm:ss'" class="form-control" id="dtCriacao">
                         </div>
 
-                        <label align="right" for="ativo" class="col-sm-1 col-form-label">Ativo:</label>
+                        <label align="right" for="ativo" class="col-sm-1 col-form-label" style="display:none;">Ativo:</label>
                         <div class="col-sm-1">
-                            <input type="text" disabled ng-model="usuario.ativo" class="form-control" id="ativo">
+                            <input type="text" disabled ng-model="usuario.ativo" class="form-control" id="ativo" style="display:none;">
                         </div>
                         
                     </div>
@@ -162,6 +162,7 @@
                         <button type="submit" ng-click="limparCampos()" class="btn btn-success">Novo</button>
                         <button type="submit" ng-click="salvar()" class="btn btn-primary">Salvar</button>
                         <button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>
+                        <button ng-click="teste()">teste</button>
                     </div>
                 </div>
                 <!-- Aba Cadastro - Fim -->
@@ -180,6 +181,28 @@
     <footer class="container">
 
     </footer>
+	
+	<!-- Modal - mensagens - inicio-->
+	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="pTitulo"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="pMsg"></p>
+	      </div>
+	      <div class="modal-footer">
+	        	<button type="button" class="btn btn-secondary" ng-click="fecharModalMensagens()">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - mensagens - fim-->
+
 
     <!-- Bootstrap core JavaScript================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

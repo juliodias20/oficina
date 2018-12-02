@@ -31,6 +31,16 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 	urlUsuario = 'http://localhost:8080/Oficina/rest/usuarios';
 	urlPerfil = 'http://localhost:8080/Oficina/rest/perfis';
 	
+	function cadastroCompleto(){
+		
+		if(!$scope.usuario.login || !$scope.usuario.senha || !$scope.usuario.perfilModel){
+			return false;
+		}else{
+			return true;
+		}
+		
+	}
+	
 	function unixToDate(unixDate){
 		var data = new Date(unixDate);
 		var dia = data.getDate();
@@ -54,7 +64,6 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 				usuarios[i].dtCriacao = unixToDate(usuarios[i].dtCriacao);
 			}*/
 			$scope.usuarios = usuarios;
-			console.log(usuarios);
 		}).error(function (erro){
 			alert(erro);
 		});
@@ -83,34 +92,42 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 	}
 
 	$scope.salvar = function() {
-		if($scope.usuario.codUsuario == undefined){
-			dt = new Date().getTime();
-			$scope.usuario.dtCriacao = dt;
-			
-			$scope.usuario.ativo = 'SIM';
-			console.log($scope.usuario);
-			$http.post(urlUsuario,$scope.usuario).success(function(usuario){
-				$scope.limparCampos();
-				$scope.listarUsuarios();
-			}).error(function(erro){
-				alert(erro);
-			});
+		if(cadastroCompleto()){
+			if($scope.usuario.codUsuario == undefined){
+				dt = new Date().getTime();
+				$scope.usuario.dtCriacao = dt;
+				
+				$scope.usuario.ativo = 'SIM';
+
+				$http.post(urlUsuario,$scope.usuario).success(function(usuario){
+					$('#nav-lista-tab').tab('show');
+					$scope.chamarModalMensagens('Mensagem!','Usuário cadastrado com sucesso!');
+					$scope.limparCampos();
+					$scope.listarUsuarios();
+				}).error(function(erro){
+					alert(erro);
+				});
+			}else{
+				$http.put(urlUsuario,$scope.usuario).success(function(usuario){
+					$scope.chamarModalMensagens('Mensagem!','Usuário alterado com sucesso!');
+					$scope.listarUsuarios();
+				}).error(function (erro){
+					alert(erro);
+				});
+			}
 		}else{
-			$http.put(urlUsuario,$scope.usuario).success(function(usuario){
-				$scope.listarUsuarios();
-				$scope.limparCampos();
-			}).error(function (erro){
-				alert(erro);
-			});
+			$scope.chamarModalMensagens('Mensagem!','Para salvar o cadastro de usuário é necessário que preencha todas os campos do formulário!');
 		}
 	}
 
 	$scope.excluir = function(){
 		if($scope.usuario.codUsuario == undefined){
-			alert("Favor selecionar um registro para excluir!");
+			$scope.chamarModalMensagens('Erro!','Para efetuar a exclusão será necessário selecionar um usuário!');
 		}else{
 			$http.delete(urlUsuario+'/'+$scope.usuario.codUsuario).success(function(){
 				$scope.listarUsuarios();
+				$('#nav-lista-tab').tab('show');
+				$scope.chamarModalMensagens('Mensagem!','Usuário excluído com sucesso!');
 				$scope.limparCampos();
 			}).error(function (erro){
 				alert(erro);
@@ -118,6 +135,22 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 		}
 	}	
 
+
+	//função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    $scope.chamarModalMensagens = function (vTitulo, vMensagem){
+    	$('#modalMensagens').modal('show');
+    	document.getElementById('pTitulo').innerHTML = vTitulo;
+    	document.getElementById('pMsg').innerHTML = vMensagem;
+    	
+    }
+    
+    //função que fecha o modal de mensagem
+    $scope.fecharModalMensagens = function(){
+    	document.getElementById('pTitulo').innerHTML = "";
+    	document.getElementById('pMsg').innerHTML = "";
+    	$('#modalMensagens').modal('hide');
+    }
+	
 
 	//executa
 	$scope.listarUsuarios();

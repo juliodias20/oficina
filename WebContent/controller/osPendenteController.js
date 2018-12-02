@@ -180,7 +180,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		$('#modalSelecionaItem').modal('show');
 	}
     
-    //função que insere uma nova OS
+    //função que atualiza o cadastro da OS
     $scope.salvar = function() {
     	
     		console.log($scope.osPendente);
@@ -192,30 +192,48 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 			});
 						
     }
-	
+    
     //função que insere novo item na OS
     $scope.salvarItem = function(){
     	$scope.itemOs.vlrTotal = (Number($scope.itemOs.qtd) * Number($scope.itemOs.valorUnit));
+    	var codProduto, qtdProduto = 2;
     	
-    	if($scope.operacao == 'U'){
-    		$http.put(urlItens,$scope.itemOs).success(function(){
-    			alert('Item alterado com sucesso!');
-    			$scope.atualizaPrecoOs();
-    			$('#modalIncluiItem').modal('hide');
-    		}).error(function (erro){
-    			alert(erro);
-    		})
-    	}else{
-	    	$http.post(urlItens,$scope.itemOs).success(function(ite){
-	    		$scope.atualizaPrecoOs();
-	    		$('#modalIncluiItem').modal('hide');
-	    		alert("Item lançado na OS com  sucesso!");
-	    		$scope.listarItensOs();
-	    		
-	    	}).error(function(erro){
-	    		alert(erro);
-	    	})
-    	}
+    	$http.get(urlProduto+'/'+$scope.itemOs.produtoModel.codProduto).success(function(p){
+    		codProduto = p[0].codProduto;
+    		qtdProduto = p[0].qtdEstoque;
+    		
+    		if(qtdProduto == 0){
+        		$scope.chamarModalMensagens('Erro!','Não é possivel inserir este item! Este produto está em falta no estoque!');
+        	}else{    	
+    	    	if($scope.operacao == 'U'){//atualiza item
+    	    		$http.put(urlItens,$scope.itemOs).success(function(){
+    	    			alert('Item alterado com sucesso!');
+    	    			$scope.atualizaPrecoOs();
+    	    			$('#modalIncluiItem').modal('hide');
+    	    		}).error(function (erro){
+    	    			alert(erro);
+    	    		})
+    	    	}else{//insere novo item
+    		    	$http.post(urlItens,$scope.itemOs).success(function(ite){
+    		    		$scope.atualizaPrecoOs();
+    		    		$('#modalIncluiItem').modal('hide');
+    		    		alert("Item lançado na OS com  sucesso!");
+    		    		$scope.listarItensOs();
+    		    		
+    		    	}).error(function(erro){
+    		    		alert(erro);
+    		    	})
+    	    	}
+        	}
+    		
+    		
+    		
+    	}).error(function(erro){
+    		alert(erro);
+    	});
+    	
+    	
+    	
     }	
 	
 	//função que remove um item da OS
