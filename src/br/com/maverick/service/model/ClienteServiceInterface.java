@@ -13,6 +13,10 @@ public interface ClienteServiceInterface {
 	void excluir(ClienteModel clienteModel);
 	
 	List<ClienteModel> getClientes();
+
+	List<ClienteModel> getClientes(String parametro, String tipoParametro);
+
+	List<ClienteModel> getClientes(String parametro);
 	
 	
 }

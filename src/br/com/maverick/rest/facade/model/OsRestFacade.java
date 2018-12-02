@@ -21,31 +21,37 @@ import br.com.maverick.service.model.OsServiceInterface;
 		   MediaType.APPLICATION_XML})
 @Consumes(MediaType.APPLICATION_JSON)
 public class OsRestFacade {
-
+	
+	//injeta a interface do serviço que comunica com a tabela de OS do banco de dados
 	@Inject
 	OsServiceInterface osServiceInterface;
 	
+	// busca todas as OS do banco de dados e retorna um Array
 	@GET
 	public List<OsModel> getOs(){
 		return osServiceInterface.getOs();
 	}
 	
+	// busca uma única OS pela PK, passando a PK de parametro
 	@GET
 	@Path("/{numOs}")
 	public List<OsModel> getOs(@PathParam("numOs") Integer numOs){
 		return osServiceInterface.getOs(numOs);
 	}
 	
+	// insere uma uma nova OS
 	@POST
 	public OsModel salvar(OsModel osModel) {
 		return osServiceInterface.salvarOs(osModel);
 	}
 	
+	// atualiza uma OS que já existe
 	@PUT
 	public void alterar(OsModel osModel) {
 		osServiceInterface.alterar(osModel);
 	}	
 	
+	// atualiza apenas o valor total da OS
 	@PUT
 	@Path("/{numOs}/{valorTotal}")
 	public void alterar(@PathParam("numOs") Integer numOs,
@@ -53,6 +59,7 @@ public class OsRestFacade {
 		osServiceInterface.alterar(numOs, valorTotal);
 	}
 	
+	//recebe a PK de uma OS e delete ela do banco
 	@DELETE
 	@Path("/{numOs}")
 	public void excluir(@PathParam("numOs") Integer numOs) {

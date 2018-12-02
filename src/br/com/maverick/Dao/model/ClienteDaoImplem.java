@@ -34,8 +34,49 @@ public class ClienteDaoImplem implements ClienteDaoInterface {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ClienteModel> getClientes() {
+		System.out.println("GET SEM PARAMETROS");
 		Query query = entityManager.createQuery("from ClienteModel");
 		return query.getResultList();
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ClienteModel> getClientes(String parametro){
+		System.out.println("GET COM 1 PARAMETRO");
+		if(parametro.equals("cpf")) {
+			System.out.println("parametro é CPF");
+			return null;
+		}else {
+			System.out.println("parametro não é CPF");
+			
+		Query query = entityManager.createQuery("from ClienteModel c where c.cpf = :cpf");
+			  query.setParameter("cpf", parametro);
+			 
+		return query.getResultList();
+		}
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ClienteModel> getClientes(String parametro, String tipoParametro){
+		System.out.println("GET COM 2 PARAMETROS");
+		if(tipoParametro.equals("cpf")) {
+			Query query = entityManager.createQuery("from ClienteModel c where c.cpf = :cpf");
+				  query.setParameter("cpf", parametro);
+			return query.getResultList();
+		}else if(tipoParametro.equals("cnpj")) {
+			Query query = entityManager.createQuery("from ClienteModel c where c.cnpj = :cnpj");
+				  query.setParameter("cnpj", parametro);
+			return query.getResultList();
+		}else if (tipoParametro.equals("codCliente")) {
+			Query query = entityManager.createQuery("from ClienteModel c where c.codCliente = :codCliente");
+				  query.setParameter("codCliente", parametro);
+			return query.getResultList();
+		}else {
+			System.out.println("caiu no else");
+			return null;
+		}
+	}
+	
 	
 }

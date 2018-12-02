@@ -145,9 +145,11 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	//função que lista todas as OS Pendentes(que ainda não foram encerradas)
 	$scope.listarOs = function (){
 		$http.get(urlOs+'/0').success(function (oss){
+			/*
 			for(var i = 0 ; i < oss.length ; i++ ){
 				oss[i].dhAbertura = unixToDate(oss[i].dhAbertura);
 			}
+			*/
 			$scope.osPendentes = oss;
 			console.log(oss);
 		}).error(function (erro){
@@ -180,20 +182,15 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     
     //função que insere uma nova OS
     $scope.salvar = function() {
-    	if($scope.lancaros.clienteModel.codCliente == ""){
-    		$scope.chamarModalMensagens("Erro!","Para lançar uma Ordem de Serviço é necessário preencher todos os campos!");
-    	}else{
     	
-	    	$scope.lancaros.dhAbertura = new Date().getTime();
-	    	$scope.lancaros.status = "PENDENTE";
-	    	
-			$http.post(urlOs,$scope.lancaros).success(function(os){
-				alert("Ordem de Serviço lançada com sucesso!");
-				$scope.limparCampos()
+    		console.log($scope.osPendente);
+    		
+			$http.put(urlOs,$scope.osPendente).success(function(os){
+				alert("Ordem de Serviço atualizada com sucesso!");
 			}).error(function(erro){
 				alert(erro);
-			});			
-    	}
+			});
+						
     }
 	
     //função que insere novo item na OS
@@ -234,14 +231,18 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     }
     
     //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
-    $scope.chamarModalMensagens = function(vTitulo, vMensagem){
+    $scope.chamarModalMensagens = function (vTitulo, vMensagem){
+    	$('#modalMensagens').modal('show');
     	document.getElementById('pTitulo').innerHTML = vTitulo;
     	document.getElementById('pMsg').innerHTML = vMensagem;
-    	$('#modalMensagens').modal('show');
+    	
     }
     
     //função que fecha o modal de mensagem
     $scope.fecharModalMensagens = function(){
+    	if (document.getElementById.value = "Ordem de Serviço encerrada com sucesso!" ){
+    		window.location.href="http://localhost:8080/Oficina/osencerradas.html";
+    	}
     	document.getElementById('pTitulo').innerHTML = "";
     	document.getElementById('pMsg').innerHTML = "";
     	$('#modalMensagens').modal('hide');
@@ -250,16 +251,16 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     //função que encerra a OS
     $scope.encerrarOs = function(){
     	var dhEnc = new Date().getTime();
+    	$scope.fechaOs = {};
     	
     	$http.get(urlOs+'/'+$scope.osPendente.numOs).success(function (os){
-    		$scope.encerraOs = os[0];
+    		$scope.fechaOs = os[0];
+    		$scope.fechaOs.dhEncerramento = dhEnc;
+    		$scope.fechaOs.status = 'ENCERRADA';
+    
     		
-    		$scope.encerraOs.dhEncerramento = dhEnc;
-    		$scope.encerraOs.status = 'ENCERRADA';
-    		
-    		$http.put(urlOs,$scope.encerraOs).success(function (){
+    		$http.put(urlOs,$scope.fechaOs).success(function (){
     			$scope.chamarModalMensagens('Mensagem','Ordem de Serviço encerrada com sucesso!');
-        		window.location.href="http://localhost:8080/Oficina/osencerradas.html";
         	}).error(function (erro){
         		alert(erro);
         	})

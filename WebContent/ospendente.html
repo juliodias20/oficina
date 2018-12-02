@@ -109,7 +109,7 @@
 						<tr class="chamaAba" onclick="chamaAba()" ng-repeat="osTabela in osPendentes | filter:pesquisaOS" ng-dblclick="selecionaOs(osTabela);listarItensOs();">
 							<td>{{osTabela.numOs}}</td>
 							<td>{{osTabela.clienteModel.nomeCliente}}</td>
-							<td>{{osTabela.dhAbertura}}</td>
+							<td>{{osTabela.dhAbertura | date:'dd/MM/yyyy - HH:mm:ss'}}</td>
 							<td>{{osTabela.modeloModel.nomeModelo+'/'+osTabela.modeloModel.qtdPortas+'P/'+osTabela.modeloModel.ano}}</td>
 							<td>{{osTabela.placaCarro}}</td>
 							<td>{{osTabela.valorTotal}}</td>
@@ -129,7 +129,7 @@
 						
 						<label align="right" for="dhabertura" class="col-sm-2 col-form-label">Data abertura:</label>
 						<div class="cpf col-sm-2">
-							<input class="form-control" disabled ng-model="osPendente.dhAbertura" type="text"  />
+							<input class="form-control" disabled ng-model="osPendente.dhAbertura | date:'dd/MM/yyyy - HH:mm:ss'" type="text"  />
 						</div>
 						
 						<label align="right" for="dhencerramento" class="col-sm-2 col-form-label" style="display:none;">Data encerramento:</label>
@@ -222,8 +222,8 @@
 						</tr>
 					</table>
 					<div align="center">
+						<button type="submit" ng-click="salvar()" class="btn btn-primary">Salvar OS</button>
 						<button type="submit" ng-click="encerrarOs()" class="btn btn-primary">Encerrar OS</button>
-
 					</div>
 				
 				<!-- itens de os - fim -->
@@ -416,7 +416,7 @@
 	        <p id="pMsg"></p>
 	      </div>
 	      <div class="modal-footer">
-	        	<button type="button" class="btn btn-secondary" ng-click="fecharModal()">Fechar</button>
+	        	<button type="button" class="btn btn-secondary" ng-click="fecharModalMensagens()">Fechar</button>
 	      </div>
 	    </div>
 	  </div>

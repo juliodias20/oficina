@@ -31,6 +31,21 @@ public class ClienteRestFacade {
 		return clienteServiceInterface.getClientes();
 	}
 	
+	@GET
+	@Path("/{parametro}")
+	public List<ClienteModel> getClientes(@PathParam("parametro") String parametro){
+		return clienteServiceInterface.getClientes(parametro);
+	}
+	
+	@GET
+	@Path("/{parametro}/{tipoParametro}")
+	public List<ClienteModel> getClientes(@PathParam("parametro")String parametro,
+										  @PathParam("tipoParametro")String tipoParametro){
+		
+		return clienteServiceInterface.getClientes(parametro, tipoParametro);
+		
+	}
+	
 	@POST
 	public ClienteModel salvarCliente(ClienteModel clienteModel) {
 		return clienteServiceInterface.salvarCliente(clienteModel);

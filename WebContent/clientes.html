@@ -6,10 +6,8 @@
 
 <title>Maverick!</title>
 <!-- link API angular 1.13-->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.min.js"></script>
 <!--estadosController-->
 <script src="controller/clientesController.js"></script>
 
@@ -19,16 +17,11 @@
 <link href="css/clientesEstilos.css" rel="stylesheet">
 
 <!-- Bootstrap core CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 <!-- bicliotecas do java script/ jquery -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- link estados.js -->
 <script src="js/clientes.js"></script>
@@ -81,7 +74,10 @@
 		</nav>
 	</header>
 
+	
+
 	<form>
+	
 		<br>
 		<div class="container">
 			<!-- container principal - inicio -->
@@ -129,8 +125,7 @@
 
 						<label align="right" for="codigo" class="col-sm-1 col-form-label">Código:</label>
 						<div class="col-sm-1">
-							<input type="number" disabled ng-model="cliente.codCliente"
-								class="form-control" id="codigo">
+							<input type="number" disabled ng-model="cliente.codCliente" class="form-control" id="codigo">
 						</div>
 						<label align="right" for="tipoPessoa" class="col-sm-1 col-form-label">Pessoa:</label>
 						<div class="col-md-3 col-lg-3 col-xl-2 form-control" id="tipoPessoa" ng-init="cliente.tipoPessoa='F'">
@@ -141,94 +136,81 @@
 								ng-model="cliente.tipoPessoa" class="pessoa" value="J"
 								type="radio" name="optradio"> Jurídica</label>
 						</div>
-						<label align="right" for="input_cpf"
-							class="cpf col-sm-1 col-form-label">CPF:</label>
+						<label align="right" for="input_cpf" class="cpf col-sm-1 col-form-label"><span class="obg">*</span>CPF:</label>
 						<div class="cpf col-sm-2">
-							<input class="cpf form-control" ng-model="cliente.cpf"
-								type="text" id="input_cpf" maxlength="11" style="width: 150px;" />
+							<input class="cpf form-control" ng-model="cliente.cpf" type="text" id="input_cpf" data-mask="000.000.000-00" style="width: 150px;" />
 						</div>
-						<label align="right" for="input_cnpj"
-							class="cnpj col-sm-1 col-form-label">CNPJ:</label>
+						<label align="right" for="input_cnpj" class="cnpj col-sm-1 col-form-label"><span class="obg">*</span>CNPJ:</label>
 						<div class="cnpj col-sm-2">
-							<input class="cnpj form-control" ng-model="cliente.cnpj"
-								type="text" id="input_cnpj" maxlength="14" style="width: 150px;" />
+							<input class="cnpj form-control" ng-model="cliente.cnpj" type="text" id="input_cnpj" data-mask="00.000.000.0000-00" style="width: 180px;" />
 						</div>
-						<label class="col-sm-1 col-form-label" align="right"
-							for="telefone">Telefone:</label>
+						<label class="col-sm-1 col-form-label" align="right" for="telefone"><span class="obg">*</span>Telefone:</label>
 						<div class="col-sm-2">
-							<input class="form-control" ng-model="cliente.telefone"
-								type="text" id="telefone" />
+							<input class="form-control" ng-model="cliente.telefone" type="text" id="telefone" data-mask="(00)0 0000-0000" maxlength="15" autocomplete="off">
 						</div>
 
 					</div>
 
 					<div class="form-group row">
-						<label align="right" for="nome" class="col-sm-1 col-form-label">Nome:</label>
-						<div class="col-10">
-							<input type="text" ng-model="cliente.nomeCliente"
-								class="form-control" id="nome">
+						<label align="right" for="nome" class="col-sm-1 col-form-label"><span class="obg">*</span>Nome:</label>
+						<div class="col-11">
+							<input type="text" ng-model="cliente.nomeCliente" class="form-control" id="nome">
 						</div>
 					</div>
 
 					<div class="form-group row">
 
 						<label align="right" for="razaosocial"
-							class="cnpj col-sm-1 col-form-label">R. Social:</label>
-						<div class="col-sm-10">
-							<input class="cnpj form-control" ng-model="cliente.razaoSocial"
-								type="text" />
+							class="cnpj col-sm-1 col-form-label"><span class="obg">*</span>R. Social:</label>
+						<div class="col-sm-11">
+							<input class="cnpj form-control" ng-model="cliente.razaoSocial" type="text" />
 						</div>
 					</div>
 					<hr>
 					<div class="form-group row">
-						<label class="col-sm-1 col-form-label" align="right" for="cep">CEP:</label>
+						<label class="col-sm-1 col-form-label" align="right" for="cep"><span class="obg">*</span>CEP:</label>
 						<div class="col-sm-2">
-							<input class="form-control" ng-model="cliente.cep" type="text"
-								id="cep" />
+							<input class="form-control" ng-model="cliente.cep" type="text" data-mask="00000-000" id="cep" />
 						</div>
 						<div class="col-sm-2" align="left">
 							<button class="btn" ng-click="buscaCEP()">OK</button>
 						</div>
-						<label class="col-sm-1 col-form-label" align="right" for="email">E-mail:</label>
-						<div class="col-sm-5">
+						<label class="col-sm-1 col-form-label" align="right" for="email"><span class="obg">*</span>E-mail:</label>
+						<div class="col-sm-6">
 							<input class="form-control" ng-model="cliente.email" type="text"
 								id="email" />
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-1 col-form-label" align="right" for="cidade">Cidade:</label>
+						<label class="col-sm-1 col-form-label" align="right" for="cidade"><span class="obg">*</span>Cidade:</label>
 						<div class="col-sm-4">
 							<input class="form-control" ng-model="cliente.cidade" type="text"
 								id="cidade" />
 						</div>
-						<label class="col-sm-1 col-form-label" align="right" for="bairro">Bairro:</label>
-						<div class="col-sm-3">
+						<label class="col-sm-1 col-form-label" align="right" for="bairro"><span class="obg">*</span>Bairro:</label>
+						<div class="col-sm-4">
 							<input class="form-control" ng-model="cliente.bairro" type="text"
 								id="bairro" />
 						</div>
-						<label class="col-sm-1 col-form-label" align="right" for="estado">Estado:</label>
+						<label class="col-sm-1 col-form-label" align="right" for="estado"><span class="obg">*</span>Estado:</label>
 						<div class="col-sm-1">
 							<input class="form-control" ng-model="cliente.estado" type="text"
 								id="estado" />
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-1 col-form-label" align="right"
-							for="logradouro">Logradouro:</label>
-						<div class="col-sm-8">
-							<input class="form-control" ng-model="cliente.logradouro"
-								type="text" id="logradouro" />
+						<label class="col-sm-1 col-form-label" align="right" for="logradouro"><span class="obg">*</span>Logradouro:</label>
+						<div class="col-sm-9">
+							<input class="form-control" ng-model="cliente.logradouro" type="text" id="logradouro" />
 						</div>
-						<label class="col-sm-1 col-form-label" align="right" for="numero">Número:</label>
+						<label class="col-sm-1 col-form-label" align="right" for="numero"><span class="obg">*</span>Número:</label>
 						<div class="col-sm-1">
-							<input class="form-control" ng-model="cliente.numero"
-								type="number" id="numero" />
+							<input class="form-control" ng-model="cliente.numero" type="text" id="numero"  />
 						</div>
 					</div>
 					<br>
 					<div align="center">
-						<button type="submit" ng-click="limparCampos()"
-							class="btn btn-success">Novo</button>
+						<button type="submit" ng-click="limparCampos()" class="btn btn-success">Novo</button>
 						<button type="submit" ng-click="salvar()" class="btn btn-primary">Salvar</button>
 						<button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>
 					</div>
@@ -248,25 +230,35 @@
 	<br>
 	<br>
 	<footer class="container">
-		<!--
-	<p class="float-right"><a href="#">Back to top</a></p>
-	<p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> -->
+
 	</footer>
 
+	<!-- Modal - mensagens - inicio-->
+	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="pTitulo"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="pMsg"></p>
+	      </div>
+	      <div class="modal-footer">
+	        	<button type="button" class="btn btn-secondary" ng-click="fecharModalMensagens()">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - mensagens - fim-->
 
 	<!-- Bootstrap core JavaScript================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-		crossorigin="anonymous"></script>
-
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="js/locastyle.js"></script>
 </body>
 </html>
