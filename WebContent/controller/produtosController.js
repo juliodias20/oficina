@@ -30,7 +30,18 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 	
 	urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
 	urlProduto = 'http://localhost:8080/Oficina/rest/produtos'
+	
+	function cadastroCompleto(){
 		
+		if(!$scope.produto.tipoProduto || !$scope.produto.porta ||
+		   !$scope.produto.nomeProduto || !$scope.produto.modeloModel){
+			return false;
+		}else{
+			return true;
+		}
+		
+	}
+	
 	$scope.listarModelos = function(){
 		$http.get(urlModelo).success(function (modelos){
 			$scope.modelos = modelos;
@@ -49,7 +60,7 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 	
 	$scope.getModelo = function(){
 		$http.get(urlModelo+'/'+$scope.pesquisaCarro.codModelo).success(function (modelo){
-			console.log(modelo);
+			//console.log(modelo);
 		}).error(function (erro){
 			alert(erro);
 		})	
@@ -57,6 +68,9 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 	
 	$scope.abrirModalLancarProdutoEstoque = function(){
 		$('#lancarProdutosEstoque').modal('show');
+		document.getElementById('modalQtdProduto').value = "";
+		document.getElementById('modalVlrPago').value = "";
+		document.getElementById('modalVlrVenda').value = "";
 	}
 	
 	$scope.pesquisaCarro = function(modeloSelecionado){
@@ -69,47 +83,52 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 		document.getElementById('nomeModeloCar').value =  produtoSelecionado.modeloModel.nomeModelo+' / '+produtoSelecionado.modeloModel.qtdPortas+'P / '+produtoSelecionado.modeloModel.ano;
 	}
 	
-	$scope.lancaEstoque = function(){
-		if(Number(document.getElementById('modalQtdProduto').value) <= 0){
-			alert("\'Quantidade\' precisa ser maior que zero.");
-			//limpa campos do modal
-			document.getElementById('modalQtdProduto').value = null;
-			document.getElementById('modalVlrPago').value = null;
-			document.getElementById('modalVlrVenda').value = null;
+	$scope.atualizaEstoque = function (){
+		$scope.teste();
+	}
+	
+	function estoqueCompleto(){
+		if(document.getElementById('modalVlrPago').value.length != 0 || document.getElementById('modalVlrVenda').value.length != 0 || 
+		   document.getElementById('modalQtdProduto').value.length != 0){
+			return true;
+		}else{
 			return false;
-		}else {
-			
+		}
+
+	}
+	
+	$scope.lancarEstoque = function(){
+		if(estoqueCompleto()){
 			//atualiza formulário
 			$scope.produto.qtdEstoque = $scope.produto.qtdEstoque + Number(document.getElementById('modalQtdProduto').value);
-			if(Number(document.getElementById('modalVlrPago').value) != 0){
+			
+			if(Number(document.getElementById('modalVlrPago').value) != ""){
 				$scope.produto.vlrPago = Number(document.getElementById('modalVlrPago').value);
 			}
-			if(Number(document.getElementById('modalVlrVenda').value) != 0){
+			
+			if(Number(document.getElementById('modalVlrVenda').value) != ""){
 				$scope.produto.vlrVenda = Number(document.getElementById('modalVlrVenda').value);
 			}
 			
-			
 			//limpa campos do modal
-			document.getElementById('modalQtdProduto').value = null;
-			document.getElementById('modalVlrPago').value = null;
-			document.getElementById('modalVlrVenda').value = null
+			document.getElementById('modalQtdProduto').value = "";
+			document.getElementById('modalVlrPago').value = "";
+			document.getElementById('modalVlrVenda').value = "";
 			
 			//lança produtos no estoque
 			$http.put(urlProduto,$scope.produto).success(function(produto){
 				$scope.listarProdutos();
-				alert('Produtos inseritos no estoque.')
+				$scope.chamarModalMensagens('Mensagem!','Estoque atualizado com sucesso!');
 			}).error(function (erro){
 				alert(erro);
 			});
 			
 			$('#lancarProdutosEstoque').modal('hide');
 			
+		}else{
+			$scope.chamarModalMensagens('Erro!','Favor preencher o formulário!');
 		}
 		
-	}
-	
-	$scope.teste = function(){
-		console.log($scope.produto);
 	}
 	
 	$scope.limparCampos = function(){
@@ -127,43 +146,68 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 	}
 	
 	$scope.salvar = function() {
-		if($scope.produto.codProduto == undefined){
-			if($scope.produto.qtdEstoque == ""){
-				$scope.produto.qtdEstoque=0;
+		if(cadastroCompleto()){
+			if($scope.produto.codProduto == undefined){
+				if($scope.produto.qtdEstoque == ""){
+					$scope.produto.qtdEstoque=0;
+				}
+				$http.post(urlProduto,$scope.produto).success(function(produto){
+					$scope.limparCampos();
+					$scope.listarProdutos();
+					$('#nav-lista-tab').tab('show');
+					$scope.chamarModalMensagens('Mensagem!','Produto cadastrado com sucesso!');
+				}).error(function(erro){
+					alert(erro);
+				});			
+			}else{
+				$http.put(urlProduto,$scope.produto).success(function(produto){
+					$scope.listarProdutos();
+					$scope.chamarModalMensagens('Mensagem!','Produto cadastrado com sucesso!');
+				}).error(function (erro){
+					alert(erro);
+				});
 			}
-			$http.post(urlProduto,$scope.produto).success(function(produto){
-				$scope.limparCampos();
-				$scope.listarProdutos();
-			}).error(function(erro){
-				alert(erro);
-			});			
 		}else{
-			$http.put(urlProduto,$scope.produto).success(function(produto){
-				$scope.listarProdutos();
-				$scope.limparCampos();
-			}).error(function (erro){
-				alert(erro);
-			});
+			$scope.chamarModalMensagens('Erro!','Os campos marcados com um asterísco(*) vermelho são obrigatórios!');
 		}
 	}
 	
 	$scope.excluir = function(){
-		if($scope.produto.codProduto == undefined){
-			alert("Favor selecionar um registro para excluir!");
-			console.log("Favor selecionar um registro para excluir!");
+		if($scope.produto.codProduto == undefined || $scope.produto.codProduto == ""){
+			$scope.chamarModalMensagens('Erro!','Para efetuar a exclusão é necessário selecionar um produto!');
 		}else{
 			$http.delete(urlProduto+'/'+$scope.produto.codProduto).success(function(){
 				$scope.listarProdutos();
-				$scope.limparCampos();
+				$('#nav-lista-tab').tab('show');
+				$scope.chamarModalMensagens('Mensagem!','Produto exclído com sucesso!');	
+				
 			}).error(function (erro){
 				alert(erro);
 			});
 		}
 	}
 	
+	//função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    $scope.chamarModalMensagens = function (vTitulo, vMensagem){
+    	$('#modalMensagens').modal('show');
+    	document.getElementById('pTitulo').innerHTML = vTitulo;
+    	document.getElementById('pMsg').innerHTML = vMensagem;
+    	
+    }
+    
+    //função que fecha o modal de mensagem
+    $scope.fecharModalMensagens = function(){
+    	document.getElementById('pTitulo').innerHTML = "";
+    	document.getElementById('pMsg').innerHTML = "";
+    	$('#modalMensagens').modal('hide');
+    }
+	
+
+	
+	
+	
 	//executa
 	$scope.listarModelos();
 	$scope.listarProdutos();
-	$scope.teste();
 
 });

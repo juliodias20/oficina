@@ -116,7 +116,7 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 				});
 			}
 		}else{
-			$scope.chamarModalMensagens('Mensagem!','Para salvar o cadastro de usuário é necessário que preencha todas os campos do formulário!');
+			$scope.chamarModalMensagens('Mensagem!','Os campos marcados com um asterísco(*) vermelho são obrigatórios!');
 		}
 	}
 
