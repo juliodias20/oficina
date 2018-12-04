@@ -151,7 +151,6 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 			}
 			*/
 			$scope.osPendentes = oss;
-			console.log(oss);
 		}).error(function (erro){
 			alert(erro);
 		})
@@ -170,6 +169,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	$scope.mostraModalIncluiItem = function (){
 		document.getElementById('nomeItem').value="";
 		$scope.itemOs = {};
+		$scope.itemOs.produtoModel = "";
 		$scope.itemOs.numOs = $scope.osPendente.numOs;
 		$('#modalIncluiItem').modal('show');
 	}
@@ -182,70 +182,113 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     
     //função que atualiza o cadastro da OS
     $scope.salvar = function() {
-    	
-    		console.log($scope.osPendente);
-    		
+    	if($scope.osPendente.descricao.length > 0){
 			$http.put(urlOs,$scope.osPendente).success(function(os){
-				alert("Ordem de Serviço atualizada com sucesso!");
+				$scope.chamarModalMensagens('Mensagem!','Ordem de Serviço atualizada com sucesso!');
 			}).error(function(erro){
 				alert(erro);
 			});
+    	}else{
+    		$scope.chamarModalMensagens('Mensagem!','O campo \'Descrição\' precisa ser preenchido!');
+    	}
 						
+    }
+    
+    function itemSelecionado(){
+    	if(!$scope.itemOs.produtoModel.codProduto || !$scope.itemOs.qtd || !$scope.itemOs.valorUnit){
+    		return false;
+    	}else{
+    		return true;
+    	}
+    }
+    
+    $scope.testar = function (){
+    	console.log($scope.itemOs);
     }
     
     //função que insere novo item na OS
     $scope.salvarItem = function(){
-    	$scope.itemOs.vlrTotal = (Number($scope.itemOs.qtd) * Number($scope.itemOs.valorUnit));
-    	var codProduto, qtdProduto = 2;
-    	
-    	$http.get(urlProduto+'/'+$scope.itemOs.produtoModel.codProduto).success(function(p){
-    		codProduto = p[0].codProduto;
-    		qtdProduto = p[0].qtdEstoque;
-    		
-    		if(qtdProduto == 0){
-        		$scope.chamarModalMensagens('Erro!','Não é possivel inserir este item! Este produto está em falta no estoque!');
-        	}else{    	
-    	    	if($scope.operacao == 'U'){//atualiza item
-    	    		$http.put(urlItens,$scope.itemOs).success(function(){
-    	    			alert('Item alterado com sucesso!');
-    	    			$scope.atualizaPrecoOs();
-    	    			$('#modalIncluiItem').modal('hide');
-    	    		}).error(function (erro){
-    	    			alert(erro);
-    	    		})
-    	    	}else{//insere novo item
-    		    	$http.post(urlItens,$scope.itemOs).success(function(ite){
-    		    		$scope.atualizaPrecoOs();
-    		    		$('#modalIncluiItem').modal('hide');
-    		    		alert("Item lançado na OS com  sucesso!");
-    		    		$scope.listarItensOs();
-    		    		
-    		    	}).error(function(erro){
-    		    		alert(erro);
-    		    	})
-    	    	}
-        	}
-    		
-    		
-    		
-    	}).error(function(erro){
-    		alert(erro);
-    	});
-    	
-    	
-    	
+    	if(itemSelecionado()){
+	    	$scope.itemOs.vlrTotal = (Number($scope.itemOs.qtd) * Number($scope.itemOs.valorUnit));
+	    	
+	    	$http.get(urlItens+'/'+$scope.osPendente.numOs+'/'+$scope.itemOs.produtoModel.codProduto).success(function(prod){
+	    		
+	    			var codProduto, qtdProduto;
+	    	    	
+	    	    	$http.get(urlProduto+'/'+$scope.itemOs.produtoModel.codProduto).success(function(p){
+	    	    		codProduto = p[0].codProduto;
+	    	    		qtdProduto = p[0].qtdEstoque;
+	    	    		
+	    	    		if(qtdProduto-Number($scope.itemOs.qtd) <= 0){
+	    	        		$scope.chamarModalMensagens('Erro!','Não é possivel inserir este item! Não há unidades suficiente no estoque!');
+	    	        	}else{    	
+	    	    	    	if($scope.operacao == 'U'){//atualiza item
+	    	    	    		$http.put(urlItens,$scope.itemOs).success(function(){
+	    	    	    			$scope.chamarModalMensagens('Mensagem!','Item alterado com sucesso!');
+	    	    	    			$scope.atualizaPrecoOs();
+	    	    	    			$('#modalIncluiItem').modal('hide');
+	    	    	    		}).error(function (erro){
+	    	    	    			alert(erro);
+	    	    	    		})
+	    	    	    	}else{//insere novo item
+	    	    	    		if(prod.length == 0){
+		    	    		    	$http.post(urlItens,$scope.itemOs).success(function(ite){
+		    	    		    		var x = qtdProduto-ite.qtd;
+		    	    		    		$http.put(urlProduto+'/'+codProduto+'/'+x).success(function(){
+		    	    		    			console.log('atualizou o estoque');
+		    	    		    		}).error(function (erro){
+		    	    		    			alert('erro ao atualizar estoque');
+		    	    		    		});	    	    		    		
+			    	    		    		$scope.atualizaPrecoOs();
+			    	    		    		$('#modalIncluiItem').modal('hide');
+			    	    		    		$scope.chamarModalMensagens('Mensagem!','Item lançado na OS com  sucesso!');
+			    	    		    		$scope.listarItensOs();
+		    	    		    		
+		    	    		    	}).error(function(erro){
+		    	    		    		alert(erro);
+		    	    		    	})
+	    	    	    		}else{
+	    	    	    			$scope.chamarModalMensagens('Mensagem!','Este item já está cadastrado na OS!');
+	    	    	    		};
+	    	    	    	}
+	    	        	}		
+	    	    		
+	    	    	}).error(function(erro){
+	    	    		alert(erro);
+	    	    	});	
+	    		/*
+	    		*/
+	    	
+	    	}).error(function (erro){
+	    		alert(erro);
+	    	});
+    	}else{
+    		$scope.chamarModalMensagens('Mensagem!','É necessário preencher todo o formulário!');
+    	}
     }	
 	
 	//função que remove um item da OS
 	$scope.excluirItem = function(itemSelecionado){
-    	$http.delete(urlItens+'/'+itemSelecionado.numOs+'/'+itemSelecionado.produtoModel.codProduto).success(function(){
-    		alert("Item removido");
-    		$scope.atualizaPrecoOs();
-    		$scope.listarItensOs();
+    	$http.get(urlProduto+'/'+itemSelecionado.produtoModel.codProduto).success(function (pro){
+    		$http.delete(urlItens+'/'+itemSelecionado.numOs+'/'+itemSelecionado.produtoModel.codProduto).success(function(){
+    		
+	    		var x = itemSelecionado.qtd + pro[0].qtdEstoque;
+
+	    			$http.put(urlProduto+'/'+itemSelecionado.produtoModel.codProduto+'/'+x).success(function(){
+		    			console.log('atualizou o estoque');
+		    		}).error(function (erro){
+		    			alert('erro ao atualizar estoque');
+		    		});
+	
+	    		$scope.chamarModalMensagens('Mensagem!','Item removido da OS');
+	    		$scope.atualizaPrecoOs();
+	    		$scope.listarItensOs();
+	    	}).error(function (erro){
+	    		alert(erro);
+	    	});
     	}).error(function (erro){
     		alert(erro);
-    	});
-   
+    	});   
     }
     
     //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
@@ -276,9 +319,8 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     		$scope.fechaOs.dhEncerramento = dhEnc;
     		$scope.fechaOs.status = 'ENCERRADA';
     
-    		
     		$http.put(urlOs,$scope.fechaOs).success(function (){
-    			$scope.chamarModalMensagens('Mensagem','Ordem de Serviço encerrada com sucesso!');
+    			$('#modalEncerraOs').modal('show');
         	}).error(function (erro){
         		alert(erro);
         	})
@@ -287,6 +329,25 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     		alert(erro);
     	});
     
+    }
+    
+  //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    $scope.chamarModalMensagens = function (vTitulo, vMensagem){
+    	$('#modalMensagens').modal('show');
+    	document.getElementById('pTitulo').innerHTML = vTitulo;
+    	document.getElementById('pMsg').innerHTML = vMensagem;
+    	
+    }
+    
+    //função que fecha o modal de mensagem
+    $scope.fecharModalMensagens = function(){
+    	console.log(document.getElementById('pMsg').content);
+    	$('#modalMensagens').modal('hide');
+    	
+    }
+    
+    $scope.fecharModelEncerraOs = function (){
+    	window.location.href="http://localhost:8080/Oficina/osencerradas.html";
     }
     
     $scope.listarOs();

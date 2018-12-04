@@ -44,32 +44,46 @@ marcasModulo.controller("marcasController", function ($http, $location, $scope, 
 	}
 
 	$scope.limparCampos = function(){
-		$scope.marca = "";
+		$scope.marca = {};
+		$scope.marca.nomeMarca = "";
 	}
 
 	$scope.salvar = function() {
 		if($scope.marca.codMarca == undefined){
-			$http.post(urlMarca,$scope.marca).success(function(marca){
-				$scope.limparCampos();
-				$scope.listarMarcas();
-			}).error(function(erro){
-				alert(erro);
-			});
+			if($scope.marca.nomeMarca.length){
+				$http.post(urlMarca,$scope.marca).success(function(marca){
+					$scope.chamarModalMensagens('Mensagem!','Marca de carro cadastrada com sucesso!');
+					$scope.listarMarcas();
+					$scope.limparCampos();
+					$('#nav-lista-tab').tab('show');
+				}).error(function(erro){
+					alert(erro);
+				});
+			}else{
+				$scope.chamarModalMensagens('Mensagem!','O nome da marca é obrigatório!')
+			}
 		}else{
-			$http.put(urlMarca,$scope.marca).success(function(marca){
+			if($scope.marca.nomeMarca){
+				$http.put(urlMarca,$scope.marca).success(function(marca){
+					$scope.chamarModalMensagens('Mensagem!','Cadastro da marca de carro foi atualizado com sucesso!');
+					$scope.listarMarcas();
+					$scope.limparCampos();
+				}).error(function (erro){
+					alert(erro);
+				});
+			}else{
+				$scope.chamarModalMensagens('Mensagem!','O nome da marca é obrigatório!');
 				$scope.listarMarcas();
-				$scope.limparCampos();
-			}).error(function (erro){
-				alert(erro);
-			});
+			}
 		}
 	}
 
 	$scope.excluir = function(){
 		if($scope.marca.codMarca == undefined){
-			alert("Favor selecionar um registro para excluir!");
+			$scope.chamarModalMensagens('Mensagem!','Favor selecionar um registro para excluir!');
 		}else{
 			$http.delete(urlMarca+'/'+$scope.marca.codMarca).success(function(){
+				$scope.chamarModalMensagens('Mensagem!','Marca de carro excluída com sucesso!');
 				$scope.listarMarcas();
 				$scope.limparCampos();
 			}).error(function (erro){
@@ -78,7 +92,20 @@ marcasModulo.controller("marcasController", function ($http, $location, $scope, 
 		}
 	}	
 
-
+	//função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    $scope.chamarModalMensagens = function (vTitulo, vMensagem){
+    	$('#modalMensagens').modal('show');
+    	document.getElementById('pTitulo').innerHTML = vTitulo;
+    	document.getElementById('pMsg').innerHTML = vMensagem;
+    	
+    }
+    
+    //função que fecha o modal de mensagem
+    $scope.fecharModalMensagens = function(){  	
+    	$('#modalMensagens').modal('hide');
+    	
+    }
+	
 	//executa
 	$scope.listarMarcas();
 

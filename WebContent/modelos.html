@@ -85,7 +85,7 @@
             <nav><!--div de abas(titulos) - inicio -->
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-lista-tab" data-toggle="tab" href="#nav-lista" role="tab" aria-controls="nav-home" aria-selected="true">Lista</a>
-                    <a class="nav-item nav-link" id="nav-cadastro-tab" data-toggle="tab" href="#nav-cadastro" role="tab" aria-controls="nav-profile" aria-selected="false">Cadastro</a>
+                    <a class="nav-item nav-link" id="nav-cadastro-tab" data-toggle="tab" href="#nav-cadastro" role="tab" aria-controls="nav-profile" aria-selected="false" ng-click="limparCampos()">Cadastro</a>
                 </div>
                 <!--div de abas - fim -->
             </nav>
@@ -163,10 +163,31 @@
     <br>
     <br>
     <footer class="container">
-        <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      <!--   <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> -->
     </footer>
 
+	 <!-- Modal - mensagens - inicio-->
+	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="pTitulo"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="pMsg"></p>
+	      </div>
+	      <div class="modal-footer">
+	        	<button type="button" class="btn btn-secondary" ng-click="fecharModalMensagens()">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - mensagens - fim-->
+	
     <!-- Bootstrap core JavaScript================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

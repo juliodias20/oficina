@@ -234,7 +234,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 		
 	}
 	
-	 //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+	//função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
     $scope.chamarModalMensagens = function (vTitulo, vMensagem){
     	$('#modalMensagens').modal('show');
     	document.getElementById('pTitulo').innerHTML = vTitulo;
@@ -248,11 +248,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
     	
     }
     
-	
-	$scope.teste = function (){
-		console.log($scope.cliente);
-	}
-	
+
 	//executa
 	$scope.listarClientes();
 

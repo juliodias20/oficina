@@ -53,44 +53,83 @@ modelosModulo.controller("modelosController",function($http, $location, $scope, 
 	}
 
 	$scope.limparCampos = function(){
-		$scope.modelo = "";
+		$scope.modelo = {};
+		$scope.modelo.codModelo = "";
+		$scope.modelo.ano = "";
+		$scope.modelo.nomeModelo = "";
+		$scope.modelo.qtdPortas = "";
+		$scope.modelo.marcaModel = {};
+		$scope.modelo.marcaModel.codMarca = "";
 	}
-
-	$scope.salvar = function() {
-		if($scope.modelo.codModelo == undefined){
-			$http.post(urlModelo,$scope.modelo).success(function(modelo){
-				$scope.limparCampos();
-				$scope.listarModelos();
-			}).error(function(erro){
-				console.log($scope.modelo);
-				console.log(erro);
-				alert(erro);
-			});			
+	
+	function cadastroModelo(){
+		if(!$scope.modelo.ano || !$scope.modelo.nomeModelo || 
+				!$scope.modelo.qtdPortas || !$scope.modelo.marcaModel.codMarca){
+			return false;
 		}else{
-			if($scope.modelo.marcaModel != undefined){
-				$http.put(urlModelo,$scope.modelo).success(function(modelo){
-					$scope.listarModelos();
+			return true;
+		}
+	}
+	
+	$scope.salvar = function() {
+		
+		if($scope.modelo.codModelo == undefined || $scope.modelo.codModelo ==""){
+			if(cadastroModelo()){
+				$http.post(urlModelo,$scope.modelo).success(function(modelo){
+					$('#nav-lista-tab').tab('show');
+					$scope.chamarModalMensagens('Mensagem!','Modelo de carro cadastrado com sucesso!');
 					$scope.limparCampos();
+					$scope.listarModelos();
+					
+				}).error(function(erro){
+					alert(erro);
+				});
+			}else{
+				$scope.chamarModalMensagens('Mensagem!','Formulário incompleto, preencha todos os campos obrigatórios do formulário!');
+			}
+		}else{
+			if(cadastroModelo()){
+				$http.put(urlModelo,$scope.modelo).success(function(modelo){
+					$scope.chamarModalMensagens('Mensagem!','Modelo de carro atualizado com sucesso!');
+					$scope.listarModelos();
 				}).error(function (erro){
 					alert(erro);
 				});
+			}else{
+				$scope.chamarModalMensagens('Mensagem!','Formulário incompleto, preencha todos os campos obrigatórios do formulário!');
 			}
 		}
 	}
 	
 	$scope.excluir = function(){
-		if($scope.modelo.codModelo == undefined){
-			alert("Favor selecionar um registro para excluir!");
-			console.log("Favor selecionar um registro para excluir!");
+		if($scope.modelo.codModelo == undefined || $scope.modelo.codModelo == ""){
+			$scope.chamarModalMensagens('Mensagem!','Favor selecionar um registro para excluir!');
 		}else{
-			$http.delete(urlModelo+'/'+$scope.modelo.codModelo).success(function(){
-				$scope.listarModelos();
-				$scope.limparCampos();
-			}).error(function (erro){
-				alert(erro);
-			});
+			if(cadastroModelo())
+				$http.delete(urlModelo+'/'+$scope.modelo.codModelo).success(function(){
+					$scope.chamarModalMensagens('Mensagem!','Modelo de carro excluído com sucesso!');
+					$scope.listarModelos();
+					$scope.limparCampos();
+					$('#nav-lista-tab').tab('show');
+				}).error(function (erro){
+					alert(erro);
+				});
 		}
 	}
+	
+	//função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    $scope.chamarModalMensagens = function (vTitulo, vMensagem){
+    	$('#modalMensagens').modal('show');
+    	document.getElementById('pTitulo').innerHTML = vTitulo;
+    	document.getElementById('pMsg').innerHTML = vMensagem;
+    	
+    }
+    
+    //função que fecha o modal de mensagem
+    $scope.fecharModalMensagens = function(){  	
+    	$('#modalMensagens').modal('hide');
+    	
+    }
 	
 	//executa
 	$scope.listarMarcas();

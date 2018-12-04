@@ -33,6 +33,20 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
     urlOs = 'http://localhost:8080/Oficina/rest/os';
     
+    function cadastroOs(){
+    	if(!$scope.lancaros.modeloModel.codModelo || !$scope.lancaros.clienteModel.codCliente ||
+    	   !$scope.lancaros.placaCarro || !$scope.lancaros.tipoOs || !$scope.lancaros.descricao){
+    		return false;
+    	}else{
+    		return true;
+    	}
+    }
+    
+    $scope.teste = function(){
+   
+    	console.log($scope.lancaros);
+    }
+    
     //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
     $scope.chamarModalMensagens = function(vTitulo, vMensagem){
     	document.getElementById('pTitulo').innerHTML = vTitulo;
@@ -71,6 +85,7 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     	$scope.lancaros.clienteModel.codCliente = "";
     	$scope.lancaros.placaCarro = "";
     	$scope.lancaros.dhAbertura = "";
+    	$scope.lancaros.descricao ="";
     	$scope.lancaros.status = "";
     	$scope.lancaros.tipoOs = "";
     	document.getElementById('nomeModeloCar').value = "";
@@ -87,9 +102,9 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 		document.getElementById('cliente').value =  clienteSelecionado.nomeCliente;
 	}
     
-    
+   
     $scope.salvar = function() {
-    	if($scope.lancaros.clienteModel.codCliente == ""){
+    	if(!cadastroOs()){
     		$scope.chamarModalMensagens("Erro!","Para lançar uma OS é necessário preencher todos os campos!");
     	}else{
     	
@@ -106,7 +121,19 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     	}
     }
 	   
+    //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    $scope.chamarModalMensagens = function (vTitulo, vMensagem){
+    	$('#modalMensagens').modal('show');
+    	document.getElementById('pTitulo').innerHTML = vTitulo;
+    	document.getElementById('pMsg').innerHTML = vMensagem;
+    	
+    }
     
+    //função que fecha o modal de mensagem
+    $scope.fecharModalMensagens = function(){  	
+    	$('#modalMensagens').modal('hide');
+    	
+    }
     
     
     $scope.limparCampos();
