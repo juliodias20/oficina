@@ -37,7 +37,7 @@ public class ClienteServiceImplem implements ClienteServiceInterface {
 	}
 	
 	@Override
-	public List<ClienteModel> getClientes(String parametro) {
+	public List<ClienteModel> getClientes(Integer parametro) {
 		return clienteDaoInterface.getClientes(parametro);
 	}
 	

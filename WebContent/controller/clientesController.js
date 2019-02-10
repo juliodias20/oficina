@@ -17,7 +17,6 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 
         }
         
-        
         $scope.perfil = $rootScope.globals.currentUser.usuario.perfilModel.nomePerfil;
     });
 	
@@ -31,14 +30,73 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 	urlCep = 'http://viacep.com.br/ws/';
 	urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
 	
+	/*função remove mascara CPF */
+	function removeMascaraCpfCnpj(campoComMascara) {
+		var campoSemMascara = campoComMascara;
+		
+		for( i = 0 ; i < 4 ; i++){
+			campoSemMascara = campoSemMascara.replace('.','');
+		}
+		campoSemMascara = campoSemMascara.replace('-','');
+		
+		return campoSemMascara;
+	}
+	
+	/*função aplica mascara CPF */
+	function aplicaMascaraCpf(campoSemMascara) {
+		var campoComMascara;
+		var parte1, parte2, parte3, parte4;
+			
+			parte1 = campoSemMascara.substring(0,3);
+			parte2 = campoSemMascara.substring(3,6);
+			parte3 = campoSemMascara.substring(6,9);
+			parte4 = campoSemMascara.substring(9,11);
+			
+			campoComMascara = parte1+'.'+parte2+'.'+parte3+'-'+parte4;
+			
+		return campoComMascara;
+	}
+	
+	/*função aplica mascara CNPJ */
+	function aplicaMascaraCnpj(campoSemMascara) {
+		var campoComMascara;
+		var parte1, parte2, parte3, parte4, parte5;
+		
+			parte1 = campoSemMascara.substring(0,2);
+			parte2 = campoSemMascara.substring(2,5);
+			parte3 = campoSemMascara.substring(5,8);
+			parte4 = campoSemMascara.substring(8,12);
+			parte5 = campoSemMascara.substring(12,14);
+			
+			campoComMascara = parte1+'.'+parte2+'.'+parte3+'.'+parte4+'-'+parte5;
+		return campoComMascara
+	}
+	
+	/*lista todos os clientes*/
 	$scope.listarClientes = function (){
 		$http.get(urlCliente).success(function (clientes){
-			$scope.clientes = clientes;
+			
+			$scope.clientes = clientes;		
+			
+			console.log($scope.clientes);
+			
+			for (i=0 ; i<clientes.length ; i++){
+				if($scope.clientes[i].tipoPessoa == 'F'){
+				
+					$scope.clientes[i].cpf = aplicaMascaraCpf($scope.clientes[i].cpf);
+				}else{
+				
+					$scope.clientes[i].cnpj = aplicaMascaraCnpj($scope.clientes[i].cnpj);
+				}
+			}
+			
 		}).error(function (erro){
 			alert(erro);
-		});
+		});	
+		
 	};
 
+	/*seleciona o tipo de pessoa (fisica ou juridica)*/
 	$scope.selecionaCliente = function(clienteSelecionado){
 		$scope.cliente = clienteSelecionado;
 		if($scope.cliente.tipoPessoa == 'F'){
@@ -49,7 +107,8 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 			$('.cpf').hide();
 		}
 	}
-
+	
+	/*limpa os campos do formulario de cadastro de cliente*/
 	$scope.limparCampos = function(){
 		$scope.cliente.tipoPessoa="F";
 		$scope.cliente.codCliente="";
@@ -68,6 +127,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 		$scope.cliente.telefone="";
 	}
 
+	/*valida o formulario de cadastro de cliente*/
 	function cadastroCompleto(){
 		if($scope.cliente.tipoPessoa == 'F'){
 			if(!$scope.cliente.nomeCliente || 
@@ -95,27 +155,40 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 		}
 	}
 	
+	
+	
+	/* registra um novo cadastro/atualiza cadastro de cliente */
 	$scope.salvar = function() {
 		if(cadastroCompleto()){
-			var existeCPF,CPF, existeCNPJ, CNPJ, codCliente;
+	
+			var existeCPF, CPF, existeCNPJ, CNPJ, codCliente;
+			
 			if($scope.cliente.tipoPessoa == 'F'){
-				$http.get(urlCliente+'/'+$scope.cliente.cpf+'/cpf').success(function (c){
-					existeCPF = c.length;
+				
+				$http.get(urlCliente+'/'+removeMascaraCpfCnpj($scope.cliente.cpf)+'/cpf').success(function (c){
+					existeCPF = c.length; 
 					
+					/*verifica se já existe um cliente cadastrado para este CPF*/
 					if(existeCPF == 0){
+						/*verifica se já existe um ID para este cliente*/
 						if($scope.cliente.codCliente == undefined){
+							$scope.cliente.cpf = removeMascaraCpfCnpj($scope.cliente.cpf);
+							
 							$http.post(urlCliente,$scope.cliente).success(function(cliente){
+								console.log('fluxo:-----> Pessoa física / POST / gravando novo cliente');
 								$scope.chamarModalMensagens('Mensagem','Cliente cadastrado com sucesso!');
-								$scope.limparCampos();
-								$('#nav-lista-tab').tab('show');
-								$scope.listarClientes();
+								//$scope.limparCampos();
+								//$('#nav-lista-tab').tab('show');
+								//$scope.listarClientes();
 							}).error(function(erro){
 								alert(erro);
 							});
 						}else{
+							console.log('fluxo:-----> Pessoa física / PUT / atualizando cliente(TINHA UM ID)');
+							$scope.cliente.cpf = removeMascaraCpfCnpj($scope.cliente.cpf);
 							$http.put(urlCliente,$scope.cliente).success(function(cliente){
 								$scope.chamarModalMensagens('Mensagem','Cliente atualizado com sucesso!');
-								$scope.listarClientes();
+								//$scope.listarClientes();
 								//$('#nav-lista-tab').tab('show');
 								//$scope.limparCampos();
 							}).error(function (erro){
@@ -126,17 +199,21 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 						CPF = c[0].cpf;
 						codCliente = c[0].codCliente;
 						
-						if ($scope.cliente.codCliente == codCliente && $scope.cliente.cpf == CPF){
+						if ($scope.cliente.codCliente == codCliente && removeMascaraCpfCnpj($scope.cliente.cpf) == CPF){
+							console.log('fluxo: ----> Pessoa Fisica / PUT / Cliente já existe será atualizado o CPF');
+							
+							$scope.cliente.cpf = removeMascaraCpfCnpj($scope.cliente.cpf);
+							
 							$http.put(urlCliente,$scope.cliente).success(function(cliente){
 								$scope.chamarModalMensagens('Mensagem','Cliente atualizado com sucesso!');
-								$scope.listarClientes();
+								//$scope.listarClientes();
 								//$('#nav-lista-tab').tab('show');
 								//$scope.limparCampos();
 							}).error(function (erro){
 								alert(erro);
 							});
 						}else{
-							$scope.chamarModalMensagens('Erro!','Já existe um cliente cadastrado com esse CPF!');
+							$scope.chamarModalMensagens('Erro!','Já existe um cliente cadastrado com esse CPF');
 						}					
 					}
 				}).error(function (erro){
@@ -144,25 +221,27 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 				})
 				
 			}else{
-				$http.get(urlCliente+'/'+$scope.cliente.cnpj+'/cnpj').success(function (p){
+				$http.get(urlCliente+'/'+removeMascaraCpfCnpj($scope.cliente.cnpj)+'/cnpj').success(function (p){
 					existeCNPJ = p.length;
-					console.log(existeCNPJ);
 					
-					if(existeCNPJ == 0){
-						if($scope.cliente.codCliente == undefined){			
+					if(existeCNPJ == 0){		
+						if($scope.cliente.codCliente == undefined){
+							$scope.cliente.cnpj = removeMascaraCpfCnpj($scope.cliente.cnpj);
+							
 							$http.post(urlCliente,$scope.cliente).success(function(cliente){
 								$scope.chamarModalMensagens('Mensagem','Cliente cadastrado com sucesso!');
-								$scope.limparCampos();
-								$('#nav-lista-tab').tab('show');
-								$scope.listarClientes();
+								//$scope.limparCampos();
+								//$('#nav-lista-tab').tab('show');
+								//$scope.listarClientes();
 							}).error(function(erro){
 								alert(erro);
 							});
-						}else{						
+						}else{
+							$scope.cliente.cnpj = removeMascaraCpfCnpj($scope.cliente.cnpj);
 							
 							$http.put(urlCliente,$scope.cliente).success(function(cliente){
 								$scope.chamarModalMensagens('Mensagem','Cliente atualizado com sucesso!');
-								$scope.listarClientes();
+								//$scope.listarClientes();
 								//$('#nav-lista-tab').tab('show');
 								//$scope.limparCampos();
 							}).error(function (erro){
@@ -173,10 +252,12 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 						CNPJ = p[0].cnpj;
 						codCliente = p[0].codCliente;
 					
-						if($scope.cliente.codCliente == codCliente && $scope.cliente.cnpj == CNPJ){
+						if($scope.cliente.codCliente == codCliente && removeMascaraCpfCnpj($scope.cliente.cnpj) == CNPJ){
+							$scope.cliente.cnpj = removeMascaraCpfCnpj($scope.cliente.cnpj);
+							
 							$http.put(urlCliente,$scope.cliente).success(function(cliente){
 								$scope.chamarModalMensagens('Mensagem','Cliente atualizado com sucesso!');
-								$scope.listarClientes();
+								//$scope.listarClientes();
 								//$('#nav-lista-tab').tab('show');
 								//$scope.limparCampos();
 							}).error(function (erro){
@@ -191,7 +272,6 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 				})
 			}
 		}else{
-			console.log($scope.cliente);
 			$scope.chamarModalMensagens('Mensagem!','Para salvar o cadastro do cliente é necessário preencher todos os campos do formulário!');
 		}
 	}

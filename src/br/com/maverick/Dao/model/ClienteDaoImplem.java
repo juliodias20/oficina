@@ -41,19 +41,13 @@ public class ClienteDaoImplem implements ClienteDaoInterface {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ClienteModel> getClientes(String parametro){
-		System.out.println("GET COM 1 PARAMETRO");
-		if(parametro.equals("cpf")) {
-			System.out.println("parametro é CPF");
-			return null;
-		}else {
-			System.out.println("parametro não é CPF");
+	public List<ClienteModel> getClientes(Integer parametro){
 			
-		Query query = entityManager.createQuery("from ClienteModel c where c.cpf = :cpf");
-			  query.setParameter("cpf", parametro);
+		Query query = entityManager.createQuery("from ClienteModel c where c.codCliente = :codCliente");
+			  query.setParameter("codCliente", parametro);
 			 
 		return query.getResultList();
-		}
+		
 	}
 	
 	@Override

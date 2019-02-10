@@ -14,9 +14,8 @@ public interface ClienteServiceInterface {
 	
 	List<ClienteModel> getClientes();
 
+	List<ClienteModel> getClientes(Integer parametro);
+	
 	List<ClienteModel> getClientes(String parametro, String tipoParametro);
 
-	List<ClienteModel> getClientes(String parametro);
-	
-	
 }

@@ -33,7 +33,7 @@ public class ClienteRestFacade {
 	
 	@GET
 	@Path("/{parametro}")
-	public List<ClienteModel> getClientes(@PathParam("parametro") String parametro){
+	public List<ClienteModel> getClientes(@PathParam("parametro") Integer parametro){
 		return clienteServiceInterface.getClientes(parametro);
 	}
 	
