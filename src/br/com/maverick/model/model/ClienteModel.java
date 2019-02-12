@@ -202,7 +202,7 @@ public class ClienteModel {
 	}
 
 	public String getEmail() {
-		return email;
+		return email.toUpperCase();
 	}
 
 	public void setEmail(String email) {

@@ -1,4 +1,4 @@
-var clientesModulo = angular.module('clientesModulo',['ngCookies']);
+var clientesModulo = angular.module('clientesModulo',['ngCookies','ngMask']);
 
 clientesModulo.controller("clientesController", function ($http, $location, $scope, $rootScope, $cookies){
 	
@@ -76,9 +76,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 	$scope.listarClientes = function (){
 		$http.get(urlCliente).success(function (clientes){
 			
-			$scope.clientes = clientes;		
-			
-			console.log($scope.clientes);
+			$scope.clientes = clientes;
 			
 			for (i=0 ; i<clientes.length ; i++){
 				if($scope.clientes[i].tipoPessoa == 'F'){
@@ -175,7 +173,6 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 							$scope.cliente.cpf = removeMascaraCpfCnpj($scope.cliente.cpf);
 							
 							$http.post(urlCliente,$scope.cliente).success(function(cliente){
-								console.log('fluxo:-----> Pessoa física / POST / gravando novo cliente');
 								$scope.chamarModalMensagens('Mensagem','Cliente cadastrado com sucesso!');
 								//$scope.limparCampos();
 								//$('#nav-lista-tab').tab('show');
@@ -184,7 +181,6 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 								alert(erro);
 							});
 						}else{
-							console.log('fluxo:-----> Pessoa física / PUT / atualizando cliente(TINHA UM ID)');
 							$scope.cliente.cpf = removeMascaraCpfCnpj($scope.cliente.cpf);
 							$http.put(urlCliente,$scope.cliente).success(function(cliente){
 								$scope.chamarModalMensagens('Mensagem','Cliente atualizado com sucesso!');
@@ -199,9 +195,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 						CPF = c[0].cpf;
 						codCliente = c[0].codCliente;
 						
-						if ($scope.cliente.codCliente == codCliente && removeMascaraCpfCnpj($scope.cliente.cpf) == CPF){
-							console.log('fluxo: ----> Pessoa Fisica / PUT / Cliente já existe será atualizado o CPF');
-							
+						if ($scope.cliente.codCliente == codCliente && removeMascaraCpfCnpj($scope.cliente.cpf) == CPF){							
 							$scope.cliente.cpf = removeMascaraCpfCnpj($scope.cliente.cpf);
 							
 							$http.put(urlCliente,$scope.cliente).success(function(cliente){

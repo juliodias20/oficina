@@ -108,7 +108,7 @@
                             <td>{{usuariosTabela.codUsuario}} </td>
                             <td>{{usuariosTabela.login}}</td>
                             <td>{{usuariosTabela.perfilModel.nomePerfil}}
-                            <td>{{usuariosTabela.dtCriacao | date:'dd/MM/yyyy - HH:mm:ss'}}</td>
+                            <td>{{usuariosTabela.dtCriacao}}</td>
                             <!-- <td>{{usuariosTabela.ativo}}</td> -->
                         </tr>
                     </table>
@@ -134,7 +134,7 @@
 
 		              	<label align="right" for="dtCriacao" class="col-sm-1 col-form-label">Criação:</label>
                         <div class="col-sm-2">
-                            <input type="text" disabled ng-model="usuario.dtCriacao | date:'dd/MM/yyyy - HH:mm:ss'" class="form-control" id="dtCriacao">
+                            <input type="text" disabled ng-model="usuario.dtCriacao" class="form-control" id="dtCriacao">
                         </div>
 
                         <label align="right" for="ativo" class="col-sm-1 col-form-label" style="display:none;">Ativo:</label>

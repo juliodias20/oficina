@@ -103,11 +103,11 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 			$scope.produto.qtdEstoque = $scope.produto.qtdEstoque + Number(document.getElementById('modalQtdProduto').value);
 			
 			if(Number(document.getElementById('modalVlrPago').value) != ""){
-				$scope.produto.vlrPago = Number(document.getElementById('modalVlrPago').value);
+				$scope.produto.vlrPago = removeMoneyMask(document.getElementById('modalVlrPago').value);
 			}
 			
 			if(Number(document.getElementById('modalVlrVenda').value) != ""){
-				$scope.produto.vlrVenda = Number(document.getElementById('modalVlrVenda').value);
+				$scope.produto.vlrVenda = removeMoneyMask(document.getElementById('modalVlrVenda').value);
 			}
 			
 			//limpa campos do modal

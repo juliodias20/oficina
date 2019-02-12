@@ -22,8 +22,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+      
+
     <!-- link modelos.js -->
     <script src="js/produtos.js"></script>
+
 </head>
 
 <body ng-controller="produtosController">
@@ -42,21 +45,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="clientes.html">Clientes</a>
                     </li>
-					<li class="nav-item">
-			          	<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
-			        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="produtos.html">Estoque</a>
                     </li>
                     <li class="nav-item dropdown">
-			            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			              Carros
-			            </a>
-			            <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
-			              <a class="dropdown-item" href="marcas.html">Marcas</a>
-			              <a class="dropdown-item" href="modelos.html">Modelos</a>
-			            </div>
-			          </li>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Carros
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
+                          <a class="dropdown-item" href="marcas.html">Marcas</a>
+                          <a class="dropdown-item" href="modelos.html">Modelos</a>
+                        </div>
+                      </li>
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -108,7 +111,7 @@
                             <td>{{produtosTabela.codProduto}} </td>
                             <td>{{produtosTabela.nomeProduto}}</td>
                             <td>{{produtosTabela.qtdEstoque}}</td>
-                            <td>{{produtosTabela.vlrVenda}}</td>
+                            <td>{{produtosTabela.vlrVenda | currency : "R$ "}}</td>
                             <td>{{produtosTabela.modeloModel.nomeModelo}} / {{produtosTabela.modeloModel.qtdPortas}}P / {{produtosTabela.modeloModel.ano}}</td>
                             <td>{{produtosTabela.porta}}</td>
                             <td>{{produtosTabela.tipoProduto}}</td>
@@ -144,16 +147,16 @@
                             </select>
                         </div>
                         <div class="col-md-2 col-lg-2 col-xl-3">
-	                        <div class="dropdown" align="right">
-							  <button class="btn btn-secondary dropdown-toggle col-sm-8" type="button" ng-disabled="!produto.codProduto" id="dropdownProdutoAcao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    Ações
-							  </button>
-							  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							    <a class="dropdown-item" ng-click="abrirModalLancarProdutoEstoque()" data-target="#lancarProtudosEstoque"href="#" >Atualizar estoque</a>
-							    <!--  <a class="dropdown-item" data-toggle="modal" data-target="#removerProtudosEstoque"href="#" >Remover estoque</a> -->
-							  </div>
-							</div>
-						</div>
+                            <div class="dropdown" align="right">
+                              <button class="btn btn-secondary dropdown-toggle col-sm-8" type="button" ng-disabled="!produto.codProduto" id="dropdownProdutoAcao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ações
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" ng-click="abrirModalLancarProdutoEstoque()" data-target="#lancarProtudosEstoque"href="#" >Atualizar estoque</a>
+                                <!--  <a class="dropdown-item" data-toggle="modal" data-target="#removerProtudosEstoque"href="#" >Remover estoque</a> -->
+                              </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label align="right" for="nomeProduto" class="col-sm-1 col-form-label"><span class="obg">*</span>Produto:</label>
@@ -163,31 +166,31 @@
                     </div>
                     <hr>
                     <div class="form-group row">
-                    	<label align="right" for="carro" class="col-sm-1 col-form-label"><span class="obg">*</span>Carro:</label>
-                    	<div class="col-sm-1">
+                        <label align="right" for="carro" class="col-sm-1 col-form-label"><span class="obg">*</span>Carro:</label>
+                        <div class="col-sm-1">
                             <input type="number" disabled ng-model="produto.modeloModel.codModelo"  class="form-control" id="codModeloCar">
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <input type="text" disabled class="form-control" id="nomeModeloCar" >
                         </div>
                         
                         <div class="col-sm-2" align="left">
-			    			<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCarro" >Pesquisar</button>
-			    		</div>
-			    	</div>
-			    	<hr>
-			    	<div class="form-group row">
-                    	<label align="right" for="Estoque" class="col-sm-1 col-form-label">Quantidade:</label>
+                            <button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCarro" >Pesquisar</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <label align="right" for="Estoque" class="col-sm-1 col-form-label">Quantidade:</label>
                         <div class="col-2">
-                            <input type="text" disabled ng-model="produto.qtdEstoque" class="form-control" id="qtdEstoque">
+                            <div class="form-control" style="background-color:#e9ecef" id="qtdEstoque">{{produto.qtdEstoque}}</div>
                         </div>
                         <label align="right" for="vlrPagoProduto" class="col-sm-1.5 col-form-label">Comprado por:</label>
                         <div class="col-2" >
-                            <input type="text" disabled ng-model="produto.vlrPago" class="form-control" id="vlrPagoProduto">
+                            <div class="form-control" style="background-color:#e9ecef" id="vlrPagoProduto">{{produto.vlrPago | currency : "R$ "}} </div>
                         </div>
                         <label align="right" for="vlrVenderProduto" class="col-sm-1.5 col-form-label">Vender por:</label>
                         <div class="col-2" >
-                            <input type="text" disabled ng-model="produto.vlrVenda" class="form-control" id="vlrVenderProduto">
+                            <div class="form-control" style="background-color:#e9ecef" id="vlrVenderProduto">{{produto.vlrVenda | currency : "R$ "}} </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -197,11 +200,11 @@
                         </div>
                     </div>
                     
-					<br>
+                    <br>
                     <div align="center">
                         <button type="submit" ng-click="limparCampos()" class="btn btn-success">Novo</button>
                         <button type="submit" ng-click="salvar()" class="btn btn-primary">Salvar</button>
-                        <button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>           		
+                        <button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>                  
                     </div>
                 </div>
                 <!-- Aba Cadastro - Fim -->
@@ -212,57 +215,57 @@
         <!-- container principal - fim -->
     </form>
 
-	<!-- Modal - Lançar estoque - inicio-->
-	<div class="modal fade" id="lancarProdutosEstoque" tabindex="-1" role="dialog" aria-labelledby="modalLancarProdutosEstoque" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered " role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="modalLancarProdutosEstoque">Atualizar produto no estoque</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <form>
-	            <div class="form-group">
-		        	<label align="left" for="modalQtdProduto" class="col-md-3 col-form-label"><span class="obg">*</span>Quantidade:</label>
-	                <div class="col-md-4">
-	                    <input type="number" class="form-control" id="modalQtdProduto" >
-	                </div>
-	            
-	                <label align="left" for="modalVlrPago" class="col-md-5 col-form-label">Valor de compra(R$):</label>
-	                <div class="col-md-4">
-	                    <input type="text" class="form-control" id="modalVlrPago">
-	                </div>
-	                
-	                <label align="left" for="modalQtdVenda" class="col-md-5 col-form-label">Valor de venda(R$):</label>
-	                <div class="col-md-4">
-	                    <input type="text" class="form-control" id="modalVlrVenda" >
-	                </div>
-	            </div>
-	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" id="fecharModalLancarProdutoEstoque" data-dismiss="modal">Fechar</button>
-	        <button type="button" class="btn btn-primary" ng-click="lancarEstoque()" >Atualizar</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- Modal - Lançar estoque - fim-->
-	
-	<!-- Modal - Pesquisa carro - inicio-->
-	<div class="modal fade" id="modalPesquisaCarro" tabindex="-1" role="dialog" aria-labelledby="modalPesquisaCarro" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="modalLancarProdutosEstoque">Lançar produto no estoque</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <table class="table table-striped table-hover">
+    <!-- Modal - Lançar estoque - inicio-->
+    <div class="modal fade" id="lancarProdutosEstoque" tabindex="-1" role="dialog" aria-labelledby="modalLancarProdutosEstoque" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLancarProdutosEstoque">Atualizar produto no estoque</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label align="left" for="modalQtdProduto" class="col-md-3 col-form-label"><span class="obg">*</span>Quantidade:</label>
+                    <div class="col-md-6">
+                        <input type="number" class="form-control" id="modalQtdProduto" >
+                    </div>
+                
+                    <label align="left" for="modalVlrPago" class="col-md-7 col-form-label">Valor de compra(R$):</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control money" id="modalVlrPago">
+                    </div>
+                    
+                    <label align="left" for="modalQtdVenda" class="col-md-7 col-form-label">Valor de venda(R$):</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control money" id="modalVlrVenda">
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="fecharModalLancarProdutoEstoque" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-primary" ng-click="lancarEstoque()" >Atualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal - Lançar estoque - fim-->
+    
+    <!-- Modal - Pesquisa carro - inicio-->
+    <div class="modal fade" id="modalPesquisaCarro" tabindex="-1" role="dialog" aria-labelledby="modalPesquisaCarro" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLancarProdutosEstoque">Lançar produto no estoque</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-striped table-hover">
                   <tr>
                       <td colspan="5" align="right">Pesquisar modelos:
                           <input type="text" ng-model="pesquisaModelo" id="pesquisa" placeholder="Pesquisa de modelos...">
@@ -281,14 +284,14 @@
                       <td>{{modelosTabela.ano}}</td>
                   </tr>
               </table>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- Modal - Pesquisa carro - fim-->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal - Pesquisa carro - fim-->
 
 
     <!-- FOOTER -->
@@ -299,26 +302,26 @@
         <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> -->
     </footer>
 
-	<!-- Modal - mensagens - inicio-->
-	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="pTitulo"></h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <p id="pMsg"></p>
-	      </div>
-	      <div class="modal-footer">
-	        	<button type="button" class="btn btn-secondary" ng-click="fecharModalMensagens()">Fechar</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- Modal - mensagens - fim-->
+    <!-- Modal - mensagens - inicio-->
+    <div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="pTitulo"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="pMsg"></p>
+          </div>
+          <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" ng-click="fecharModalMensagens()">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal - mensagens - fim-->
 
     <!-- Bootstrap core JavaScript================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -326,7 +329,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/locastyle.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <!-- biblioteca jQuery para mascara de dinheiro -->
+    <script src="js/jquery.maskMoney.js" type="text/javascript"></script>  
+
+
 </body>
 
-</html>
+</html> 

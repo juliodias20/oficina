@@ -49,8 +49,11 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 	    var hora = data.getHours();
 	    var minuto = data.getMinutes();
 		
-	    if (hora == '0'){hora = '00'};
-	    if (minuto == '0'){minuto = '00'};
+	    if (dia.toString().length == 1){dia = '0' + dia}
+	    if (mes.toString().length == 1){mes = '0' + mes}
+	    
+	    if (hora.toString().length == 1){hora = '0' + hora};
+	    if (minuto.toString().length == 1){minuto = '0' + minuto};
 	    
 	    var dataConvertida = dia+'/'+mes+'/'+ano+' - '+hora+':'+minuto;
 		
@@ -59,11 +62,14 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 	
 	$scope.listarUsuarios = function (){
 		$http.get(urlUsuario).success(function (usuarios){
-			/* isso faz com que seja possivel filtrar pela data  no campinho de busca
+			/* isso faz com que seja possivel filtrar pela data  no campinho de busca*/
 			for(var i = 0 ; i < usuarios.length ; i++ ){
 				usuarios[i].dtCriacao = unixToDate(usuarios[i].dtCriacao);
-			}*/
+			}
 			$scope.usuarios = usuarios;
+			
+			console.log(usuarios);
+			
 		}).error(function (erro){
 			alert(erro);
 		});
