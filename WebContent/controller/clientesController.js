@@ -1,4 +1,4 @@
-var clientesModulo = angular.module('clientesModulo',['ngCookies','ngMask']);
+var clientesModulo = angular.module('clientesModulo',['ngCookies']);
 
 clientesModulo.controller("clientesController", function ($http, $location, $scope, $rootScope, $cookies){
 	

@@ -25,7 +25,7 @@ public class OsDaoImplem implements OsDaoInterface {
 		entityManager.persist(osModelMerge);
 	}
 	
-	//metodo que atualiza o valor total da Ordem de Serviço, conforme os itens da OS são inseridos/alterados/removidos;
+	//metodo que atualiza o valor total da Ordem de Serviï¿½o, conforme os itens da OS sï¿½o inseridos/alterados/removidos;
 	@Override
 	public void alterar(Integer numOs, float valorTotal) {
 		Query query = entityManager.createQuery("update OsModel os set os.valorTotal = :valorTotal where os.numOs = :numOs");
@@ -44,7 +44,7 @@ public class OsDaoImplem implements OsDaoInterface {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<OsModel> getOs() {
-		Query query = entityManager.createQuery("from OsModel");
+		Query query = entityManager.createQuery("from OsModel os order by os.numOs desc");
 		return query.getResultList();
 	}
 	
@@ -53,14 +53,14 @@ public class OsDaoImplem implements OsDaoInterface {
 	@SuppressWarnings("unchecked")
 	public List<OsModel> getOs(Integer numOs) {
 		if(numOs >= 1) {
-			Query query = entityManager.createQuery("from OsModel os where os.numOs = :numOs");
+			Query query = entityManager.createQuery("from OsModel os where os.numOs = :numOs order by os.numOs desc");
 			query.setParameter("numOs", numOs);
 			return query.getResultList();
 		}else if(numOs == 0) {
-			Query query = entityManager.createQuery("from OsModel os where os.status = 'PENDENTE'");
+			Query query = entityManager.createQuery("from OsModel os where os.status = 'PENDENTE' order by os.numOs desc");
 			return query.getResultList();
 		}else if(numOs == -1) {
-			Query query = entityManager.createQuery("from OsModel os where os.status = 'ENCERRADA'");
+			Query query = entityManager.createQuery("from OsModel os where os.status = 'ENCERRADA' order by os.numOs desc");
 			return query.getResultList();
 		}else {
 			return null;

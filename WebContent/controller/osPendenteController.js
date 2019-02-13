@@ -96,7 +96,8 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	//função que seleciona um Item dos Itens do estoque
 	$scope.selecionaItem = function(itemSelecionado){
 		$scope.itemOs.produtoModel = itemSelecionado;
-		document.getElementById('nomeItem').value =  itemSelecionado.nomeProduto+' - '+itemSelecionado.modeloModel.nomeModelo+'('+itemSelecionado.modeloModel.qtdPortas+' Portas)';
+		console.log(itemSelecionado);
+		document.getElementById('nomeItem').value =  itemSelecionado.nomeProduto+' - '+itemSelecionado.modeloModel.nomeModelo+'('+itemSelecionado.modeloModel.qtdPortas+' P) -'+' Porta: '+itemSelecionado.porta;
 		$('#modalSelecionaItem').modal('hide');
 	}
     
@@ -109,6 +110,11 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		$('#modalIncluiItem').modal('show');
 
 		
+	}
+	
+	$scope.teste = function (){
+		$scope.itemOs.valorUnit = removeMoneyMask(document.getElementById('valorUnit').value);
+		console.log($scope.itemOs);
 	}
 	
     //função que lista os modelos de carro
@@ -202,12 +208,9 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	}
     }
     
-    $scope.testar = function (){
-    	console.log($scope.itemOs);
-    }
-    
     //função que insere novo item na OS
     $scope.salvarItem = function(){
+    	$scope.itemOs.valorUnit = removeMoneyMask(document.getElementById('valorUnit').value);
     	if(itemSelecionado()){
 	    	$scope.itemOs.vlrTotal = (Number($scope.itemOs.qtd) * Number($scope.itemOs.valorUnit));
 	    	
@@ -232,6 +235,8 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	    	    	    		})
 	    	    	    	}else{//insere novo item
 	    	    	    		if(prod.length == 0){
+	    	    	    			
+	    	    	    			//$scope.itemOs.valorUnit = document.getElementById
 		    	    		    	$http.post(urlItens,$scope.itemOs).success(function(ite){
 		    	    		    		var x = qtdProduto-ite.qtd;
 		    	    		    		$http.put(urlProduto+'/'+codProduto+'/'+x).success(function(){

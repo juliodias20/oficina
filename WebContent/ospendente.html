@@ -12,10 +12,6 @@
 <!--osPendenteController-->
 <script src="controller/osPendenteController.js"></script>
 
-<!-- Custom styles for this template -->
-<!-- <link href="css/oficinaEstilos.css" rel="stylesheet">
-<link href="css/osPendenteEstilos.css" rel="stylesheet"> -->
-
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"  crossorigin="anonymous">
 
@@ -110,9 +106,9 @@
                             <td>{{osTabela.numOs}}</td>
                             <td>{{osTabela.clienteModel.nomeCliente}}</td>
                             <td>{{osTabela.dhAbertura | date:'dd/MM/yyyy - HH:mm:ss'}}</td>
-                            <td>{{osTabela.modeloModel.nomeModelo+'/'+osTabela.modeloModel.qtdPortas+'P/'+osTabela.modeloModel.ano}}</td>
+                            <td>{{osTabela.modeloModel.nomeModelo+' / '+osTabela.modeloModel.qtdPortas+'P / '+osTabela.modeloModel.ano}}</td>
                             <td>{{osTabela.placaCarro}}</td>
-                            <td>{{osTabela.valorTotal}}</td>
+                            <td>{{osTabela.valorTotal | currency : "R$ "}}</td>
                         </tr>
                     </table>
                 </div>
@@ -155,7 +151,7 @@
                     
                     <div class="form-group row">
                         <label align="right" for="cliente" class="col-sm-1 col-form-label">Cliente:</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <input type="text" disabled class="form-control" id="cliente">
                         </div>
                         <div class="col-sm-1" align="left">
@@ -171,8 +167,8 @@
                     
                     <div class="form-group row">
                     
-                        <label align="right" for="carro" class="col-sm-1 col-form-label"><span class="obg">*</span>Carro:</label>
-                        <div class="col-sm-3">
+                        <label align="right" for="carro" class="col-sm-1 col-form-label">Carro:</label>
+                        <div class="col-sm-4">
                             <input type="text" disabled class="form-control" id="nomeModeloCar" >
                         </div>
                         
@@ -195,7 +191,7 @@
                 
                     <hr>
 
-                <!-- itens de os - inicio -->
+                    <!-- itens de os - inicio -->
                     <div class="container row">
                     <h2 align="left">Itens</h2>
                     </div>
@@ -212,11 +208,11 @@
                         <th>Valor unitário</th>
                         <th>Valor total</th>
                         <th></th>
-                        <tr ng-repeat="itensTabela in itens | filter:pesquisaItens" ng-dblclick="alteraItem(itensTabela);">
+                        <tr ng-repeat="itensTabela in itens | filter:pesquisaItens" >
                             <td>{{itensTabela.produtoModel.nomeProduto}}</td>
                             <td>{{itensTabela.qtd}}</td>
-                            <td>{{itensTabela.valorUnit}}</td>
-                            <td>{{itensTabela.vlrTotal}}</td>
+                            <td>{{itensTabela.valorUnit | currency : "R$ "}}</td>
+                            <td>{{itensTabela.vlrTotal | currency : "R$ "}}</td>
                             <td align="right"><button type="submit" ng-click="excluirItem(itensTabela)" class="btn btn-danger">Remover item</button></td>
 
                         </tr>
@@ -345,19 +341,18 @@
                 </div>
                 <div class="form-group row">
                     <label align="right" for="qtdItem" class="col-sm-2 col-form-label">Quantidade:</label>
-                    <div class="col-2">
+                    <div class="col-3">
                         <input type="text" class="form-control" ng-model="itemOs.qtd" id="qtdItem">
                     </div>
                     <label align="right" for="valorUnit" class="col-sm-2 col-form-label">Valor unitário:</label>
-                    <div class="col-2">
-                        <input type="text" class="form-control" ng-model="itemOs.valorUnit" id="valorUnit">
+                    <div class="col-3">
+                        <input type="text" class="money form-control" ng-model="itemOs.valorUnit" id="valorUnit">
                     </div>
                 </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" ng-click="salvarItem()">Incluir Item</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button ng-click="testar()">botao</button>
           </div>
         </div>
       </div>
@@ -451,6 +446,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
+	<script src="js/jquery.maskMoney.js" type="text/javascript"></script> 
 </body>
 </html>
