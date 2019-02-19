@@ -10,10 +10,10 @@ osEncerradasModulo.controller("osEncerradasController", function ($http, $locati
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://localhost:8080/Oficina/login.html";
+        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
 
         }
         
@@ -24,7 +24,7 @@ osEncerradasModulo.controller("osEncerradasController", function ($http, $locati
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://localhost:8080/Oficina/login.html";	
+         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
     };
     //--------------------------------------------------------autenticação de login
     
@@ -46,8 +46,8 @@ osEncerradasModulo.controller("osEncerradasController", function ($http, $locati
 		return dataConvertida;
 	}
     
-    urlOs = 'http://localhost:8080/Oficina/rest/os';
-    urlItens = 'http://localhost:8080/Oficina/rest/subos';
+    urlOs = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/os';
+    urlItens = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/subos';
     
     //função que lista os Itens(produtos) vinculados a OS
     $scope.listarItensOs = function(){
