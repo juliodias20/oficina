@@ -20,7 +20,7 @@ public class ClienteViaCepWS {
             URL url = new URL("http://viacep.com.br/ws/"+ cep +"/json");
             URLConnection urlConnection = url.openConnection();
             InputStream is = urlConnection.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
 
             StringBuilder jsonSb = new StringBuilder();
 
@@ -35,18 +35,4 @@ public class ClienteViaCepWS {
         return json;
     }
 
-    public static void main(String[] args) throws IOException {
-        String json = buscarCep("69046000");
-        System.out.println(json);
-
-        Map<String,String> mapa = new HashMap<>();
-
-        Matcher matcher = Pattern.compile("\"\\D.*?\": \".*?\"").matcher(json);
-        while (matcher.find()) {
-            String[] group = matcher.group().split(":");
-            mapa.put(group[0].replaceAll("\"", "").trim(), group[1].replaceAll("\"", "").trim());
-        }
-
-        System.out.println(mapa);
-    }
 }

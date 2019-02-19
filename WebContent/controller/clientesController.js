@@ -27,7 +27,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
          window.location.href="http://localhost:8080/Oficina/login.html";	
     };
     //--------------------------------------------------------autenticação de login
-	urlCep = 'http://viacep.com.br/ws/';
+	urlCep = 'http://localhost:8080/Oficina/rest/ceps/';
 	urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
 	
 	/*função remove mascara CPF */
@@ -292,7 +292,7 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 	$scope.buscaCEP = function(){
 		var aux = $scope.cliente.cep;
 		var c = aux.replace('-','');
-		$http.get(urlCep+c+'/json', {
+		$http.get(urlCep+c, {
 			headers: {
 				'Access-Control-Allow-Origin':'*',
 				'Access-Control-Allow-Headers':'origin, content-type, accept, authorization'
