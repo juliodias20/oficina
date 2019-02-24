@@ -1,18 +1,9 @@
 package br.com.maverick.rest.facade.model;
 
-import java.sql.Timestamp;
-import java.util.List;
-
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import br.com.maverick.model.model.HistoricoPrecoProduto;
-import br.com.maverick.service.model.HistoricoPrecoProdutoServiceInterface;
 
 @Path("/historicoproduto")
 @Produces({MediaType.APPLICATION_JSON,
