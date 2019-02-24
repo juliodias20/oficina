@@ -46,8 +46,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="produtos.html">Estoque</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEstoque" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Estoque
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownEstoque">
+                            <a class="dropdown-item" href="produtos.html">Produtos</a>
+                            <a class="dropdown-item" href="estoques.html">Estoque</a>
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -201,7 +207,7 @@
                     <div align="center">
                         <button type="submit" ng-click="limparCampos()" class="btn btn-success">Novo</button>
                         <button type="submit" ng-click="salvar()" class="btn btn-primary">Salvar</button>
-                        <button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>                  
+                        <!-- <button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>  -->         
                     </div>
                 </div>
                 <!-- Aba Cadastro - Fim -->

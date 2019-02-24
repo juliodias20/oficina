@@ -2,21 +2,22 @@ var osPendenteModulo = angular.module('osPendenteModulo',['ngCookies']);
 
 osPendenteModulo.controller("osPendenteController", function ($http, $location, $scope, $rootScope, $cookies){
 	
-	//--------------------------------------------------------autenticação de login
+	// --------------------------------------------------------autenticação de
+	// login
 	$rootScope.globals = $cookies.getObject('globals') || {};
     if ($rootScope.globals.currentUser) {
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
+        // redirect to login page if not logged in and trying to access a
+		// restricted page
+        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://localhost:8080/Oficina/login.html";
+        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
 
         }
-        
         
         $scope.perfil = $rootScope.globals.currentUser.usuario.perfilModel.nomePerfil;
     });
@@ -25,9 +26,10 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://localhost:8080/Oficina/login.html";	
+         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
     };
-    //--------------------------------------------------------autenticação de login
+    // --------------------------------------------------------autenticação de
+	// login
     
     function unixToDate(unixDate){
 		var data = new Date(unixDate);
@@ -48,14 +50,16 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	}
     
     
-    urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
-    urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
-    urlOs = 'http://localhost:8080/Oficina/rest/os';
-    urlItens = 'http://localhost:8080/Oficina/rest/subos';
-    urlProduto = 'http://localhost:8080/Oficina/rest/produtos';
+    urlModelo = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/modelos'
+    urlCliente = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/clientes';
+    urlOs = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/os';
+    urlItens = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/subos';
+    urlProduto = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/produtos';
+    urlEstoque = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/estoques'
     
     
-    //Função que atualiza o preço total da Ordem de Serviço(soma o valor de cada produto da OS e seta na tabela "tbos")
+    // Função que atualiza o preço total da Ordem de Serviço(soma o valor de
+	// cada produto da OS e seta na tabela "tbos")
     $scope.atualizaPrecoOs = function(){
     	$http.get(urlItens+'/'+$scope.osPendente.numOs).success(function (itens){
     		var vlrTotal = 0.0;
@@ -75,7 +79,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	
 	}  
     
-    //função que lista os Itens(produtos) vinculados a OS
+    // função que lista os Itens(produtos) vinculados a OS
     $scope.listarItensOs = function(){
     	$http.get(urlItens+'/'+$scope.osPendente.numOs).success(function (itens){
     		$scope.itens = itens;
@@ -84,7 +88,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	})
     }
     
-    //função que lista os Itens do estoque
+    // função que lista os Itens do estoque
     $scope.listarItensEstoque = function(){
     	$http.get(urlProduto).success(function (itensEstoque){
     		$scope.itensEstoque = itensEstoque;
@@ -93,15 +97,14 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	})
     }
     
-	//função que seleciona um Item dos Itens do estoque
+	// função que seleciona um Item dos Itens do estoque
 	$scope.selecionaItem = function(itemSelecionado){
 		$scope.itemOs.produtoModel = itemSelecionado;
-		console.log(itemSelecionado);
 		document.getElementById('nomeItem').value =  itemSelecionado.nomeProduto+' - '+itemSelecionado.modeloModel.nomeModelo+'('+itemSelecionado.modeloModel.qtdPortas+' P) -'+' Porta: '+itemSelecionado.porta;
 		$('#modalSelecionaItem').modal('hide');
 	}
     
-    //função que chama Modal para alterar item já lançado na OS
+    // função que chama Modal para alterar item já lançado na OS
 	$scope.alteraItem = function (itemSelecionado){
 		$scope.operacao = 'U';
 		$scope.itemOs = {};
@@ -112,28 +115,22 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		
 	}
 	
-	$scope.teste = function (){
-		$scope.itemOs.valorUnit = removeMoneyMask(document.getElementById('valorUnit').value);
-		console.log($scope.itemOs);
-	}
-	
-    //função que lista os modelos de carro
+    // função que lista os modelos de carro
     $scope.listarModelos = function(){
 		$http.get(urlModelo).success(function (modelos){
 			$scope.modelos = modelos;
-			console.log(modelos);
 		}).error(function (erro){
 			alert(erro);
 		})
 	}
     
-    //função que seleciona um modelo de carro da lista de modelos de carro
+    // função que seleciona um modelo de carro da lista de modelos de carro
     $scope.pesquisaCarro = function(modeloSelecionado){
 		$scope.osPendente.modeloModel = modeloSelecionado;
 		document.getElementById('nomeModeloCar').value =  modeloSelecionado.nomeModelo+' / '+modeloSelecionado.qtdPortas+'P / '+modeloSelecionado.ano;
 	}  
     
-    //função que lista os clientes cadastrados
+    // função que lista os clientes cadastrados
     $scope.listarClientes = function (){
 		$http.get(urlCliente).success(function (clientes){
 			$scope.clientes = clientes;
@@ -142,27 +139,26 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		});
 	};
 	
-	//função que seleciona um cliente da lista clientes
+	// função que seleciona um cliente da lista clientes
     $scope.buscaCliente = function(clienteSelecionado){
 		$scope.osPendente.clienteModel = clienteSelecionado;
 		document.getElementById('cliente').value =  clienteSelecionado.nomeCliente;
 	} 
 	
-	//função que lista todas as OS Pendentes(que ainda não foram encerradas)
+	// função que lista todas as OS Pendentes(que ainda não foram encerradas)
 	$scope.listarOs = function (){
 		$http.get(urlOs+'/0').success(function (oss){
 			/*
-			for(var i = 0 ; i < oss.length ; i++ ){
-				oss[i].dhAbertura = unixToDate(oss[i].dhAbertura);
-			}
-			*/
+			 * for(var i = 0 ; i < oss.length ; i++ ){ oss[i].dhAbertura =
+			 * unixToDate(oss[i].dhAbertura); }
+			 */
 			$scope.osPendentes = oss;
 		}).error(function (erro){
 			alert(erro);
 		})
 	}
 	
-	//função que seleciona uma OS da lista de OS's Pendente
+	// função que seleciona uma OS da lista de OS's Pendente
 	$scope.selecionaOs = function(osSelecionada){
 		$scope.osPendente = osSelecionada;
 		document.getElementById('nomeModeloCar').value =  osSelecionada.modeloModel.nomeModelo+' / '+osSelecionada.modeloModel.qtdPortas+'P / '+osSelecionada.modeloModel.ano;
@@ -171,7 +167,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	
 	
 	
-	//função que chama o Modal com formulario do item que será lançado
+	// função que chama o Modal com formulario do item que será lançado
 	$scope.mostraModalIncluiItem = function (){
 		document.getElementById('nomeItem').value="";
 		$scope.itemOs = {};
@@ -181,14 +177,14 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	}
 
 	
-	//função que chama que busca itens do estoque
+	// função que chama que busca itens do estoque
 	$scope.mostraModalSelecionaItem = function (){
 		$('#modalSelecionaItem').modal('show');
 	}
     
-    //função que atualiza o cadastro da OS
+    // função que atualiza o cadastro da OS
     $scope.salvar = function() {
-    	if($scope.osPendente.descricao.length > 0){
+    	if($scope.osPendente.problema.length > 0){
 			$http.put(urlOs,$scope.osPendente).success(function(os){
 				$scope.chamarModalMensagens('Mensagem!','Ordem de Serviço atualizada com sucesso!');
 			}).error(function(erro){
@@ -208,9 +204,10 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	}
     }
     
-    //função que insere novo item na OS
+    // função que insere novo item na OS
     $scope.salvarItem = function(){
     	$scope.itemOs.valorUnit = removeMoneyMask(document.getElementById('valorUnit').value);
+    	
     	if(itemSelecionado()){
 	    	$scope.itemOs.vlrTotal = (Number($scope.itemOs.qtd) * Number($scope.itemOs.valorUnit));
 	    	
@@ -218,36 +215,28 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	    		
 	    			var codProduto, qtdProduto;
 	    	    	
-	    	    	$http.get(urlProduto+'/'+$scope.itemOs.produtoModel.codProduto).success(function(p){
-	    	    		codProduto = p[0].codProduto;
-	    	    		qtdProduto = p[0].qtdEstoque;
+	    	    	$http.get(urlEstoque+'/'+$scope.itemOs.produtoModel.codProduto).success(function(p){
 	    	    		
-	    	    		if(qtdProduto-Number($scope.itemOs.qtd) <= 0){
+	    	    		codProduto = $scope.itemOs.produtoModel.codProduto;
+	    	    		qtdProduto = p[0].qtdEstoque;
+
+	    	    		if(qtdProduto-Number($scope.itemOs.qtd) < 0){
 	    	        		$scope.chamarModalMensagens('Erro!','Não é possivel inserir este item! Não há unidades suficiente no estoque!');
-	    	        	}else{    	
-	    	    	    	if($scope.operacao == 'U'){//atualiza item
-	    	    	    		$http.put(urlItens,$scope.itemOs).success(function(){
-	    	    	    			$scope.chamarModalMensagens('Mensagem!','Item alterado com sucesso!');
-	    	    	    			$scope.atualizaPrecoOs();
-	    	    	    			$('#modalIncluiItem').modal('hide');
-	    	    	    		}).error(function (erro){
-	    	    	    			alert(erro);
-	    	    	    		})
-	    	    	    	}else{//insere novo item
-	    	    	    		if(prod.length == 0){
+	    	        	}else{// insere novo item
+	    	    	    		if(prod.length == 0){// verifica se esta OS já tem O produto que será inserido.
 	    	    	    			
-	    	    	    			//$scope.itemOs.valorUnit = document.getElementById
 		    	    		    	$http.post(urlItens,$scope.itemOs).success(function(ite){
-		    	    		    		var x = qtdProduto-ite.qtd;
-		    	    		    		$http.put(urlProduto+'/'+codProduto+'/'+x).success(function(){
-		    	    		    			console.log('atualizou o estoque');
+		    	    		    		var qtdEstoqueAtualizado = qtdProduto-ite.qtd;
+		    	    		    		
+		    	    		    		$http.put(urlEstoque+'/'+codProduto+'/'+qtdEstoqueAtualizado).success(function(){
 		    	    		    		}).error(function (erro){
-		    	    		    			alert('erro ao atualizar estoque');
-		    	    		    		});	    	    		    		
-			    	    		    		$scope.atualizaPrecoOs();
-			    	    		    		$('#modalIncluiItem').modal('hide');
-			    	    		    		$scope.chamarModalMensagens('Mensagem!','Item lançado na OS com  sucesso!');
-			    	    		    		$scope.listarItensOs();
+		    	    		    			alert('Erro: O produto foi inserido na OS mas o sistema não conseguiu atualizar o estoque');
+		    	    		    		}); 
+		    	    		    		
+		    	    		    		$scope.atualizaPrecoOs();
+		    	    		    		$('#modalIncluiItem').modal('hide');
+		    	    		    		$scope.chamarModalMensagens('Mensagem!','Item lançado na OS com  sucesso!');
+		    	    		    		$scope.listarItensOs();
 		    	    		    		
 		    	    		    	}).error(function(erro){
 		    	    		    		alert(erro);
@@ -255,15 +244,12 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	    	    	    		}else{
 	    	    	    			$scope.chamarModalMensagens('Mensagem!','Este item já está cadastrado na OS!');
 	    	    	    		};
-	    	    	    	}
-	    	        	}		
-	    	    		
+	    	    	    		
+	    	        	}
 	    	    	}).error(function(erro){
 	    	    		alert(erro);
-	    	    	});	
-	    		/*
-	    		*/
-	    	
+	    	    	});	    	
+	    	    	
 	    	}).error(function (erro){
 	    		alert(erro);
 	    	});
@@ -272,17 +258,16 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	}
     }	
 	
-	//função que remove um item da OS
+	// função que remove um item da OS
 	$scope.excluirItem = function(itemSelecionado){
-    	$http.get(urlProduto+'/'+itemSelecionado.produtoModel.codProduto).success(function (pro){
+		$http.get(urlEstoque+'/'+itemSelecionado.produtoModel.codProduto).success(function (pro){
     		$http.delete(urlItens+'/'+itemSelecionado.numOs+'/'+itemSelecionado.produtoModel.codProduto).success(function(){
     		
-	    		var x = itemSelecionado.qtd + pro[0].qtdEstoque;
+	    		var qtdEstoqueAtualizado = itemSelecionado.qtd + pro[0].qtdEstoque;
 
-	    			$http.put(urlProduto+'/'+itemSelecionado.produtoModel.codProduto+'/'+x).success(function(){
-		    			console.log('atualizou o estoque');
+	    			$http.put(urlEstoque+'/'+itemSelecionado.produtoModel.codProduto+'/'+qtdEstoqueAtualizado).success(function(){
 		    		}).error(function (erro){
-		    			alert('erro ao atualizar estoque');
+		    			alert('Erro: O produto foi removido na OS mas o sistema não conseguiu atualizar o estoque');
 		    		});
 	
 	    		$scope.chamarModalMensagens('Mensagem!','Item removido da OS');
@@ -293,10 +278,11 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	    	});
     	}).error(function (erro){
     		alert(erro);
-    	});   
+    	});
     }
     
-    //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+    // função que chama um Modal para apresentar mensagens, recebe de parâmetro
+	// um título e uma mensagem
     $scope.chamarModalMensagens = function (vTitulo, vMensagem){
     	$('#modalMensagens').modal('show');
     	document.getElementById('pTitulo').innerHTML = vTitulo;
@@ -304,17 +290,17 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	
     }
     
-    //função que fecha o modal de mensagem
+    // função que fecha o modal de mensagem
     $scope.fecharModalMensagens = function(){
     	if (document.getElementById.value = "Ordem de Serviço encerrada com sucesso!" ){
-    		window.location.href="http://localhost:8080/Oficina/osencerradas.html";
+    		window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/osencerradas.html";
     	}
     	document.getElementById('pTitulo').innerHTML = "";
     	document.getElementById('pMsg').innerHTML = "";
     	$('#modalMensagens').modal('hide');
     }
     
-    //função que encerra a OS
+    // função que encerra a OS
     $scope.encerrarOs = function(){
     	var dhEnc = new Date().getTime();
     	$scope.fechaOs = {};
@@ -336,7 +322,8 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     
     }
     
-  //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
+  // função que chama um Modal para apresentar mensagens, recebe de parâmetro
+	// um título e uma mensagem
     $scope.chamarModalMensagens = function (vTitulo, vMensagem){
     	$('#modalMensagens').modal('show');
     	document.getElementById('pTitulo').innerHTML = vTitulo;
@@ -344,15 +331,14 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	
     }
     
-    //função que fecha o modal de mensagem
+    // função que fecha o modal de mensagem
     $scope.fecharModalMensagens = function(){
-    	console.log(document.getElementById('pMsg').content);
     	$('#modalMensagens').modal('hide');
     	
     }
     
     $scope.fecharModelEncerraOs = function (){
-    	window.location.href="http://localhost:8080/Oficina/osencerradas.html";
+    	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/osencerradas.html";
     }
     
     $scope.listarOs();

@@ -7,9 +7,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/maverick</jta-data-source>
 		<properties>
-			<property name="hibernate.dia"
-				value="org.hibernate.dialect.MySQLDialect" />
-			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.dia" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.hbm2ddl.auto" value="validate" />
 		</properties>
 	</persistence-unit>

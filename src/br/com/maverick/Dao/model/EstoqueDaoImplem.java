@@ -24,6 +24,15 @@ public class EstoqueDaoImplem implements EstoqueDaoInterface {
 		EstoqueModel estoqueModelMerge = entityManager.merge(estoqueModel);
 		entityManager.persist(estoqueModelMerge);		
 	}
+	
+	@Override
+	public void alterar(Integer codProduto, Integer qtdEstoque) {
+		Query query = entityManager.createQuery("update EstoqueModel est set est.qtdEstoque = :qtdEstoque where est.produtoModel.codProduto = :codProduto");
+			  query.setParameter("qtdEstoque", qtdEstoque);
+			  query.setParameter("codProduto", codProduto);
+			  query.executeUpdate();
+		
+	}
 
 	@Override
 	public void excluir(EstoqueModel estoqueModel) {

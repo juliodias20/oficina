@@ -10,10 +10,10 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://localhost:8080/Oficina/login.html";
+        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
 
         }
         
@@ -25,11 +25,11 @@ usuariosModulo.controller("usuariosController", function ($http, $location, $sco
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://localhost:8080/Oficina/login.html";	
+         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
     };
 
-	urlUsuario = 'http://localhost:8080/Oficina/rest/usuarios';
-	urlPerfil = 'http://localhost:8080/Oficina/rest/perfis';
+	urlUsuario = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/usuarios';
+	urlPerfil = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/perfis';
 	
 	function cadastroCompleto(){
 		

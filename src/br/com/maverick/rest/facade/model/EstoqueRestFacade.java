@@ -45,5 +45,12 @@ public class EstoqueRestFacade {
 	public void alterar(EstoqueModel estoqueModel) {
 		estoqueServiceInterface.alterar(estoqueModel);
 	}
+	
+	@PUT
+	@Path("/{codProduto}/{qtdEstoque}")
+	public void alterar(@PathParam("codProduto") Integer codProduto,
+						@PathParam("qtdEstoque") Integer qtdEstoque) {
+		estoqueServiceInterface.alterar(codProduto, qtdEstoque);
+	}
 
 }

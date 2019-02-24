@@ -10,10 +10,10 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://localhost:8080/Oficina/login.html";
+        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
 
         }
         
@@ -25,17 +25,17 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://localhost:8080/Oficina/login.html";	
+         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
     };
     //--------------------------------------------------------autenticação de login
     
-    urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
-    urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
-    urlOs = 'http://localhost:8080/Oficina/rest/os';
+    urlModelo = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/modelos'
+    urlCliente = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/clientes';
+    urlOs = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/os';
     
     function cadastroOs(){
     	if(!$scope.lancaros.modeloModel.codModelo || !$scope.lancaros.clienteModel.codCliente ||
-    	   !$scope.lancaros.placaCarro || !$scope.lancaros.tipoOs || !$scope.lancaros.descricao){
+    	   !$scope.lancaros.placaCarro || !$scope.lancaros.tipoOs || !$scope.lancaros.problema){
     		return false;
     	}else{
     		return true;
@@ -85,7 +85,7 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     	$scope.lancaros.clienteModel.codCliente = "";
     	$scope.lancaros.placaCarro = "";
     	$scope.lancaros.dhAbertura = "";
-    	$scope.lancaros.descricao ="";
+    	$scope.lancaros.problema ="";
     	$scope.lancaros.status = "";
     	$scope.lancaros.tipoOs = "";
     	document.getElementById('nomeModeloCar').value = "";
@@ -114,7 +114,7 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 			$http.post(urlOs,$scope.lancaros).success(function(os){
 				$scope.chamarModalMensagens('Mensagem','Ordem de Serviço lançada com sucesso!');
 				$scope.limparCampos();
-				window.location.href="http://localhost:8080/Oficina/ospendente.html";
+				window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/ospendente.html";
 			}).error(function(erro){
 				alert(erro);
 			});			

@@ -48,8 +48,15 @@
 					<li class="nav-item">
 			          	<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
 			        </li>
-					<li class="nav-item"><a class="nav-link" href="produtos.html">Estoque</a>
-					</li>
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEstoque" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Estoque
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownEstoque">
+                            <a class="dropdown-item" href="produtos.html">Produtos</a>
+                            <a class="dropdown-item" href="estoques.html">Estoque</a>
+                        </div>
+                    </li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -118,9 +125,9 @@
 			</div>
 			<hr>
 			<div class="form-group row">
-				<label align="left" for="descricao" class="col-sm-1 col-form-label"><span class="obg">*</span>Descrição:</label>
+				<label align="left" for="problema" class="col-sm-1 col-form-label"><span class="obg">*</span>Problema:</label>
 				<div class="col-sm-11">
-					<textarea class="form-control" ng-model="lancaros.descricao" id="descricao"></textarea> 
+					<textarea class="form-control" ng-model="lancaros.problema" id="problema"></textarea> 
 				</div>
 			</div>
 

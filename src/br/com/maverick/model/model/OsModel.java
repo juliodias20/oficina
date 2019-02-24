@@ -31,8 +31,11 @@ public class OsModel {
 	@Column(name="status")
 	String status;
 	
-	@Column(name="descricao")
-	String descricao;
+	@Column(name="problema",columnDefinition = "LONGTEXT")
+	String problema;
+	
+	@Column(name="solucao", columnDefinition = "LONGTEXT")
+	String solucao;
 	
 	@Column(name="placacarro")
 	String placaCarro;
@@ -54,13 +57,14 @@ public class OsModel {
 	public OsModel() {
 	}
 
-	public OsModel(Integer numOs, Date dhAbertura, Date dhEncerramento, String status, String descricao,
+	public OsModel(Integer numOs, Date dhAbertura, Date dhEncerramento, String status, String problema, String solucao,
 			String placaCarro, float valorTotal, String tipoOs, ModeloModel modeloModel, ClienteModel clienteModel) {
 		this.numOs = numOs;
 		this.dhAbertura = dhAbertura;
 		this.dhEncerramento = dhEncerramento;
 		this.status = status;
-		this.descricao = descricao;
+		this.problema = problema;
+		this.solucao = solucao;
 		this.placaCarro = placaCarro;
 		this.valorTotal = valorTotal;
 		this.tipoOs = tipoOs;
@@ -100,12 +104,12 @@ public class OsModel {
 		this.status = status.toUpperCase();
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getProblema() {
+		return problema;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao.toUpperCase();
+	public void setProblema(String problema) {
+		this.problema = problema.toUpperCase();
 	}
 
 	public String getPlacaCarro() {
@@ -146,6 +150,19 @@ public class OsModel {
 
 	public void setClienteModel(ClienteModel clienteModel) {
 		this.clienteModel = clienteModel;
+	}
+	
+
+	public String getSolucao() {
+		return solucao;
+	}
+
+	public void setSolucao(String solucao) {
+		this.solucao = solucao;
+	}
+
+	public void setNumOs(Integer numOs) {
+		this.numOs = numOs;
 	}
 
 	@Override

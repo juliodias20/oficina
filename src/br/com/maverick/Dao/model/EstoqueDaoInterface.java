@@ -10,6 +10,8 @@ public interface EstoqueDaoInterface {
 	
 	void alterar(EstoqueModel estoqueModel);
 	
+	void alterar(Integer codProduto, Integer qtdEstoque);
+	
 	void excluir(EstoqueModel estoqueModel);
 	
 	List<EstoqueModel> getEstoques();

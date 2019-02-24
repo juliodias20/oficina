@@ -35,30 +35,23 @@ public class EstoqueModel {
 	@JoinColumn(name="codproduto", referencedColumnName="codproduto", nullable = false)
 	ProdutoModel produtoModel;
 	
-	/*
-	@OneToMany(mappedBy="estoqueModel")
-	private List<HistoricoPrecoProduto> historicoPrecoModel;
-	
-	@XmlTransient
-	public List<HistoricoPrecoProduto> getHistoricos(){
-		return historicoPrecoModel;
-	}
-	*/
-	
-	//@ManyToOne
+	//@OneToOne
 	//@JoinColumn(name="codproduto",referencedColumnName="codproduto", nullable=false)
 	//Integer codProduto;
 	
 	public EstoqueModel() {
 	}
-
+	
 	public EstoqueModel(Integer codEstoque, Integer qtdEstoque, double vlrCompra, double vlrVenda,
-			List<HistoricoPrecoProduto> historicoPrecoModel) {
+			ProdutoModel produtoModel
+			//, Integer codProduto
+			) {
 		this.codEstoque = codEstoque;
 		this.qtdEstoque = qtdEstoque;
 		this.vlrCompra = vlrCompra;
 		this.vlrVenda = vlrVenda;
-		//this.historicoPrecoModel = historicoPrecoModel;
+		this.produtoModel = produtoModel;
+//		this.codProduto = codProduto;
 	}
 
 	public Integer getCodEstoque() {
@@ -100,7 +93,7 @@ public class EstoqueModel {
 	public void setProdutoModel(ProdutoModel produtoModel) {
 		this.produtoModel = produtoModel;
 	}
-
+	
 	/*
 	public Integer getCodProduto() {
 		return codProduto;
@@ -117,8 +110,6 @@ public class EstoqueModel {
 		result = prime * result + ((codEstoque == null) ? 0 : codEstoque.hashCode());
 		return result;
 	}
-
-	
 
 	@Override
 	public boolean equals(Object obj) {

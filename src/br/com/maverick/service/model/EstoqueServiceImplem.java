@@ -24,6 +24,12 @@ public class EstoqueServiceImplem implements EstoqueServiceInterface {
 	public void alterar(EstoqueModel estoqueModel) {
 		estoqueDaoInterface.alterar(estoqueModel);
 	}
+	
+	@Override
+	@Transactional
+	public void alterar(Integer codProduto, Integer qtdEstoque) {
+		estoqueDaoInterface.alterar(codProduto, qtdEstoque);
+	}
 
 	@Override
 	@Transactional
