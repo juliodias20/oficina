@@ -10,10 +10,10 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
+        	window.location.href="http://localhost:8080/Oficina/login.html";
 
         }
         
@@ -25,7 +25,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
+         window.location.href="http://localhost:8080/Oficina/login.html";	
     };
     //--------------------------------------------------------autenticação de login
     
@@ -48,11 +48,11 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	}
     
     
-    urlModelo = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/modelos'
-    urlCliente = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/clientes';
-    urlOs = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/os';
-    urlItens = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/subos';
-    urlProduto = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/produtos';
+    urlModelo = 'http://localhost:8080/Oficina/rest/modelos'
+    urlCliente = 'http://localhost:8080/Oficina/rest/clientes';
+    urlOs = 'http://localhost:8080/Oficina/rest/os';
+    urlItens = 'http://localhost:8080/Oficina/rest/subos';
+    urlProduto = 'http://localhost:8080/Oficina/rest/produtos';
     
     
     //Função que atualiza o preço total da Ordem de Serviço(soma o valor de cada produto da OS e seta na tabela "tbos")
@@ -307,7 +307,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     //função que fecha o modal de mensagem
     $scope.fecharModalMensagens = function(){
     	if (document.getElementById.value = "Ordem de Serviço encerrada com sucesso!" ){
-    		window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/osencerradas.html";
+    		window.location.href="http://localhost:8080/Oficina/osencerradas.html";
     	}
     	document.getElementById('pTitulo').innerHTML = "";
     	document.getElementById('pMsg').innerHTML = "";
@@ -352,7 +352,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     }
     
     $scope.fecharModelEncerraOs = function (){
-    	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/osencerradas.html";
+    	window.location.href="http://localhost:8080/Oficina/osencerradas.html";
     }
     
     $scope.listarOs();

@@ -34,7 +34,6 @@ public class ClienteDaoImplem implements ClienteDaoInterface {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ClienteModel> getClientes() {
-		System.out.println("GET SEM PARAMETROS");
 		Query query = entityManager.createQuery("from ClienteModel");
 		return query.getResultList();
 	}

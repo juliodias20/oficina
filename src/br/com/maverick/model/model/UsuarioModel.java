@@ -1,5 +1,6 @@
 package br.com.maverick.model.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -31,10 +32,10 @@ public class UsuarioModel {
 	String senha;
 	
 	@Column(name="dtcriacao")
-	Date dtCriacao;
+	Timestamp dtCriacao;
 	
 	@Column(name="dtdesativacao")
-	Date dtDesativacao;
+	Timestamp dtDesativacao;
 	
 	@Column(name="ativo")
 	String ativo;
@@ -47,7 +48,7 @@ public class UsuarioModel {
 	public UsuarioModel() {
 	}
 
-	public UsuarioModel(Integer codUsuario, String login, String senha, Date dtCriacao, Date dtDesativacao,
+	public UsuarioModel(Integer codUsuario, String login, String senha, Timestamp dtCriacao, Timestamp dtDesativacao,
 			String ativo) {
 		this.codUsuario = codUsuario;
 		this.login = login;
@@ -85,7 +86,7 @@ public class UsuarioModel {
 		return dtCriacao;
 	}
 
-	public void setDtCriacao(Date dtCriacao) {
+	public void setDtCriacao(Timestamp dtCriacao) {
 		this.dtCriacao = dtCriacao;
 	}
 
@@ -93,7 +94,7 @@ public class UsuarioModel {
 		return dtDesativacao;
 	}
 
-	public void setDtDesativacao(Date dtDesativacao) {
+	public void setDtDesativacao(Timestamp dtDesativacao) {
 		this.dtDesativacao = dtDesativacao;
 	}
 
