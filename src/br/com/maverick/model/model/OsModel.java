@@ -158,7 +158,7 @@ public class OsModel {
 	}
 
 	public void setSolucao(String solucao) {
-		this.solucao = solucao;
+		this.solucao = solucao.toUpperCase();
 	}
 
 	public void setNumOs(Integer numOs) {

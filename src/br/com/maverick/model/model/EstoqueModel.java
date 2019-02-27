@@ -41,15 +41,12 @@ public class EstoqueModel {
 	}
 	
 	public EstoqueModel(Integer codEstoque, Integer qtdEstoque, double vlrCompra, double vlrVenda,
-			ProdutoModel produtoModel
-			//, Integer codProduto
-			) {
+			ProdutoModel produtoModel) {
 		this.codEstoque = codEstoque;
 		this.qtdEstoque = qtdEstoque;
 		this.vlrCompra = vlrCompra;
 		this.vlrVenda = vlrVenda;
 		this.produtoModel = produtoModel;
-//		this.codProduto = codProduto;
 	}
 
 	public Integer getCodEstoque() {
@@ -92,15 +89,6 @@ public class EstoqueModel {
 		this.produtoModel = produtoModel;
 	}
 	
-	/*
-	public Integer getCodProduto() {
-		return codProduto;
-	}
-
-	public void setCodProduto(Integer codProduto) {
-		this.codProduto = codProduto;
-	}
-	*/
 	@Override
 	public int hashCode() {
 		final int prime = 31;

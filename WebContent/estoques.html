@@ -71,8 +71,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
                             <a class="dropdown-item" href="lancaros.html">Lançar OS</a>
-                            <a class="dropdown-item" href="ospendente.html">OS abertas</a>
-                            <a class="dropdown-item" href="osencerradas.html">OS fechadas</a>
+                            <a class="dropdown-item" href="ospendente.html">OS pendentes</a>
+                            <a class="dropdown-item" href="osencerradas.html">OS encerradas</a>
                         </div>
                     </li>
                 </ul>
@@ -111,7 +111,7 @@
                         <th>Carro</th>
                         <th>Porta</th>
                         <th>Tipo</th>
-                        <tr class="chamaAba" onclick="chamaAba()" ng-repeat="estoquesTabela in estoques | filter:pesquisaProduto" ng-dblclick="selecionaEstoque(estoquesTabela)">
+                        <tr class="chamaAba" onclick="chamaAba()" ng-repeat="estoquesTabela in estoques | filter:pesquisaProdutoEstoque" ng-dblclick="selecionaEstoque(estoquesTabela)">
                             <td>{{estoquesTabela.produtoModel.codProduto}} </td>
                             <td>{{estoquesTabela.produtoModel.nomeProduto}}</td>
                             <td>{{estoquesTabela.qtdEstoque}}</td>

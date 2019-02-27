@@ -36,15 +36,6 @@ public class ProdutoModel {
 	@Column(name="observacao")
 	String observacao;
 	
-	@Column(name="qtdestoque")
-	Integer qtdEstoque;
-	
-	@Column(name="vlrpago")
-	double vlrPago;
-	
-	@Column(name="vlrvenda")
-	double vlrVenda;
-	
 	@ManyToOne
 	@JoinColumn(name="codmodelo",referencedColumnName="codmodelo", nullable=false)
 	ModeloModel modeloModel;
@@ -68,10 +59,7 @@ public class ProdutoModel {
 		this.porta = porta;
 		this.tipoProduto = tipoProduto;
 		this.observacao = observacao;
-		this.qtdEstoque = qtdEstoque;
-		this.vlrPago = vlrPago;
 		this.modeloModel = modeloModel;
-		this.vlrVenda = vlrVenda;
 	}
 
 
@@ -116,36 +104,12 @@ public class ProdutoModel {
 		this.observacao = observacao.toUpperCase();
 	}
 
-	public Integer getQtdEstoque() {
-		return qtdEstoque;
-	}
-
-	public void setQtdEstoque(Integer qtdEstoque) {
-		this.qtdEstoque = qtdEstoque;
-	}
-
-	public double getVlrPago() {
-		return vlrPago;
-	}
-
-	public void setVlrPago(double vlrPago) {
-		this.vlrPago = vlrPago;
-	}
-
 	public ModeloModel getModeloModel() {
 		return modeloModel;
 	}
 
 	public void setModeloModel(ModeloModel modeloModel) {
 		this.modeloModel = modeloModel;
-	}
-	
-	public double getVlrVenda() {
-		return vlrVenda;
-	}
-
-	public void setVlrVenda(double vlrVenda) {
-		this.vlrVenda = vlrVenda;
 	}
 
 	@Override

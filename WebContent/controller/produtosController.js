@@ -10,10 +10,10 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
+        	window.location.href="http://localhost:8080/Oficina/login.html";
 
         }
         
@@ -25,12 +25,12 @@ produtosModulo.controller("produtosController",function($http, $location, $scope
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
+         window.location.href="http://localhost:8080/Oficina/login.html";	
     };
 	
-	urlModelo = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/modelos';
-	urlProduto = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/produtos';
-	urlEstoque = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/estoques';
+	urlModelo = 'http://localhost:8080/Oficina/rest/modelos';
+	urlProduto = 'http://localhost:8080/Oficina/rest/produtos';
+	urlEstoque = 'http://localhost:8080/Oficina/rest/estoques';
 	
 	function cadastroCompleto(){
 		

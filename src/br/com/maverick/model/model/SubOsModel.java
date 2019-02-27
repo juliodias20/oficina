@@ -37,14 +37,16 @@ public class SubOsModel {
 	@JoinColumn(name="codproduto", referencedColumnName="codproduto", nullable=false)
 	ProdutoModel produtoModel;
 	
+	@OneToOne
+	@JoinColumn(name="codkit", referencedColumnName="codkit")
+	KitModel kitModel;
+	
 
 	public SubOsModel() {
 	}
 
-	
-
 	public SubOsModel(Integer item, Integer numOs, Integer qtd, float valorUnit, float vlrTotal,
-			ProdutoModel produtoModel) {
+			ProdutoModel produtoModel, KitModel kitModel) {
 		super();
 		Item = item;
 		this.numOs = numOs;
@@ -52,9 +54,9 @@ public class SubOsModel {
 		this.valorUnit = valorUnit;
 		this.vlrTotal = vlrTotal;
 		this.produtoModel = produtoModel;
+		this.kitModel = kitModel;
+		//this.codKit = codKit;
 	}
-
-
 
 	public Integer getNumOs() {
 		return numOs;
@@ -95,8 +97,24 @@ public class SubOsModel {
 	public void setVlrTotal(float vlrTotal) {
 		this.vlrTotal = vlrTotal;
 	}
+	
+	/*
+	public Integer getCodKit() {
+		return codKit;
+	}
+	
+	public void setCodKit(Integer codKit) {
+		this.codKit = codKit;
+	}
+	*/
 
+	public KitModel getKitModel() {
+		return kitModel;
+	}
 
+	public void setKitModel(KitModel kitModel) {
+		this.kitModel = kitModel;
+	}
 
 	@Override
 	public int hashCode() {
@@ -106,8 +124,6 @@ public class SubOsModel {
 		result = prime * result + ((produtoModel == null) ? 0 : produtoModel.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
