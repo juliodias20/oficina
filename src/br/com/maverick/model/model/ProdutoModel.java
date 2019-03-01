@@ -52,8 +52,7 @@ public class ProdutoModel {
 	public ProdutoModel() {
 	}
 
-	public ProdutoModel(Integer codProduto, String nomeProduto, String porta, String tipoProduto, String observacao,
-			Integer qtdEstoque, double vlrPago, ModeloModel modeloModel, double vlrVenda) {
+	public ProdutoModel(Integer codProduto, String nomeProduto, String porta, String tipoProduto, String observacao, ModeloModel modeloModel) {
 		this.codProduto = codProduto;
 		this.nomeProduto = nomeProduto;
 		this.porta = porta;

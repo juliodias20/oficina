@@ -8,16 +8,16 @@ loginModulo.controller("loginController", function ($http, $location, $scope, $r
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://localhost:8080/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         
         
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://localhost:8080/Oficina/login.html";
+        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
         }
     });
 	
-    urlLogin = 'http://localhost:8080/Oficina/rest/login';
+    urlLogin = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/login';
     
     $scope.logar = function(){
     	
@@ -34,7 +34,7 @@ loginModulo.controller("loginController", function ($http, $location, $scope, $r
             cookieExp.setDate(cookieExp.getDate() + 7);
             $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
             
-    		window.location.href="http://localhost:8080/Oficina/index.html";
+    		window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/index.html";
     		
 	    	}).error(function(erro){
 	    		$('#loginModal').modal('show');
