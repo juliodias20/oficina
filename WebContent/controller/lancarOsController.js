@@ -10,10 +10,10 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost:80/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
+        	window.location.href="http://localhost:80/Oficina/login.html";
 
         }
         
@@ -25,26 +25,21 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
+         window.location.href="http://localhost:80/Oficina/login.html";	
     };
     //--------------------------------------------------------autenticação de login
     
-    urlModelo = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/modelos'
-    urlCliente = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/clientes';
-    urlOs = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/os';
+    urlModelo = 'http://localhost:80/Oficina/rest/modelos'
+    urlParceiro = 'http://localhost:80/Oficina/rest/parceiros';
+    urlOs = 'http://localhost:80/Oficina/rest/os';
     
     function cadastroOs(){
-    	if(!$scope.lancaros.modeloModel.codModelo || !$scope.lancaros.clienteModel.codCliente ||
+    	if(!$scope.lancaros.modeloModel.codModelo || !$scope.lancaros.parceiroModel.codParceiro ||
     	   !$scope.lancaros.placaCarro || !$scope.lancaros.tipoOs || !$scope.lancaros.problema){
     		return false;
     	}else{
     		return true;
     	}
-    }
-    
-    $scope.teste = function(){
-   
-    	console.log($scope.lancaros);
     }
     
     //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem
@@ -69,9 +64,9 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 		})
 	}
     
-    $scope.listarClientes = function (){
-		$http.get(urlCliente).success(function (clientes){
-			$scope.clientes = clientes;
+    $scope.listarParceiros = function (){
+		$http.get(urlParceiro).success(function (parceiros){
+			$scope.parceiros = parceiros;
 		}).error(function (erro){
 			alert(erro);
 		});
@@ -81,15 +76,15 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     	$scope.lancaros = {};
     	$scope.lancaros.modeloModel = {};
     	$scope.lancaros.modeloModel.codModelo = "";
-    	$scope.lancaros.clienteModel = {};
-    	$scope.lancaros.clienteModel.codCliente = "";
+    	$scope.lancaros.parceiroModel = {};
+    	$scope.lancaros.parceiroModel.codParceiro = "";
     	$scope.lancaros.placaCarro = "";
     	$scope.lancaros.dhAbertura = "";
     	$scope.lancaros.problema ="";
     	$scope.lancaros.status = "";
     	$scope.lancaros.tipoOs = "";
     	document.getElementById('nomeModeloCar').value = "";
-    	document.getElementById('cliente').value = "";
+    	document.getElementById('parceiro').value = "";
     }
     
     $scope.pesquisaCarro = function(modeloSelecionado){
@@ -97,9 +92,9 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 		document.getElementById('nomeModeloCar').value =  modeloSelecionado.nomeModelo+' / '+modeloSelecionado.qtdPortas+'P / '+modeloSelecionado.ano;
 	}
     
-    $scope.buscaCliente = function(clienteSelecionado){
-		$scope.lancaros.clienteModel = clienteSelecionado;
-		document.getElementById('cliente').value =  clienteSelecionado.nomeCliente;
+    $scope.buscaParceiro = function(parceiroSelecionado){
+		$scope.lancaros.parceiroModel = parceiroSelecionado;
+		document.getElementById('parceiro').value =  parceiroSelecionado.nomeParceiro;
 	}
     
    
@@ -114,7 +109,7 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
 			$http.post(urlOs,$scope.lancaros).success(function(os){
 				$scope.chamarModalMensagens('Mensagem','Ordem de Serviço lançada com sucesso!');
 				$scope.limparCampos();
-				window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/ospendente.html";
+				window.location.href="http://localhost:80/Oficina/ospendente.html";
 			}).error(function(erro){
 				alert(erro);
 			});			

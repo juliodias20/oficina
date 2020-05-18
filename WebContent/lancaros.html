@@ -43,7 +43,7 @@
 							<span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item ">
-						<a class="nav-link" href="clientes.html">Clientes</a>
+						<a class="nav-link" href="parceiros.html">Parceiros</a>
 					</li>
 					<li class="nav-item">
 			          	<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
@@ -94,12 +94,12 @@
 			</div>
 			<hr>-->
 			<div class="form-group row">
-				<label align="left" for="cliente" class="col-sm-1 col-form-label"><span class="obg">*</span>Cliente:</label>
+				<label align="left" for="parceiro" class="col-sm-1 col-form-label"><span class="obg">*</span>Parceiro:</label>
 				<div class="col-sm-3">
-					<input type="text" disabled class="form-control" id="cliente">
+					<input type="text" disabled class="form-control" id="parceiro">
 				</div>
 				<div class="col-sm-1" align="left">
-			    	<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaCliente" ng-click="listarClientes()">Pesquisar</button>
+			    	<button class="btn" id="dropdownPesquisaCarro"  data-toggle="modal" data-target="#modalPesquisaParceiro" ng-click="listarParceiros()">Pesquisar</button>
 			    </div>
 			    <label align="right" class="col-sm-2 col-form-label" for="ano" ><span class="obg">*</span>Tipo de OS:</label>
 			    <div class="col-sm-2">
@@ -180,12 +180,12 @@
 	</div>
 	<!-- Modal - Pesquisa carro - fim-->
 	
-	<!-- Modal - Pesquisa cliente - inicio-->
-	<div class="modal fade" id="modalPesquisaCliente" tabindex="-2" role="dialog" aria-labelledby="modalPesquisaCliente" aria-hidden="true">
+	<!-- Modal - Pesquisa parceiro - inicio-->
+	<div class="modal fade" id="modalPesquisaParceiro" tabindex="-2" role="dialog" aria-labelledby="modalPesquisaParceiro" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="modalLancarProdutosEstoque">Pesquisar cliente</h5>
+	        <h5 class="modal-title" id="modalLancarProdutosEstoque">Pesquisar parceiro</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -193,17 +193,17 @@
 	      <div class="modal-body">
 	        <table class="table table-striped table-hover">
 				<tr>
-					<td colspan="5" align="right">Pesquisar clientes: <input type="text" ng-model="pesquisaCliente" id="pesquisa" placeholder="Pesquisa de clientes..."></td>
+					<td colspan="5" align="right">Pesquisar parceiros: <input type="text" ng-model="pesquisaParceiro" id="pesquisa" placeholder="Pesquisa de parceiros..."></td>
 				</tr>
 				<th>Código</th>
 				<th>Nome</th>
 				<th>Telefone</th>
 				<th>Email</th>
-				<tr data-dismiss="modal" aria-label="Close" ng-repeat="clientesTabela in clientes | filter:pesquisaCliente" ng-click="buscaCliente(clientesTabela)">
-					<td>{{clientesTabela.codCliente}}</td>
-					<td>{{clientesTabela.nomeCliente}}</td>
-					<td>{{clientesTabela.telefone}}</td>
-					<td>{{clientesTabela.email}}</td>
+				<tr data-dismiss="modal" aria-label="Close" ng-repeat="parceirosTabela in parceiros | filter:pesquisaParceiro" ng-click="buscaParceiro(parceirosTabela)">
+					<td>{{parceirosTabela.codParceiro}}</td>
+					<td>{{parceirosTabela.nomeParceiro}}</td>
+					<td>{{parceirosTabela.telefone}}</td>
+					<td>{{parceirosTabela.email}}</td>
 				</tr>
 			</table>
 	      </div>
@@ -213,7 +213,7 @@
 	    </div>
 	  </div>
 	</div>
-	<!-- Modal - Pesquisa cliente - fim-->
+	<!-- Modal - Pesquisa parceiro - fim-->
 	
 	<!-- Modal - mensagens - inicio-->
 	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">

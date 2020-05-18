@@ -10,10 +10,10 @@ osEncerradasModulo.controller("osEncerradasController", function ($http, $locati
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost:80/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
+        	window.location.href="http://localhost:80/Oficina/login.html";
 
         }
         
@@ -24,7 +24,7 @@ osEncerradasModulo.controller("osEncerradasController", function ($http, $locati
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
+         window.location.href="http://localhost:80/Oficina/login.html";	
     };
     //--------------------------------------------------------autenticação de login
     
@@ -46,8 +46,8 @@ osEncerradasModulo.controller("osEncerradasController", function ($http, $locati
 		return dataConvertida;
 	}
     
-    urlOs = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/os';
-    urlItens = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/subos';
+    urlOs = 'http://localhost:80/Oficina/rest/os';
+    urlItens = 'http://localhost:80/Oficina/rest/subos';
     
     //função que lista os Itens(produtos) vinculados a OS
     $scope.listarItensOs = function(){
@@ -75,7 +75,7 @@ osEncerradasModulo.controller("osEncerradasController", function ($http, $locati
 	$scope.selecionaOs = function(osSelecionada){
 		$scope.osEncerrada = osSelecionada;
 		document.getElementById('nomeModeloCar').value =  osSelecionada.modeloModel.nomeModelo+' / '+osSelecionada.modeloModel.qtdPortas+'P / '+osSelecionada.modeloModel.ano;
-		document.getElementById('cliente').value =  osSelecionada.clienteModel.nomeCliente;
+		document.getElementById('parceiro').value =  osSelecionada.parceiroModel.nomeParceiro;
 	}
 	
     //função que chama um Modal para apresentar mensagens, recebe de parâmetro um título e uma mensagem

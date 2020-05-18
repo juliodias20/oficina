@@ -43,7 +43,7 @@
 							<span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item">
-						<a class="nav-link" href="clientes.html">Clientes</a>
+						<a class="nav-link" href="parceiros.html">Parceiros</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'">Usuarios</a>
@@ -104,14 +104,14 @@
 							<td colspan="6" align="right">Pesquisar OS: <input type="text" ng-model="pesquisaOS" id="pesquisa" placeholder="Pesquisa de OS..."></td>
 						</tr>
 						<th>Número</th>
-						<th>Cliente</th>
+						<th>Parceiro</th>
 						<th>Data de abertura</th>
 						<th>Carro</th>
 						<th>Placa</th>
 						<th>Valor</th>
 						<tr class="chamaAba" onclick="chamaAba()" ng-repeat="osTabela in osEncerradas | filter:pesquisaOS" ng-dblclick="selecionaOs(osTabela);listarItensOs();">
 							<td>{{osTabela.numOs}}</td>
-							<td>{{osTabela.clienteModel.nomeCliente}}</td>
+							<td>{{osTabela.parceiroModel.nomeParceiro}}</td>
 							<td>{{osTabela.dhAbertura}}</td>
 							<td>{{osTabela.modeloModel.nomeModelo+'/'+osTabela.modeloModel.qtdPortas+'P/'+osTabela.modeloModel.ano}}</td>
 							<td>{{osTabela.placaCarro}}</td>
@@ -157,14 +157,14 @@
 					<hr>
 					
 					<div class="form-group row">
-						<label align="right" for="cliente" class="col-sm-1 col-form-label">Cliente:</label>
+						<label align="right" for="parceiro" class="col-sm-1 col-form-label">Parceiro:</label>
 						<div class="col-sm-4">
-							<input type="text" disabled class="form-control" id="cliente">
+							<input type="text" disabled class="form-control" id="parceiro">
 						</div>
 					    
 					    <label class="col-sm-2 col-form-label" align="right" for="telefone">Telefone:</label>
 						<div class="col-sm-2">
-							<input class="form-control" disabled ng-model="osEncerrada.clienteModel.telefone" type="text" id="telefone" />
+							<input class="form-control" disabled ng-model="osEncerrada.parceiroModel.telefone" type="text" id="telefone" />
 						</div>
 					    
 					</div>

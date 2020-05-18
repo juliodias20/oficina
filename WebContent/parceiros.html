@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en" ng-app="parceirosModulo">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="img/favicon.ico">
+
+<title>Maverick!</title>
+<!-- link API angular 1.13-->
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.min.js"></script>
+<!--estadosController-->
+<script src="controller/parceirosController.js"></script>
+
+
+<!-- Custom styles for this template -->
+<link href="css/oficinaEstilos.css" rel="stylesheet">
+<link href="css/parceirosEstilos.css" rel="stylesheet">
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<!-- bicliotecas do java script/ jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- link estados.js -->
+<script src="js/parceiros.js"></script>
+</head>
+<body ng-controller="parceirosController">
+	<header>
+		<!-- Static navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">MAVERICK</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Início <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="parceiros.html">Parceiros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="usuarios.html" ng-if="perfil == 'admin'" >Usuarios</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEstoque" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Estoque
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownEstoque">
+                            <a class="dropdown-item" href="produtos.html">Produtos</a>
+                            <a class="dropdown-item" href="estoques.html">Estoque</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Carros
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
+                          <a class="dropdown-item" href="marcas.html">Marcas</a>
+                          <a class="dropdown-item" href="modelos.html">Modelos</a>
+                        </div>
+                      </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOS" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ordem de Serviço(OS)
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownOS">
+                            <a class="dropdown-item" href="lancaros.html">Lançar OS</a>
+                            <a class="dropdown-item" href="ospendente.html">OS pendentes</a>
+                            <a class="dropdown-item" href="osencerradas.html">OS encerradas</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a href="#" class="btn btn-outline-warning" ng-click="sair()">Sair</a>
+        </nav>
+	</header>
+
+	
+
+	<form>
+	
+		<br>
+		<div class="container">
+			<!-- container principal - inicio -->
+			<h1 align="center">Parceiros</h1>
+			<br>
+			<nav>
+				<div class="nav nav-tabs" id="nav-tab" role="tablist">
+					<!--div de abas(titulos) - inicio -->
+					<a class="nav-item nav-link active" id="nav-lista-tab"
+						data-toggle="tab" href="#nav-lista" ng-click="listarParceiros()"
+						role="tab" aria-controls="nav-home" aria-selected="true">Lista</a>
+					<a class="nav-item nav-link" id="nav-cadastro-tab"
+						data-toggle="tab" href="#nav-cadastro" ng-click="limparCampos()"
+						role="tab" aria-controls="nav-profile" aria-selected="false">Cadastro</a>
+
+				</div>
+				<!--div de abas  - fim -->
+			</nav>
+			<!-- aba de abas(conteudos) - inicio-->
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade show active" id="nav-lista" role="tabpanel" aria-labelledby="nav-lista-tab">
+					<table class="table table-striped table-hover">
+						<tr>
+							<td colspan="5" align="right">Pesquisar parceiros: <input type="text" ng-model="pesquisaParceiro" id="pesquisa" placeholder="Pesquisa de parceiros..."></td>
+						</tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>Telefone</th>
+						<th>Email</th>
+						<tr class="chamaAba" onclick="chamaAba()" ng-repeat="parceirosTabela in parceiros | filter:pesquisaParceiro" ng-dblclick="selecionaParceiro(parceirosTabela)">
+							<td>{{parceirosTabela.codParceiro}}</td>
+							<td>{{parceirosTabela.nomeParceiro}}</td>
+							<td>{{parceirosTabela.telefone}}</td>
+							<td>{{parceirosTabela.email}}</td>
+						</tr>
+					</table>
+				</div>
+
+				<!-- Aba Cadastro - Inicio -->
+
+				<div class="tab-pane fade" id="nav-cadastro" role="tabpanel"
+					aria-labelledby="nav-cadastro-tab">
+					<br>
+					<div class="form-group row">
+
+						<label align="right" for="codigo" class="col-sm-1 col-form-label">Código:</label>
+						<div class="col-sm-1">
+							<input type="number" disabled ng-model="parceiro.codParceiro" class="form-control" id="codigo">
+						</div>
+						<label align="right" for="tipoPessoa" class="col-sm-1 col-form-label">Pessoa:</label>
+						<div class="col-md-3 col-lg-3 col-xl-2 form-control" id="tipoPessoa" ng-init="parceiro.tipoPessoa='F'">
+							<label class="radio-inline"><input
+								ng-model="parceiro.tipoPessoa" class="pessoa" value="F"
+								type="radio" name="optradio"> Física &nbsp;&nbsp;&nbsp;</label>
+							<label class="radio-inline"><input
+								ng-model="parceiro.tipoPessoa" class="pessoa" value="J"
+								type="radio" name="optradio"> Jurídica</label>
+						</div>
+						<label align="right" for="input_cpf" class="cpf col-sm-1 col-form-label"><span class="obg">*</span>CPF:</label>
+						<div class="cpf col-sm-2">
+							<input class="cpf form-control" ng-model="parceiro.cpf" type="text" id="input_cpf" data-mask="000.000.000-00" style="width: 150px;" />
+						</div>
+						<label align="right" for="input_cnpj" class="cnpj col-sm-1 col-form-label"><span class="obg">*</span>CNPJ:</label>
+						<div class="cnpj col-sm-2">
+							<input class="cnpj form-control" ng-model="parceiro.cnpj" type="text" id="input_cnpj" data-mask="00.000.000.0000-00" style="width: 180px;" />
+						</div>
+						<label class="col-sm-1 col-form-label" align="right" for="telefone"><span class="obg">*</span>Telefone:</label>
+						<div class="col-sm-2">
+							<input class="form-control" ng-model="parceiro.telefone" type="text" id="telefone" data-mask="(00)0 0000-0000" maxlength="15" autocomplete="off">
+						</div>
+
+					</div>
+
+					<div class="form-group row">
+						<label align="right" for="nome" class="col-sm-1 col-form-label"><span class="obg">*</span>Nome:</label>
+						<div class="col-11">
+							<input type="text" ng-model="parceiro.nomeParceiro" class="form-control" id="nome">
+						</div>
+					</div>
+
+					<div class="form-group row">
+
+						<label align="right" for="razaosocial"
+							class="cnpj col-sm-1.5 col-form-label" style="width: 92px"><span class="obg">*</span>R. Social:</label>
+						<div class="col-sm-11">
+							<input class="cnpj form-control" ng-model="parceiro.razaoSocial" type="text" />
+						</div>
+					</div>
+					<hr>
+					<div class="form-group row">
+						<label class="col-sm-1 col-form-label" align="right" for="cep"><span class="obg">*</span>CEP:</label>
+						<div class="col-sm-2">
+							<input class="form-control" ng-model="parceiro.cep" type="text" data-mask="00000-000" id="cep" />
+						</div>
+						<div class="col-sm-2" align="left">
+							<button class="btn" ng-click="buscaCEP()">OK</button>
+						</div>
+						<label class="col-sm-1 col-form-label" align="right" for="email"><span class="obg">*</span>E-mail:</label>
+						<div class="col-sm-6">
+							<input class="form-control" ng-model="parceiro.email" type="text"
+								id="email" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-1 col-form-label" align="right" for="cidade"><span class="obg">*</span>Cidade:</label>
+						<div class="col-sm-4">
+							<input class="form-control" ng-model="parceiro.cidade" type="text"
+								id="cidade" />
+						</div>
+						<label class="col-sm-1 col-form-label" align="right" for="bairro"><span class="obg">*</span>Bairro:</label>
+						<div class="col-sm-4">
+							<input class="form-control" ng-model="parceiro.bairro" type="text"
+								id="bairro" />
+						</div>
+						<label class="col-sm-1 col-form-label" align="right" for="estado"><span class="obg">*</span>Estado:</label>
+						<div class="col-sm-1">
+							<input class="form-control" ng-model="parceiro.estado" type="text"
+								id="estado" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-1 col-form-label" align="right" for="logradouro"><span class="obg">*</span>Logradouro:</label>
+						<div class="col-sm-9">
+							<input class="form-control" ng-model="parceiro.logradouro" type="text" id="logradouro" />
+						</div>
+						<label class="col-sm-1 col-form-label" align="right" for="numero"><span class="obg">*</span>Número:</label>
+						<div class="col-sm-1">
+							<input class="form-control" ng-model="parceiro.numero" type="text" id="numero"  />
+						</div>
+					</div>
+					<br>
+					<div align="center">
+						<button type="submit" ng-click="limparCampos()" class="btn btn-success">Novo</button>
+						<button type="submit" ng-click="salvar()" class="btn btn-primary">Salvar</button>
+						<button type="submit" ng-click="excluir()" class="btn btn-danger">Excluir</button>
+					</div>
+				</div>
+				<!-- Aba Cadastro - Fim -->
+				<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+					aria-labelledby="nav-contact-tab"></div>
+			</div>
+			<!-- aba de abas(conteudos) - fim-->
+		</div>
+		<!-- container principal - fim -->
+	</form>
+
+	<!-- FOOTER -->
+	<br>
+	<br>
+	<footer class="container">
+
+	</footer>
+
+	<!-- Modal - mensagens - inicio-->
+	<div class="modal fade" id="modalMensagens" tabindex="-1" role="dialog" aria-labelledby="modalMensagens" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="pTitulo"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="pMsg"></p>
+	      </div>
+	      <div class="modal-footer">
+	        	<button type="button" class="btn btn-secondary" ng-click="fecharModalMensagens()">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal - mensagens - fim-->
+
+	<!-- Bootstrap core JavaScript================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="js/locastyle.js"></script>
+	
+</body>
+</html>

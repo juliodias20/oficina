@@ -12,10 +12,10 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a
 		// restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost:80/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
+        	window.location.href="http://localhost:80/Oficina/login.html";
 
         }
         
@@ -26,7 +26,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
+         window.location.href="http://localhost:80/Oficina/login.html";	
     };
     // --------------------------------------------------------autenticação de
 	// login
@@ -50,13 +50,13 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	}
     
     
-    urlModelo = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/modelos'
-    urlCliente = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/clientes';
-    urlOs = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/os';
-    urlItens = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/subos';
-    urlProduto = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/produtos';
-    urlEstoque = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/estoques';
-    urlKit = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/kits';
+    urlModelo = 'http://localhost:80/Oficina/rest/modelos'
+    urlParceiro = 'http://localhost:80/Oficina/rest/parceiros';
+    urlOs = 'http://localhost:80/Oficina/rest/os';
+    urlItens = 'http://localhost:80/Oficina/rest/subos';
+    urlProduto = 'http://localhost:80/Oficina/rest/produtos';
+    urlEstoque = 'http://localhost:80/Oficina/rest/estoques';
+    urlKit = 'http://localhost:80/Oficina/rest/kits';
     
     // função que lista os kits de produtos
     $scope.listarKits = function(){
@@ -139,19 +139,19 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 		document.getElementById('nomeModeloCar').value =  modeloSelecionado.nomeModelo+' / '+modeloSelecionado.qtdPortas+'P / '+modeloSelecionado.ano;
 	}  
     
-    // função que lista os clientes cadastrados
-    $scope.listarClientes = function (){
-		$http.get(urlCliente).success(function (clientes){
-			$scope.clientes = clientes;
+    // função que lista os parceiros cadastrados
+    $scope.listarParceiros = function (){
+		$http.get(urlParceiro).success(function (parceiros){
+			$scope.parceiros = parceiros;
 		}).error(function (erro){
 			alert(erro);
 		});
 	};
 	
-	// função que seleciona um cliente da lista clientes
-    $scope.buscaCliente = function(clienteSelecionado){
-		$scope.osPendente.clienteModel = clienteSelecionado;
-		document.getElementById('cliente').value =  clienteSelecionado.nomeCliente;
+	// função que seleciona um parceiro da lista parceiros
+    $scope.buscaParceiro = function(parceiroSelecionado){
+		$scope.osPendente.parceiroModel = parceiroSelecionado;
+		document.getElementById('parceiro').value =  parceiroSelecionado.nomeParceiro;
 	} 
 	
 	// função que lista todas as OS Pendentes(que ainda não foram encerradas)
@@ -171,7 +171,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	$scope.selecionaOs = function(osSelecionada){
 		$scope.osPendente = osSelecionada;
 		document.getElementById('nomeModeloCar').value =  osSelecionada.modeloModel.nomeModelo+' / '+osSelecionada.modeloModel.qtdPortas+'P / '+osSelecionada.modeloModel.ano;
-		document.getElementById('cliente').value =  osSelecionada.clienteModel.nomeCliente;
+		document.getElementById('parceiro').value =  osSelecionada.parceiroModel.nomeParceiro;
 	}
 	
 	
@@ -217,7 +217,6 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     // função que insere novo item na OS
     $scope.salvarItem = function(){
     	$scope.itemOs.valorUnit = removeMoneyMask(document.getElementById('valorUnit').value);
-    	console.log($scope.itemOs);
     	
     	if(itemSelecionado()){
 	    	$scope.itemOs.vlrTotal = (Number($scope.itemOs.qtd) * Number($scope.itemOs.valorUnit));
@@ -304,7 +303,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     // função que fecha o modal de mensagem
     $scope.fecharModalMensagens = function(){
     	if (document.getElementById.value = "Ordem de Serviço encerrada com sucesso!" ){
-    		window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/osencerradas.html";
+    		window.location.href="http://localhost:80/Oficina/osencerradas.html";
     	}
     	document.getElementById('pTitulo').innerHTML = "";
     	document.getElementById('pMsg').innerHTML = "";
@@ -355,7 +354,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     }
     
     $scope.fecharModelEncerraOs = function (){
-    	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/osencerradas.html";
+    	window.location.href="http://localhost:80/Oficina/osencerradas.html";
     }
     
     $scope.listarOs();

@@ -51,14 +51,14 @@ public class OsModel {
 	ModeloModel modeloModel;
 	
 	@ManyToOne
-	@JoinColumn(name="codcliente", referencedColumnName="codcliente", nullable=false)
-	ClienteModel clienteModel;
+	@JoinColumn(name="codcliente", referencedColumnName="codparceiro", nullable=false)
+	ParceiroModel parceiroModel;
 
 	public OsModel() {
 	}
 
 	public OsModel(Integer numOs, Date dhAbertura, Date dhEncerramento, String status, String problema, String solucao,
-			String placaCarro, float valorTotal, String tipoOs, ModeloModel modeloModel, ClienteModel clienteModel) {
+			String placaCarro, float valorTotal, String tipoOs, ModeloModel modeloModel, ParceiroModel parceiroModel) {
 		this.numOs = numOs;
 		this.dhAbertura = dhAbertura;
 		this.dhEncerramento = dhEncerramento;
@@ -69,7 +69,7 @@ public class OsModel {
 		this.valorTotal = valorTotal;
 		this.tipoOs = tipoOs;
 		this.modeloModel = modeloModel;
-		this.clienteModel = clienteModel;
+		this.parceiroModel = parceiroModel;
 	}
 
 	public Integer getNumOs() {
@@ -144,12 +144,12 @@ public class OsModel {
 		this.modeloModel = modeloModel;
 	}
 
-	public ClienteModel getClienteModel() {
-		return clienteModel;
+	public ParceiroModel getParceiroModel() {
+		return parceiroModel;
 	}
 
-	public void setClienteModel(ClienteModel clienteModel) {
-		this.clienteModel = clienteModel;
+	public void setParceiroModel(ParceiroModel parceiroModel) {
+		this.parceiroModel = parceiroModel;
 	}
 	
 
