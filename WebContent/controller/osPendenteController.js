@@ -52,7 +52,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
     
     urlModelo = 'http://localhost:80/Oficina/rest/modelos'
     urlParceiro = 'http://localhost:80/Oficina/rest/parceiros';
-    urlOs = 'http://localhost:80/Oficina/rest/os';
+    urlOs = 'http://localhost:80/Oficina/rest/os/pendentes';
     urlItens = 'http://localhost:80/Oficina/rest/subos';
     urlProduto = 'http://localhost:80/Oficina/rest/produtos';
     urlEstoque = 'http://localhost:80/Oficina/rest/estoques';
@@ -156,7 +156,7 @@ osPendenteModulo.controller("osPendenteController", function ($http, $location, 
 	
 	// função que lista todas as OS Pendentes(que ainda não foram encerradas)
 	$scope.listarOs = function (){
-		$http.get(urlOs+'/0').success(function (oss){
+		$http.get(urlOs).success(function (oss){
 			/*
 			 * for(var i = 0 ; i < oss.length ; i++ ){ oss[i].dhAbertura =
 			 * unixToDate(oss[i].dhAbertura); }

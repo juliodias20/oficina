@@ -10,10 +10,10 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray(window.location.href, ['http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html']) === -1;
+        var restrictedPage = $.inArray(window.location.href, ['http://localhost/Oficina/login.html']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
         if (restrictedPage && !loggedIn) {
-        	window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";
+        	window.location.href="http://localhost/Oficina/login.html";
 
         }
         
@@ -24,11 +24,11 @@ clientesModulo.controller("clientesController", function ($http, $location, $sco
     	 $rootScope.globals = {};
          $cookies.remove('globals');
          $http.defaults.headers.common.Authorization = 'Basic';
-         window.location.href="http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/login.html";	
+         window.location.href="http://localhost/Oficina/login.html";	
     };
     //--------------------------------------------------------autenticação de login
-	urlCep = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/ceps/';
-	urlCliente = 'http://ec2-54-207-85-166.sa-east-1.compute.amazonaws.com/Oficina/rest/clientes';
+	urlCep = 'http://localhost/Oficina/rest/ceps/';
+	urlCliente = 'http://localhost/Oficina/rest/parceiros';
 	
 	/*função remove mascara CPF */
 	function removeMascaraCpfCnpj(campoComMascara) {

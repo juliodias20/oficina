@@ -31,7 +31,7 @@ lancarOsModulo.controller("lancarOsController", function ($http, $location, $sco
     
     urlModelo = 'http://localhost:80/Oficina/rest/modelos'
     urlParceiro = 'http://localhost:80/Oficina/rest/parceiros';
-    urlOs = 'http://localhost:80/Oficina/rest/os';
+    urlOs = 'http://localhost:80/Oficina/rest/os/pendentes';
     
     function cadastroOs(){
     	if(!$scope.lancaros.modeloModel.codModelo || !$scope.lancaros.parceiroModel.codParceiro ||
