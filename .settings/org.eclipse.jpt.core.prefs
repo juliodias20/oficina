@@ -1,3 +1,7 @@
 eclipse.preferences.version=1
+<<<<<<< Updated upstream
 org.eclipse.jpt.core.platform=hibernate2_0
+=======
+org.eclipse.jpt.core.platform=eclipselink2_0
+>>>>>>> Stashed changes
 org.eclipse.jpt.jpa.core.discoverAnnotatedClasses=true
